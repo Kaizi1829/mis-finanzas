@@ -131,6 +131,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="sec" id="s-calendario"></div>
 <div class="sec" id="s-facturas"></div>
 
+<!-- BACKUP BAR -->
+<div style="position:fixed;top:0;right:0;z-index:200;padding:6px 8px;display:flex;gap:6px" id="backupBar">
+  <button onclick="exportarDatos()" style="background:#2E7D32;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">💾 Exportar</button>
+  <label style="background:#185FA5;color:#fff;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer">
+    📂 Importar<input type="file" accept=".json" style="display:none" onchange="importarDatos(event)"/>
+  </label>
+</div>
+
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="active" onclick="show('resumen',this)"><span class="ico">🏠</span>Resumen</button>
@@ -710,6 +718,42 @@ const renders={
 
 // INIT
 loadDB();loadFact();renderResumen();
+
+// ── EXPORTAR / IMPORTAR ──────────────────────────────────
+function exportarDatos(){
+  const backup={db:DB,fact:FACT,exportado:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const fecha=new Date().toLocaleDateString('es-ES').replace(/\//g,'-');
+  a.href=url;
+  a.download=`finanzas-marta-${fecha}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  alert('✓ Datos exportados correctamente. Guarda el archivo en Google Drive o iCloud para tenerlo seguro.');
+}
+
+function importarDatos(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const backup=JSON.parse(e.target.result);
+      if(!backup.db||!backup.db._v){alert('⚠ El archivo no parece válido.');return;}
+      if(!confirm(`¿Restaurar datos del backup del ${new Date(backup.exportado).toLocaleDateString('es-ES')}? Se sobreescribirán los datos actuales.`))return;
+      DB=backup.db;
+      FACT=backup.fact||{};
+      saveDB();saveFact();
+      renderResumen();
+      alert('✓ Datos restaurados correctamente.');
+    }catch(err){alert('⚠ Error al leer el archivo. Asegúrate de que es un backup válido.');}
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
 </script>
 </body>
 </html>
