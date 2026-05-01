@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="Mis Finanzas"/>
+<meta name="theme-color" content="#185FA5"/>
+<title>Mis Finanzas</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bbva:#185FA5;--san:#C0392B;--tr:#2C2C2A;--inv:#2E7D32;--bg:#f8f8f6;--card:#fff;--border:#e5e5e2;--text:#1a1a18;--text2:#6b6b68;--text3:#9b9b98}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px}
+/* NAV BOTTOM para móvil */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.bottom-nav button{flex:1;padding:8px 2px 6px;border:none;background:none;font-size:9px;color:var(--text2);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bottom-nav button .ico{font-size:18px;line-height:1}
+.bottom-nav button.active{color:var(--bbva)}
+.bottom-nav button.active .ico{transform:scale(1.1)}
+/* TOP */
+.topbar{background:var(--bbva);color:#fff;padding:14px 16px 12px;position:sticky;top:0;z-index:50}
+.topbar h1{font-size:16px;font-weight:700}
+.topbar .sub{font-size:11px;opacity:.8;margin-top:2px}
+.topbar .total{font-size:13px;opacity:.9;margin-top:6px}
+.topbar .total strong{font-size:18px;font-weight:700}
+/* SECTIONS */
+.sec{display:none;padding:12px 14px}
+.sec.active{display:block}
+/* CARDS */
+.card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card h3{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.h-bb{color:var(--bbva)}.h-sa{color:var(--san)}.h-tr{color:var(--tr)}.h-in{color:var(--inv)}.h-m{color:var(--text2)}
+.bt-bb{border-top:3px solid var(--bbva)}.bt-sa{border-top:3px solid var(--san)}.bt-tr{border-top:3px solid var(--tr)}.bt-in{border-top:3px solid var(--inv)}
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.kpi{border-radius:10px;padding:12px}
+.kpi .kl{font-size:10px;color:var(--text2);margin-bottom:3px}
+.kpi .kv{font-size:20px;font-weight:700}
+.kpi .ks{font-size:10px;color:var(--text3);margin-top:2px}
+.m-bb{background:#EAF2FC;border-left:3px solid var(--bbva)}
+.m-sa{background:#FCEAEA;border-left:3px solid var(--san)}
+.m-tr{background:#EBEBEB;border-left:3px solid var(--tr)}
+.m-in{background:#EAF5EA;border-left:3px solid var(--inv)}
+/* ROWS */
+.row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:none}
+.rn{flex:1;font-size:13px;color:var(--text)}
+.rs{font-size:10px;color:var(--text3);margin-top:1px}
+.ra{font-size:13px;font-weight:700;white-space:nowrap}
+.c-bb{color:var(--bbva)}.c-sa{color:var(--san)}.c-tr{color:var(--tr)}.c-in{color:var(--inv)}
+.neg{color:#A32D2D}.pos{color:#2E7D32}.muted{color:var(--text3)}
+/* BADGE */
+.badge{font-size:9px;padding:2px 6px;border-radius:6px;white-space:nowrap;font-weight:600}
+.bw{background:#FAEEDA;color:#633806}.bd{background:#EAF3DE;color:#27500A}.bp{background:#FCEBEB;color:#791F1F}.boff{background:#EBEBEB;color:#777}
+/* TOTBAR */
+.totbar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
+.totbox{background:var(--card);border-radius:8px;padding:8px 6px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.totbox .tl{font-size:9px;color:var(--text3);margin-bottom:2px}
+.totbox .tv{font-size:15px;font-weight:700}
+/* BAR */
+.bar-bg{height:6px;border-radius:3px;background:#eee;overflow:hidden;margin-top:4px}
+.bar-fill{height:100%;border-radius:3px}
+/* FORMS */
+.fr{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.fr label{font-size:11px;color:var(--text2);font-weight:600}
+.fr input,.fr select,.fr textarea{padding:10px 12px;font-size:14px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--text);width:100%;-webkit-appearance:none}
+.fr input:focus,.fr select:focus{outline:none;border-color:var(--bbva)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{width:100%;padding:12px;border-radius:10px;border:none;font-size:14px;font-weight:700;cursor:pointer;color:#fff;margin-top:4px}
+.btn-bb{background:var(--bbva)}.btn-sa{background:var(--san)}.btn-tr{background:var(--tr)}.btn-in{background:var(--inv)}
+.btn-sm{padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text2);font-size:12px;cursor:pointer}
+/* CAL */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:6px}
+.ch{font-size:9px;text-align:center;font-weight:700;color:var(--text2);padding:3px}
+.cd{font-size:11px;text-align:center;padding:6px 2px;border-radius:5px;color:var(--text3)}
+.cd.bill{background:#E6F1FB;color:var(--bbva);font-weight:700}
+.cd.paid{background:#EAF3DE;color:var(--inv);font-weight:700}
+.cd.today{outline:2px solid var(--bbva);outline-offset:-1px}
+.cd.empty{opacity:0}
+/* FACTURAS */
+.fi{display:flex;align-items:center;gap:10px;padding:11px;border-radius:10px;margin-bottom:6px;border:1.5px solid var(--border);background:#fff;cursor:pointer;user-select:none;-webkit-user-select:none}
+.fi.chk{background:#EAF5EA;border-color:#A5D6A7}
+.fi.chk .fn{color:var(--text3);text-decoration:line-through}
+.fi.nap{opacity:.35;pointer-events:none}
+.cc{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.fi.chk .cc{background:var(--inv);border-color:var(--inv);color:#fff}
+.fb{flex:1;min-width:0}
+.fn{font-size:13px;font-weight:600;color:var(--text)}
+.fm{font-size:11px;color:var(--text3);margin-top:1px}
+.ftag{font-size:9px;padding:1px 6px;border-radius:5px;margin-left:3px;font-weight:600}
+.ftr{background:#EAF2FC;color:var(--bbva)}.ftt{background:#FAEEDA;color:#633806}.fta{background:#F3E5F5;color:#6A1B9A}.fte{background:#FBE9E7;color:#BF360C}
+/* ALERT */
+.alert{padding:10px 12px;border-radius:8px;font-size:12px;margin-top:8px}
+.aw{background:#FAEEDA;color:#633806}.ai{background:#EAF5EA;color:#1B5E20}
+/* OBJETIVOS */
+.obj-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.countdown{font-size:28px;font-weight:800}
+.cd-ok{color:var(--inv)}.cd-soon{color:#BA7517}.cd-urgent{color:#A32D2D}.cd-none{color:var(--text3)}
+/* EDIT INLINE */
+.edit-panel{background:#f0f4f8;border-radius:10px;padding:12px;margin-top:8px;display:none}
+.edit-inline{display:flex;gap:6px;align-items:center;margin-bottom:8px}
+.edit-inline input{flex:1;padding:8px 10px;font-size:13px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--text)}
+.edit-inline .save-btn{padding:8px 14px;border-radius:8px;border:none;font-size:12px;font-weight:700;color:#fff;background:var(--inv);white-space:nowrap;cursor:pointer}
+/* PROGRESS */
+.prog-bar{height:8px;border-radius:4px;background:#eee;overflow:hidden;margin:6px 0}
+.prog-fill{height:100%;border-radius:4px;background:var(--inv);transition:.4s}
+/* RECIBO BAJA */
+.recibo-baja{opacity:.45}
+/* MSG */
+.msg-ok{color:var(--inv);font-size:12px;margin-top:6px;font-weight:600}
+.msg-err{color:#A32D2D;font-size:12px;margin-top:6px;font-weight:600}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin:14px 0 6px}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <h1>💶 Mis finanzas</h1>
+  <div class="sub" id="fechaHoy"></div>
+  <div class="total">Saldo total: <strong id="saldoTotal">—</strong></div>
+</div>
+
+<!-- SECTIONS -->
+<div class="sec active" id="s-resumen"></div>
+<div class="sec" id="s-cuentas"></div>
+<div class="sec" id="s-recibos"></div>
+<div class="sec" id="s-inversiones"></div>
+<div class="sec" id="s-objetivos"></div>
+<div class="sec" id="s-calendario"></div>
+<div class="sec" id="s-facturas"></div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="active" onclick="show('resumen',this)"><span class="ico">🏠</span>Resumen</button>
+  <button onclick="show('cuentas',this)"><span class="ico">🏦</span>Cuentas</button>
+  <button onclick="show('recibos',this)"><span class="ico">📋</span>Recibos</button>
+  <button onclick="show('inversiones',this)"><span class="ico">📈</span>Inversión</button>
+  <button onclick="show('objetivos',this)"><span class="ico">🎯</span>Objetivos</button>
+  <button onclick="show('calendario',this)"><span class="ico">📅</span>Calendario</button>
+  <button onclick="show('facturas',this)"><span class="ico">🧾</span>Facturas</button>
+</nav>
+
+<script>
+const hoy=new Date();
+const diasSem=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const mesesN=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const mesesC=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+document.getElementById('fechaHoy').textContent=`${diasSem[hoy.getDay()]} ${hoy.getDate()} de ${mesesN[hoy.getMonth()]} de ${hoy.getFullYear()}`;
+
+const SK='finanzas-marta-v5';
+const SK_FACT='facturas-asesoria-marta-v3';
+
+function defaultDB(){return{_v:5,
+  saldos:{bbva:{val:512,fecha:'2026-04-22'},san:{val:12.98,fecha:'2026-04-22'},tr:{val:60.87,fecha:'2026-04-22'}},
+  recibos:[
+    {id:1,nombre:'Neting',importe:48.39,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:7,notas:''},
+    {id:2,nombre:'PIAS',importe:50,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10,notas:''},
+    {id:3,nombre:'Dr Smile',importe:41.46,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10,notas:'Fin jun 2026',finAnio:2026,finMes:5},
+    {id:4,nombre:'Aspiradora',importe:26.75,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10,notas:'Fin dic 2026',finAnio:2026,finMes:11},
+    {id:5,nombre:'Google ONE',importe:2.99,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10,notas:''},
+    {id:6,nombre:'Curves',importe:59,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:16,notas:'Baja may 2026',finAnio:2026,finMes:3},
+    {id:7,nombre:'Comparsa',importe:16,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:16,notas:''},
+    {id:8,nombre:'App WB',importe:3.09,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:24,notas:''},
+    {id:9,nombre:'DIGI',importe:10,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:30,notas:''},
+    {id:10,nombre:'Legado Activo AXA',importe:20,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:30,notas:''},
+    {id:11,nombre:'Cuota autónomo',importe:302.65,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:30,notas:''},
+    {id:12,nombre:'AJE',importe:48,tipo:'gasto',frec:'quarterly',cuenta:'bbva',dia:1,meses:[0,3,6,9],notas:''},
+    {id:13,nombre:'Arrabal & Díaz',importe:60,tipo:'gasto',frec:'quarterly',cuenta:'bbva',dia:10,meses:[1,4,7,10],notas:''},
+    {id:14,nombre:'Seguro de Hogar',importe:78.26,tipo:'gasto',frec:'annual',cuenta:'bbva',dia:4,mesAnual:1,notas:''},
+    {id:15,nombre:'Regularización autónomo',importe:178.08,tipo:'gasto',frec:'quarterly',cuenta:'bbva',dia:30,meses:[3,4,5],notas:'Abr-Jun 2026'},
+    {id:16,nombre:'Shein 2/3',importe:68.07,tipo:'fraccionado',frec:'once',cuenta:'bbva',dia:15,mesAnual:4,anio:2026,notas:'Fraccionado'},
+    {id:17,nombre:'Shein 3/3',importe:68.07,tipo:'fraccionado',frec:'once',cuenta:'bbva',dia:14,mesAnual:5,anio:2026,notas:'Fraccionado'},
+    {id:18,nombre:'Alquiler (efectivo)',importe:540,tipo:'gasto',frec:'monthly',cuenta:'san',dia:1,notas:'Efectivo'},
+    {id:19,nombre:'Luz (efectivo)',importe:30,tipo:'gasto',frec:'monthly',cuenta:'san',dia:1,notas:'Efectivo'},
+    {id:20,nombre:'Uñas + Cejas',importe:39,tipo:'gasto',frec:'monthly',cuenta:'san',dia:4,notas:'Efectivo'},
+  ],
+  inversiones:{
+    pias:{saldo:1008.70,disposiciones:100.07,variacion:58.77,fecha:'20/04/2026'},
+    legado:{acumulado:136.63,disponible:96.63,fecha:'20/04/2026'},
+    axa:{compra:42.50,cierre:42.10,fecha:'26/04/2026'}
+  },
+  objetivos:[
+    {id:1,nombre:'Caparica',meta:150,ahorrado:60.87,fecha:'2026-07-14'},
+    {id:2,nombre:'Puro Latino',meta:200,ahorrado:0,fecha:'2026-07-24'},
+    {id:3,nombre:'Traje de Carnaval',meta:300,ahorrado:0,fecha:'2026-12-01'},
+    {id:4,nombre:'Dentista — Retenedor',meta:60,ahorrado:0,fecha:''},
+  ],
+  prestamo:{cuota:109.94,total:84,capital:7000}
+};}
+
+let DB=defaultDB();
+let FACT={};
+
+function loadDB(){try{const r=localStorage.getItem(SK);if(r){const t=JSON.parse(r);if(t._v>=5)DB=t;}}catch(e){}}
+function saveDB(){try{localStorage.setItem(SK,JSON.stringify(DB));}catch(e){}}
+function loadFact(){try{const r=localStorage.getItem(SK_FACT);if(r)FACT=JSON.parse(r);}catch(e){}}
+function saveFact(){try{localStorage.setItem(SK_FACT,JSON.stringify(FACT));}catch(e){}}
+
+function fmt(n){return n!=null?parseFloat(n).toFixed(2).replace('.',',')+' €':'—';}
+function mesKey(y,m){return `${y}-${String(m).padStart(2,'0')}`;}
+function cuentaLabel(c){return c==='bbva'?'BBVA':c==='san'?'Santander':'Trade Republic';}
+function cuentaColor(c){return c==='bbva'?'var(--bbva)':c==='san'?'var(--san)':'var(--tr)';}
+function isPast(dia,y,m){
+  const ty=hoy.getFullYear(),tm=hoy.getMonth(),td=hoy.getDate();
+  if(y<ty||(y===ty&&m<tm))return true;
+  if(y===ty&&m===tm&&dia<td)return true;
+  return false;
+}
+function reciboActivo(r,y,m){
+  if(r.finAnio!==undefined&&r.finMes!==undefined)
+    if(y>r.finAnio||(y===r.finAnio&&m>r.finMes))return false;
+  return true;
+}
+function reciboAplica(r,y,m){
+  if(!reciboActivo(r,y,m))return false;
+  if(r.frec==='monthly')return true;
+  if(r.frec==='quarterly')return r.meses&&r.meses.includes(m);
+  if(r.frec==='annual')return r.mesAnual===m;
+  if(r.frec==='once')return r.mesAnual===m&&(!r.anio||r.anio===y);
+  return false;
+}
+function getBBVABills(y,m){
+  return DB.recibos.filter(r=>r.cuenta==='bbva'&&(r.tipo==='gasto'||r.tipo==='fraccionado')&&reciboAplica(r,y,m)).sort((a,b)=>a.dia-b.dia);
+}
+function diasRestantes(f){
+  if(!f)return null;
+  const fd=new Date(f);fd.setHours(0,0,0,0);
+  const hd=new Date();hd.setHours(0,0,0,0);
+  return Math.ceil((fd-hd)/(1000*60*60*24));
+}
+function calcCuotasPagadas(){
+  const inicio=new Date('2026-05-01');
+  if(hoy<inicio)return 0;
+  const m=(hoy.getFullYear()-inicio.getFullYear())*12+(hoy.getMonth()-inicio.getMonth());
+  return Math.min(m+1,DB.prestamo.total);
+}
+
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+  renders[id]&&renders[id]();
+}
+
+function renderKPIs(){
+  const s=DB.saldos;
+  const total=(s.bbva?.val||0)+(s.san?.val||0)+(s.tr?.val||0);
+  document.getElementById('saldoTotal').textContent=fmt(total);
+}
+
+// ── RESUMEN ──────────────────────────────────────────────
+function renderResumen(){
+  renderKPIs();
+  const s=DB.saldos;
+  const bills=getBBVABills(hoy.getFullYear(),hoy.getMonth());
+  let total=0,paid=0,pending=0;
+  bills.forEach(b=>{total+=b.importe;if(isPast(b.dia,hoy.getFullYear(),hoy.getMonth()))paid+=b.importe;else pending+=b.importe;});
+  const next=DB.recibos.filter(r=>reciboAplica(r,hoy.getFullYear(),hoy.getMonth())&&!isPast(r.dia,hoy.getFullYear(),hoy.getMonth())).sort((a,b)=>a.dia-b.dia).slice(0,4);
+  document.getElementById('s-resumen').innerHTML=`
+    <div class="kpi-grid">
+      <div class="kpi m-bb"><div class="kl">BBVA</div><div class="kv c-bb">${fmt(s.bbva?.val)}</div><div class="ks">${s.bbva?.fecha||''}</div></div>
+      <div class="kpi m-sa"><div class="kl">Santander</div><div class="kv c-sa">${fmt(s.san?.val)}</div><div class="ks">${s.san?.fecha||''}</div></div>
+      <div class="kpi m-tr"><div class="kl">Trade Republic</div><div class="kv c-tr">${fmt(s.tr?.val)}</div><div class="ks">${s.tr?.fecha||''}</div></div>
+      <div class="kpi m-in"><div class="kl">PIAS</div><div class="kv c-in">${fmt(DB.inversiones.pias.saldo)}</div><div class="ks">${DB.inversiones.pias.fecha}</div></div>
+      <div class="kpi m-in"><div class="kl">Legado Activo</div><div class="kv c-in">${fmt(DB.inversiones.legado.disponible)}</div><div class="ks">Disponible</div></div>
+      <div class="kpi m-in"><div class="kl">Acción AXA</div><div class="kv c-in">${fmt(DB.inversiones.axa.cierre)}</div><div class="ks">Cierre ${DB.inversiones.axa.fecha}</div></div>
+    </div>
+    <div class="card">
+      <h3 class="h-bb">BBVA — ${mesesC[hoy.getMonth()]} ${hoy.getFullYear()}</h3>
+      <div class="totbar">
+        <div class="totbox"><div class="tl">Total</div><div class="tv c-bb">${fmt(total)}</div></div>
+        <div class="totbox"><div class="tl">Pagado</div><div class="tv pos">${fmt(paid)}</div></div>
+        <div class="totbox"><div class="tl">Pendiente</div><div class="tv neg">${fmt(pending)}</div></div>
+      </div>
+      ${bills.map(b=>{const past=isPast(b.dia,hoy.getFullYear(),hoy.getMonth());return`<div class="row"><div style="font-size:10px;color:var(--text3);width:26px;flex-shrink:0">d.${b.dia}</div><div class="rn">${b.nombre}</div><span class="badge ${past?'bd':'bp'}">${past?'✓':'⏳'}</span><div class="ra ${past?'muted':'c-bb'}">${past?'':'-'}${fmt(b.importe)}</div></div>`;}).join('')}
+    </div>
+    <div class="card">
+      <h3 class="h-m">Próximos vencimientos</h3>
+      ${next.map(r=>`<div class="row"><div style="font-size:10px;color:var(--text3);width:26px;flex-shrink:0">d.${r.dia}</div><div class="rn">${r.nombre}</div><span class="badge" style="background:${r.cuenta==='bbva'?'#EAF2FC':r.cuenta==='san'?'#FCEAEA':'#EBEBEB'};color:${cuentaColor(r.cuenta)}">${cuentaLabel(r.cuenta)}</span><div class="ra neg">${r.tipo==='ingreso'?'+':'-'}${fmt(r.importe)}</div></div>`).join('')||'<div style="font-size:13px;color:var(--text3)">Sin vencimientos pendientes</div>'}
+    </div>`;
+}
+
+// ── CUENTAS ──────────────────────────────────────────────
+function renderCuentas(){
+  document.getElementById('s-cuentas').innerHTML=`
+    <div class="card bt-bb">
+      <h3 class="h-bb">BBVA</h3>
+      <div class="fg">
+        <div class="fr"><label>Saldo (€)</label><input type="number" id="sBBVA" value="${DB.saldos.bbva?.val||''}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Fecha</label><input type="date" id="fBBVA" value="${DB.saldos.bbva?.fecha||hoy.toISOString().split('T')[0]}"/></div>
+      </div>
+      <button class="btn btn-bb" onclick="actualizarSaldo('bbva','sBBVA','fBBVA')">Actualizar BBVA</button>
+    </div>
+    <div class="card bt-sa">
+      <h3 class="h-sa">Santander</h3>
+      <div class="fg">
+        <div class="fr"><label>Saldo (€)</label><input type="number" id="sSAN" value="${DB.saldos.san?.val||''}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Fecha</label><input type="date" id="fSAN" value="${DB.saldos.san?.fecha||hoy.toISOString().split('T')[0]}"/></div>
+      </div>
+      <button class="btn btn-sa" onclick="actualizarSaldo('san','sSAN','fSAN')">Actualizar Santander</button>
+    </div>
+    <div class="card bt-tr">
+      <h3 class="h-tr">Trade Republic</h3>
+      <div class="fg">
+        <div class="fr"><label>Saldo (€)</label><input type="number" id="sTR" value="${DB.saldos.tr?.val||''}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Fecha</label><input type="date" id="fTR" value="${DB.saldos.tr?.fecha||hoy.toISOString().split('T')[0]}"/></div>
+      </div>
+      <button class="btn btn-tr" onclick="actualizarSaldo('tr','sTR','fTR')">Actualizar Trade Republic</button>
+    </div>
+    <div id="cMsg"></div>`;
+}
+function actualizarSaldo(c,si,fi){
+  const v=parseFloat(document.getElementById(si).value);
+  const f=document.getElementById(fi).value||hoy.toISOString().split('T')[0];
+  if(isNaN(v)){document.getElementById('cMsg').innerHTML='<div class="msg-err">⚠ Introduce un importe válido</div>';return;}
+  DB.saldos[c]={val:v,fecha:f};saveDB();renderKPIs();
+  document.getElementById('cMsg').innerHTML='<div class="msg-ok">✓ Guardado</div>';
+  setTimeout(()=>{const m=document.getElementById('cMsg');if(m)m.innerHTML='';},2000);
+}
+
+// ── RECIBOS ──────────────────────────────────────────────
+function renderRecibos(){
+  const grupos=[
+    {cuenta:'bbva',label:'BBVA',bt:'bt-bb',hc:'h-bb',ac:'c-bb'},
+    {cuenta:'san',label:'Santander',bt:'bt-sa',hc:'h-sa',ac:'c-sa'},
+    {cuenta:'tr',label:'Trade Republic',bt:'bt-tr',hc:'h-tr',ac:'c-tr'},
+  ];
+  const frac=DB.recibos.filter(r=>r.tipo==='fraccionado');
+  let html='';
+  grupos.forEach(g=>{
+    const list=DB.recibos.filter(r=>r.cuenta===g.cuenta&&r.tipo!=='fraccionado');
+    if(!list.length)return;
+    html+=`<div class="card ${g.bt}"><h3 class="${g.hc}">${g.label}</h3>${list.map(r=>reciboRow(r,g.ac)).join('')}</div>`;
+  });
+  if(frac.length) html+=`<div class="card bt-bb"><h3 class="h-bb">Pagos fraccionados</h3>${frac.map(r=>reciboRow(r,'c-bb')).join('')}</div>`;
+  html+=`<div class="card" style="border:2px dashed var(--border)">
+    <h3 class="h-m">➕ Añadir recibo</h3>
+    <div class="fr"><label>Nombre</label><input type="text" id="rN" placeholder="Ej: Spotify"/></div>
+    <div class="fg">
+      <div class="fr"><label>Importe (€)</label><input type="number" id="rI" step="0.01" placeholder="0.00" inputmode="decimal"/></div>
+      <div class="fr"><label>Día del mes</label><input type="number" id="rD" min="1" max="31" placeholder="1"/></div>
+    </div>
+    <div class="fg">
+      <div class="fr"><label>Tipo</label><select id="rT"><option value="gasto">Gasto</option><option value="ingreso">Ingreso</option><option value="fraccionado">Fraccionado</option></select></div>
+      <div class="fr"><label>Frecuencia</label><select id="rF"><option value="monthly">Mensual</option><option value="quarterly">Trimestral</option><option value="annual">Anual</option><option value="once">Único</option></select></div>
+    </div>
+    <div class="fr"><label>Cuenta</label><select id="rC"><option value="bbva">BBVA</option><option value="san">Santander</option><option value="tr">Trade Republic</option></select></div>
+    <div class="fr"><label>Notas</label><input type="text" id="rNt" placeholder="Opcional"/></div>
+    <div class="fr"><label>¿Factura deducible?</label><select id="rEF"><option value="no">No</option><option value="si">Sí — añadir a Facturas</option></select></div>
+    <button class="btn btn-bb" onclick="addRecibo()">Guardar recibo</button>
+    <div id="rMsg"></div>
+  </div>`;
+  document.getElementById('s-recibos').innerHTML=html;
+}
+function reciboRow(r,ac){
+  const activo=reciboActivo(r,hoy.getFullYear(),hoy.getMonth());
+  const fl={monthly:'Mensual',quarterly:'Trimestral',annual:'Anual',once:'Único'}[r.frec]||r.frec;
+  return `<div class="${activo?'':'recibo-baja'}">
+    <div class="row">
+      <div style="font-size:10px;color:var(--text3);width:28px;flex-shrink:0">d.${r.dia}</div>
+      <div class="rn">${r.nombre}<br><span style="font-size:10px;color:var(--text3)">${fl}${r.finAnio!==undefined?' · Baja '+mesesC[r.finMes]?.slice(0,3)+' '+r.finAnio:''}</span></div>
+      <div class="ra ${r.tipo==='ingreso'?'pos':'neg'} ${ac}" style="margin-right:6px">${r.tipo==='gasto'||r.tipo==='fraccionado'?'−':'+'} ${fmt(r.importe)}</div>
+      <button class="btn-sm" style="font-size:12px;padding:6px 8px" onclick="toggleEditR(${r.id})">${activo?'✏️':'↩️'}</button>
+    </div>
+    <div id="editR-${r.id}" class="edit-panel">
+      <div class="edit-inline">
+        <input type="text" id="rEN-${r.id}" value="${r.nombre}" placeholder="Nombre"/>
+        <input type="number" id="rEI-${r.id}" value="${r.importe}" step="0.01" inputmode="decimal" style="max-width:90px"/>
+        <button class="save-btn" onclick="guardarEditR(${r.id})">✓</button>
+      </div>
+      ${activo
+        ?`<button class="btn" style="background:#FCEBEB;color:#791F1F;font-size:12px;padding:8px" onclick="darDeBaja(${r.id})">🚫 Dar de baja (conserva historial)</button>`
+        :`<button class="btn" style="background:#EAF5EA;color:#1B5E20;font-size:12px;padding:8px" onclick="reactivarRecibo(${r.id})">✓ Reactivar</button>`
+      }
+    </div>
+  </div>`;
+}
+function toggleEditR(id){const el=document.getElementById('editR-'+id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
+function guardarEditR(id){
+  const r=DB.recibos.find(x=>x.id===id);if(!r)return;
+  const n=document.getElementById('rEN-'+id)?.value.trim();if(n)r.nombre=n;
+  const i=parseFloat(document.getElementById('rEI-'+id)?.value);if(!isNaN(i)&&i>=0)r.importe=i;
+  saveDB();renderRecibos();
+}
+function darDeBaja(id){
+  const r=DB.recibos.find(x=>x.id===id);if(!r)return;
+  r.finAnio=hoy.getFullYear();r.finMes=hoy.getMonth();
+  saveDB();renderRecibos();
+}
+function reactivarRecibo(id){
+  const r=DB.recibos.find(x=>x.id===id);if(!r)return;
+  delete r.finAnio;delete r.finMes;
+  saveDB();renderRecibos();
+}
+function addRecibo(){
+  const nombre=document.getElementById('rN').value.trim();
+  const importe=parseFloat(document.getElementById('rI').value);
+  const dia=parseInt(document.getElementById('rD').value)||1;
+  const tipo=document.getElementById('rT').value;
+  const frec=document.getElementById('rF').value;
+  const cuenta=document.getElementById('rC').value;
+  const notas=document.getElementById('rNt').value.trim();
+  const esF=document.getElementById('rEF').value==='si';
+  const msg=document.getElementById('rMsg');
+  if(!nombre||isNaN(importe)){msg.className='msg-err';msg.textContent='⚠ Nombre e importe obligatorios.';return;}
+  const r={id:Date.now(),nombre,importe,tipo,frec,cuenta,dia,notas};
+  if(frec==='quarterly')r.meses=[0,3,6,9];
+  if(frec==='annual'||frec==='once')r.mesAnual=hoy.getMonth();
+  if(frec==='once')r.anio=hoy.getFullYear();
+  if(esF&&tipo==='gasto'){
+    const k=mesKey(hoy.getFullYear(),hoy.getMonth());
+    if(!FACT[k])FACT[k]={checks:{},extras:[]};
+    FACT[k].extras.push({id:Date.now()+1,name:nombre,amt:importe,checked:false});
+    saveFact();
+  }
+  DB.recibos.push(r);saveDB();
+  msg.className='msg-ok';msg.textContent='✓ Guardado'+(esF&&tipo==='gasto'?' y añadido a Facturas':'');
+  setTimeout(()=>renderRecibos(),1500);
+}
+
+// ── INVERSIONES ──────────────────────────────────────────
+function renderInversiones(){
+  const p=DB.inversiones.pias,l=DB.inversiones.legado,a=DB.inversiones.axa;
+  const varE=(a.cierre-a.compra),varP=(varE/a.compra*100);
+  document.getElementById('s-inversiones').innerHTML=`
+    <div class="card bt-in">
+      <h3 class="h-in">PIAS</h3>
+      <div class="row"><div class="rn">Saldo actual</div><div class="ra c-in">${fmt(p.saldo)}</div></div>
+      <div class="row"><div class="rn">Disposiciones</div><div class="ra neg">−${fmt(p.disposiciones)}</div></div>
+      <div class="row"><div class="rn">Variación patrimonial</div><div class="ra pos">+${fmt(p.variacion)}</div></div>
+      <div class="row"><div class="rn">Referencia</div><div class="ra muted">${p.fecha}</div></div>
+      <div class="section-label">Actualizar</div>
+      <div class="fg">
+        <div class="fr"><label>Saldo (€)</label><input type="number" id="pS" value="${p.saldo}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Disposiciones (€)</label><input type="number" id="pD" value="${p.disposiciones}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Variación (€)</label><input type="number" id="pV" value="${p.variacion}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Fecha ref.</label><input type="text" id="pF" value="${p.fecha}" placeholder="dd/mm/aaaa"/></div>
+      </div>
+      <button class="btn btn-in" onclick="saveInv()">Guardar PIAS</button>
+      <div class="alert ai">Aportación: +50 €/mes · día 10 (BBVA)</div>
+    </div>
+    <div class="card bt-in">
+      <h3 class="h-in">Legado Activo AXA</h3>
+      <div class="row"><div class="rn">Acumulado total</div><div class="ra c-in">${fmt(l.acumulado)}</div></div>
+      <div class="row"><div class="rn">Disponible (rescate)</div><div class="ra c-in">${fmt(l.disponible)}</div></div>
+      <div class="row"><div class="rn">No disponible (decesos)</div><div class="ra muted">${fmt(Math.max(0,l.acumulado-l.disponible))}</div></div>
+      <div class="section-label">Actualizar</div>
+      <div class="fg">
+        <div class="fr"><label>Acumulado (€)</label><input type="number" id="lA" value="${l.acumulado}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Disponible (€)</label><input type="number" id="lD" value="${l.disponible}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Fecha ref.</label><input type="text" id="lF" value="${l.fecha}" placeholder="dd/mm/aaaa"/></div>
+      </div>
+      <button class="btn btn-in" onclick="saveLeg()">Guardar Legado</button>
+      <div class="alert ai">Aportación: +20 €/mes · día 30 (BBVA) · Incluye decesos</div>
+    </div>
+    <div class="card bt-in">
+      <h3 class="h-in">Acción AXA (CS.PA)</h3>
+      <div class="row"><div class="rn">Precio de compra</div><div class="ra c-in">${fmt(a.compra)}</div></div>
+      <div class="row"><div class="rn">Precio de cierre</div><div class="ra c-in">${fmt(a.cierre)}</div></div>
+      <div class="row"><div class="rn">Variación</div><div class="ra ${varE>=0?'pos':'neg'}">${varE>=0?'+':''}${varE.toFixed(2)} € (${varP>=0?'+':''}${varP.toFixed(2)}%)</div></div>
+      <div class="section-label">Actualizar precio de cierre</div>
+      <div class="fg">
+        <div class="fr"><label>Cierre (€)</label><input type="number" id="axC" value="${a.cierre}" step="0.01" inputmode="decimal"/></div>
+        <div class="fr"><label>Fecha</label><input type="text" id="axF" value="${a.fecha}" placeholder="dd/mm/aaaa"/></div>
+      </div>
+      <button class="btn btn-in" onclick="saveAxa()">Guardar AXA</button>
+      <div class="alert ${varE>=0?'ai':'aw'}">${varE>=0?'Ganancia':'Pérdida'} latente de ${Math.abs(varE).toFixed(2)} €.</div>
+    </div>
+    <div class="card bt-sa">
+      <h3 class="h-sa">Préstamo Santander</h3>
+      ${(()=>{const pagadas=calcCuotasPagadas();const amort=pagadas*DB.prestamo.cuota;const pct=Math.min(100,amort/DB.prestamo.capital*100);const restM=DB.prestamo.total-pagadas;return`
+        <div class="row"><div class="rn">Capital original</div><div class="ra c-sa">${fmt(DB.prestamo.capital)}</div></div>
+        <div class="row"><div class="rn">Cuota mensual</div><div class="ra c-sa">${fmt(DB.prestamo.cuota)}</div></div>
+        <div class="row"><div class="rn">Cuotas pagadas</div><div class="ra c-sa">${pagadas}/${DB.prestamo.total}</div></div>
+        <div class="row"><div class="rn">Amortizado est.</div><div class="ra c-sa">${fmt(amort)}</div></div>
+        <div class="row"><div class="rn">Cuotas restantes</div><div class="ra c-sa">${restM} · Fin Abr 2033</div></div>
+        <div class="bar-bg" style="height:8px;margin-top:8px;border-radius:4px"><div class="bar-fill" style="width:${pct.toFixed(1)}%;background:var(--san)"></div></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;text-align:right">${pct.toFixed(1)}% amortizado · Se actualiza el día 1 de cada mes</div>`;})()}
+    </div>`;
+}
+function saveInv(){
+  const s=parseFloat(document.getElementById('pS').value);
+  const d=parseFloat(document.getElementById('pD').value);
+  const v=parseFloat(document.getElementById('pV').value);
+  const f=document.getElementById('pF').value.trim();
+  if(!isNaN(s))DB.inversiones.pias.saldo=s;
+  if(!isNaN(d))DB.inversiones.pias.disposiciones=d;
+  if(!isNaN(v))DB.inversiones.pias.variacion=v;
+  if(f)DB.inversiones.pias.fecha=f;
+  saveDB();renderKPIs();renderInversiones();
+}
+function saveLeg(){
+  const a=parseFloat(document.getElementById('lA').value);
+  const d=parseFloat(document.getElementById('lD').value);
+  const f=document.getElementById('lF').value.trim();
+  if(!isNaN(a))DB.inversiones.legado.acumulado=a;
+  if(!isNaN(d))DB.inversiones.legado.disponible=d;
+  if(f)DB.inversiones.legado.fecha=f;
+  saveDB();renderKPIs();renderInversiones();
+}
+function saveAxa(){
+  const c=parseFloat(document.getElementById('axC').value);
+  const f=document.getElementById('axF').value.trim();
+  if(!isNaN(c))DB.inversiones.axa.cierre=c;
+  if(f)DB.inversiones.axa.fecha=f;
+  saveDB();renderKPIs();renderInversiones();
+}
+
+// ── OBJETIVOS ────────────────────────────────────────────
+function renderObjetivos(){
+  const saldoTR=DB.saldos.tr?.val||0;
+  const totalMeta=DB.objetivos.reduce((s,o)=>s+o.meta,0);
+  let html=DB.objetivos.map(o=>{
+    const pct=o.meta>0?Math.min(100,Math.round(o.ahorrado/o.meta*100)):0;
+    const faltan=Math.max(0,o.meta-o.ahorrado);
+    const dias=diasRestantes(o.fecha);
+    let cdCls='cd-none',cdTxt='Sin fecha';
+    if(dias!==null){if(dias<0){cdTxt='Vencido';cdCls='cd-urgent';}else if(dias<=30){cdTxt=`${dias}d`;cdCls='cd-urgent';}else if(dias<=90){cdTxt=`${dias}d`;cdCls='cd-soon';}else{cdTxt=`${dias}d`;cdCls='cd-ok';}}
+    return `<div class="obj-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div><div style="font-size:15px;font-weight:800">${o.nombre}</div><div style="font-size:11px;color:var(--text3);margin-top:2px">${o.fecha?new Date(o.fecha).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'Sin fecha'}</div></div>
+        <div style="text-align:right"><div class="countdown ${cdCls}">${cdTxt}</div><div style="font-size:10px;color:var(--text3)">restantes</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+        <span>Ahorrado: <strong>${fmt(o.ahorrado)}</strong></span><span>Meta: <strong>${fmt(o.meta)}</strong></span><span class="neg">Faltan: <strong>${fmt(faltan)}</strong></span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:var(--tr)"></div></div>
+      <div style="font-size:10px;color:var(--text3);text-align:right;margin-top:2px">${pct}%${dias&&dias>0&&faltan>0?' · ~'+fmt(faltan/dias)+'/día':''}</div>
+      <button class="btn-sm" style="margin-top:10px;width:100%" onclick="toggleEditO(${o.id})">✏️ Editar</button>
+      <div id="editO-${o.id}" class="edit-panel">
+        <div class="fg">
+          <div class="fr"><label>Nombre</label><input type="text" id="oN-${o.id}" value="${o.nombre}"/></div>
+          <div class="fr"><label>Meta (€)</label><input type="number" id="oM-${o.id}" value="${o.meta}" step="0.01" inputmode="decimal"/></div>
+          <div class="fr"><label>Ahorrado (€)</label><input type="number" id="oA-${o.id}" value="${o.ahorrado}" step="0.01" inputmode="decimal"/></div>
+          <div class="fr"><label>Fecha límite</label><input type="date" id="oF-${o.id}" value="${o.fecha||''}"/></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-in" style="flex:1" onclick="guardarEditO(${o.id})">✓ Guardar</button>
+          <button class="btn" style="flex:1;background:#FCEBEB;color:#791F1F" onclick="delObjetivo(${o.id})">✕ Eliminar</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  html+=`<div class="card" style="border:2px dashed var(--border)">
+    <h3 class="h-m">+ Nuevo objetivo</h3>
+    <div class="fg">
+      <div class="fr"><label>Nombre</label><input type="text" id="oNN" placeholder="Ej: Viaje Roma"/></div>
+      <div class="fr"><label>Meta (€)</label><input type="number" id="oNM" step="0.01" inputmode="decimal" placeholder="0.00"/></div>
+      <div class="fr"><label>Ahorrado (€)</label><input type="number" id="oNA" step="0.01" inputmode="decimal" placeholder="0"/></div>
+      <div class="fr"><label>Fecha límite</label><input type="date" id="oNF"/></div>
+    </div>
+    <button class="btn btn-tr" onclick="addObjetivo()">Guardar objetivo</button>
+  </div>
+  <div class="card">
+    <div class="row"><div class="rn">Total objetivos</div><div class="ra c-tr">${fmt(totalMeta)}</div></div>
+    <div class="row"><div class="rn">Saldo Trade Republic</div><div class="ra c-in">${fmt(saldoTR)}</div></div>
+    <div class="row" style="background:#EBEBEB;border-radius:8px;padding:9px"><div class="rn" style="font-weight:700">Déficit total</div><div class="ra neg">${fmt(Math.max(0,totalMeta-saldoTR))}</div></div>
+  </div>`;
+  document.getElementById('s-objetivos').innerHTML=html;
+}
+function toggleEditO(id){const el=document.getElementById('editO-'+id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
+function guardarEditO(id){
+  const o=DB.objetivos.find(x=>x.id===id);if(!o)return;
+  const n=document.getElementById('oN-'+id)?.value.trim();if(n)o.nombre=n;
+  const m=parseFloat(document.getElementById('oM-'+id)?.value);if(!isNaN(m))o.meta=m;
+  const a=parseFloat(document.getElementById('oA-'+id)?.value);if(!isNaN(a))o.ahorrado=a;
+  const f=document.getElementById('oF-'+id)?.value;if(f!==undefined)o.fecha=f;
+  saveDB();renderObjetivos();
+}
+function delObjetivo(id){if(!confirm('¿Eliminar objetivo?'))return;DB.objetivos=DB.objetivos.filter(x=>x.id!==id);saveDB();renderObjetivos();}
+function addObjetivo(){
+  const nombre=document.getElementById('oNN').value.trim();
+  const meta=parseFloat(document.getElementById('oNM').value);
+  const ahorrado=parseFloat(document.getElementById('oNA').value)||0;
+  const fecha=document.getElementById('oNF').value;
+  if(!nombre||isNaN(meta))return;
+  DB.objetivos.push({id:Date.now(),nombre,meta,ahorrado,fecha});
+  saveDB();renderObjetivos();
+}
+
+// ── CALENDARIO ───────────────────────────────────────────
+let curYear=hoy.getFullYear(),curMonth=hoy.getMonth();
+function renderCalendario(){
+  document.getElementById('s-calendario').innerHTML=`
+    <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center">
+      <button class="btn-sm" onclick="changeMes(-1)">← Ant.</button>
+      <span id="calTitle" style="flex:1;text-align:center;font-size:15px;font-weight:700"></span>
+      <button class="btn-sm" onclick="changeMes(1)">Sig. →</button>
+    </div>
+    <div class="totbar">
+      <div class="totbox"><div class="tl">Total BBVA</div><div class="tv c-bb" id="tTotal">—</div></div>
+      <div class="totbox"><div class="tl">Pagado</div><div class="tv pos" id="tPaid">—</div></div>
+      <div class="totbox"><div class="tl">Pendiente</div><div class="tv neg" id="tPend">—</div></div>
+    </div>
+    <div class="card" style="padding:10px">
+      <div class="cal-grid"><div class="ch">L</div><div class="ch">M</div><div class="ch">X</div><div class="ch">J</div><div class="ch">V</div><div class="ch">S</div><div class="ch">D</div></div>
+      <div class="cal-grid" id="calDays"></div>
+    </div>
+    <div class="card" id="calList"></div>`;
+  renderCal();
+}
+function changeMes(d){curMonth+=d;if(curMonth>11){curMonth=0;curYear++;}if(curMonth<0){curMonth=11;curYear--;}renderCal();}
+function renderCal(){
+  if(!document.getElementById('calTitle'))return;
+  document.getElementById('calTitle').textContent=mesesC[curMonth]+' '+curYear;
+  const bills=getBBVABills(curYear,curMonth);
+  const byDay={};bills.forEach(b=>{if(!byDay[b.dia])byDay[b.dia]=[];byDay[b.dia].push(b);});
+  let total=0,paid=0,pending=0;
+  bills.forEach(b=>{total+=b.importe;if(isPast(b.dia,curYear,curMonth))paid+=b.importe;else pending+=b.importe;});
+  document.getElementById('tTotal').textContent=fmt(total);
+  document.getElementById('tPaid').textContent=fmt(paid);
+  document.getElementById('tPend').textContent=fmt(pending);
+  const firstDay=new Date(curYear,curMonth,1).getDay();
+  const offset=firstDay===0?6:firstDay-1;
+  const daysInM=new Date(curYear,curMonth+1,0).getDate();
+  let html='';
+  for(let i=0;i<offset;i++)html+=`<div class="cd empty">·</div>`;
+  for(let d=1;d<=daysInM;d++){
+    const hb=byDay[d];const isToday=hoy.getFullYear()===curYear&&hoy.getMonth()===curMonth&&d===hoy.getDate();
+    const past=isPast(d,curYear,curMonth);
+    html+=`<div class="cd${hb?(past?' paid':' bill'):''}${isToday?' today':''}">${d}</div>`;
+  }
+  document.getElementById('calDays').innerHTML=html;
+  let lh=`<h3 class="h-bb" style="margin-bottom:10px">BBVA ${mesesC[curMonth]} · Pendiente: <span class="neg">${fmt(pending)}</span></h3>`;
+  bills.forEach(b=>{const past=isPast(b.dia,curYear,curMonth);lh+=`<div class="row"><div style="font-size:10px;color:var(--text3);width:26px;flex-shrink:0">d.${b.dia}</div><div class="rn">${b.nombre}</div><span class="badge ${past?'bd':'bp'}">${past?'✓':'⏳'}</span><div class="ra ${past?'muted':'c-bb'}">${past?'':'-'}${fmt(b.importe)}</div></div>`;});
+  lh+=`<div class="row" style="background:#EAF2FC;border-radius:8px;padding:9px;margin-top:4px"><div class="rn" style="font-weight:700">Total BBVA ${mesesC[curMonth]}</div><div class="ra c-bb">−${fmt(total)}</div></div>`;
+  document.getElementById('calList').innerHTML=lh;
+}
+
+// ── FACTURAS ─────────────────────────────────────────────
+const FIJAS=[
+  {id:'aje',name:'AJE',amt:48,frec:'quarterly',meses:[0,3,6,9]},
+  {id:'neting',name:'Neting',amt:48.39,frec:'monthly'},
+  {id:'google',name:'Google ONE',amt:2.99,frec:'monthly'},
+  {id:'appwb',name:'App WB',amt:3.09,frec:'monthly'},
+  {id:'arrabal',name:'Arrabal & Díaz',amt:60,frec:'quarterly',meses:[1,4,7,10]},
+  {id:'alquiler',name:'Alquiler',amt:540,frec:'monthly'},
+  {id:'ssalud',name:'Seguro de salud',amt:74.90,frec:'monthly'},
+  {id:'shogar',name:'Seguro de hogar',amt:78.26,frec:'annual',mes:1},
+  {id:'regular',name:'Regularización autónomo',amt:178.08,frec:'special',check:(y,m)=>y===2026&&[3,4,5].includes(m)},
+];
+function factAplica(f,y,m){if(f.frec==='monthly')return true;if(f.frec==='quarterly')return f.meses.includes(m);if(f.frec==='annual')return f.mes===m;if(f.frec==='special')return f.check(y,m);return false;}
+function tagFact(f){if(f.frec==='monthly')return['Mensual','ftr'];if(f.frec==='quarterly')return['Trimestral','ftt'];if(f.frec==='annual')return['Anual','fta'];return['Especial','fte'];}
+let factY=hoy.getFullYear(),factM=hoy.getMonth();
+function getFactMes(y,m){const k=mesKey(y,m);if(!FACT[k])FACT[k]={checks:{},extras:[]};return FACT[k];}
+function renderFacturas(){
+  const e=getFactMes(factY,factM);
+  const disp=FIJAS.filter(f=>factAplica(f,factY,factM));
+  const noDisp=FIJAS.filter(f=>!factAplica(f,factY,factM));
+  const totalF=disp.length+e.extras.length;
+  const okF=disp.filter(f=>e.checks[f.id]).length+e.extras.filter(x=>x.checked).length;
+  const pct=totalF?Math.round(okF/totalF*100):0;
+  let html=`
+    <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center">
+      <button class="btn-sm" onclick="changeFactMes(-1)">← Ant.</button>
+      <span style="flex:1;text-align:center;font-size:15px;font-weight:700">${mesesC[factM]} ${factY}</span>
+      <button class="btn-sm" onclick="changeFactMes(1)">Sig. →</button>
+    </div>
+    <div class="totbar">
+      <div class="totbox"><div class="tl">Total</div><div class="tv">${totalF}</div></div>
+      <div class="totbox"><div class="tl">Guardadas ✓</div><div class="tv pos">${okF}</div></div>
+      <div class="totbox"><div class="tl">Pendientes</div><div class="tv" style="color:#E65100">${totalF-okF}</div></div>
+    </div>
+    <div class="prog-bar" style="height:10px;margin-bottom:4px"><div class="prog-fill" style="width:${pct}%"></div></div>
+    <div style="font-size:11px;color:var(--text3);text-align:right;margin-bottom:10px">${okF} de ${totalF} guardadas (${pct}%)</div>`;
+  disp.forEach(f=>{
+    const chk=!!e.checks[f.id];const[tl,tc]=tagFact(f);
+    html+=`<div class="fi${chk?' chk':''}" onclick="toggleFact('${f.id}')">
+      <div class="cc">${chk?'✓':''}</div>
+      <div class="fb"><div class="fn">${f.name}<span class="ftag ${tc}">${tl}</span></div><div class="fm">${chk?'✓ Guardada en carpeta':'Pendiente de guardar'}</div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--text2)">${fmt(f.amt)}</div>
+    </div>`;
+  });
+  if(noDisp.length){
+    html+=`<div class="section-label">No aplican este mes</div>`;
+    noDisp.forEach(f=>{const[tl,tc]=tagFact(f);html+=`<div class="fi nap"><div class="cc"></div><div class="fb"><div class="fn">${f.name}<span class="ftag ${tc}">${tl}</span></div></div><div style="font-size:12px;color:var(--text3)">${fmt(f.amt)}</div></div>`;});
+  }
+  html+=`<div class="section-label">Gastos extra (cenas, reuniones…)</div>`;
+  e.extras.forEach(x=>{html+=`<div class="fi${x.checked?' chk':''}" onclick="toggleExtra(${x.id})"><div class="cc">${x.checked?'✓':''}</div><div class="fb"><div class="fn">${x.name}<span class="ftag fte">Extra</span></div><div class="fm">${x.checked?'✓ Guardada':'Pendiente'}</div></div><div style="font-size:13px;font-weight:700;color:var(--text2)">${fmt(x.amt)}</div></div>`;});
+  html+=`<div style="display:flex;gap:8px;margin-top:10px">
+    <input type="text" id="eC" placeholder="Concepto extra" style="flex:1;padding:10px;font-size:13px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--text)"/>
+    <input type="number" id="eI" placeholder="€" inputmode="decimal" style="width:70px;padding:10px;font-size:13px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--text)"/>
+    <button class="btn btn-bb" style="width:auto;padding:10px 14px" onclick="addExtra()">+</button>
+  </div>
+  <button class="btn-sm" style="width:100%;margin-top:10px;color:#A32D2D" onclick="resetFactMes()">↺ Reiniciar mes</button>`;
+  document.getElementById('s-facturas').innerHTML=html;
+}
+function changeFactMes(d){factM+=d;if(factM>11){factM=0;factY++;}if(factM<0){factM=11;factY--;}renderFacturas();}
+function resetFactMes(){if(!confirm(`¿Reiniciar ${mesesC[factM]} ${factY}?`))return;const k=mesKey(factY,factM);if(FACT[k]){FACT[k].checks={};FACT[k].extras=[];}saveFact();renderFacturas();}
+function toggleFact(id){const e=getFactMes(factY,factM);e.checks[id]=!e.checks[id];saveFact();renderFacturas();}
+function toggleExtra(id){const e=getFactMes(factY,factM);const x=e.extras.find(x=>x.id===id);if(x){x.checked=!x.checked;saveFact();renderFacturas();}}
+function addExtra(){
+  const c=document.getElementById('eC').value.trim();
+  const i=parseFloat(document.getElementById('eI').value);
+  if(!c)return;
+  const e=getFactMes(factY,factM);
+  e.extras.push({id:Date.now(),name:c,amt:isNaN(i)?null:i,checked:false});
+  saveFact();renderFacturas();
+}
+
+const renders={
+  resumen:renderResumen,cuentas:renderCuentas,recibos:renderRecibos,
+  inversiones:renderInversiones,objetivos:renderObjetivos,
+  calendario:renderCalendario,facturas:renderFacturas
+};
+
+// INIT
+loadDB();loadFact();renderResumen();
+</script>
+</body>
+</html>
