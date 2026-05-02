@@ -182,9 +182,29 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 /* BACKUP BAR — pointer-events:none on container so it doesn't block clicks behind it */
 .bkbar{position:fixed;top:0;right:0;z-index:300;padding:10px 13px;display:flex;gap:8px;pointer-events:none}
 .bkbtn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:100px;font-size:11px;font-weight:700;cursor:pointer;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border:1px solid var(--blue-m);color:var(--blue);font-family:inherit;box-shadow:var(--sh);pointer-events:all}
+
+/* LOADER */
+.loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;transition:opacity .3s}
+.loader.hidden{opacity:0;pointer-events:none}
+.loader-spin{width:36px;height:36px;border:3px solid var(--brd);border-top-color:var(--blue);border-radius:50%;animation:spin 1s linear infinite}
+.loader-txt{font-size:13px;font-weight:600;color:var(--t2)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SYNC INDICATOR */
+.sync-dot{position:fixed;bottom:84px;right:14px;width:8px;height:8px;border-radius:50%;background:var(--green);z-index:200;opacity:0;transition:opacity .4s}
+.sync-dot.saving{opacity:1;background:var(--amber);animation:pulse 1s ease infinite}
+.sync-dot.saved{opacity:1;background:var(--green)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 </style>
 </head>
 <body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-spin"></div>
+  <div class="loader-txt">Cargando tus datos…</div>
+</div>
+<div class="sync-dot" id="syncDot"></div>
 
 <!-- BACKUP BAR -->
 <div class="bkbar">
@@ -329,11 +349,78 @@ function defaultDB(){return{_v:9,
   prestamo:{cuota:109.94,total:84,capital:7000}
 };}
 
-let DB=defaultDB();let FACT={};
-function loadDB(){try{const r=localStorage.getItem(SK);if(r){const t=JSON.parse(r);if(t._v>=9)DB=t;}}catch(e){}}
-function saveDB(){try{localStorage.setItem(SK,JSON.stringify(DB));}catch(e){}}
-function loadFact(){try{const r=localStorage.getItem(SK_FACT);if(r)FACT=JSON.parse(r);}catch(e){}}
-function saveFact(){try{localStorage.setItem(SK_FACT,JSON.stringify(FACT));}catch(e){}}
+// ════════════════════════════════════════
+// SUPABASE CONFIG
+// ════════════════════════════════════════
+const SB_URL='https://pfbpsnfdsukydpquucgf.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmYnBzbmZkc3VreWRwcXV1Y2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MDg1NDYsImV4cCI6MjA5MjM4NDU0Nn0.mz81M0k4buO1Ey5Mv5V0lRM9_rA2jBxBWH-W6JKJGn8';
+const SB_TABLE='finanzas_personal';
+
+function showSync(state){
+  const d=document.getElementById('syncDot');
+  if(!d)return;
+  d.className='sync-dot '+state;
+  if(state==='saved')setTimeout(()=>{d.className='sync-dot';},2000);
+}
+
+async function loadAll(){
+  // Intenta Supabase primero
+  try{
+    const res=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?id=eq.main&select=*`,{
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}
+    });
+    if(res.ok){
+      const rows=await res.json();
+      if(rows&&rows.length>0){
+        const row=rows[0];
+        if(row.db_data&&row.db_data._v>=9)DB=row.db_data;
+        if(row.fact_data&&Object.keys(row.fact_data).length>0)FACT=row.fact_data;
+        saveLocal(); // actualiza caché local
+        return;
+      }
+    }
+  }catch(e){console.warn('Supabase load error:',e);}
+  // Fallback: localStorage
+  try{
+    const r=localStorage.getItem(SK);
+    if(r){const t=JSON.parse(r);if(t._v>=9)DB=t;}
+    const f=localStorage.getItem(SK_FACT);
+    if(f)FACT=JSON.parse(f);
+  }catch(e){}
+}
+
+function saveLocal(){
+  try{localStorage.setItem(SK,JSON.stringify(DB));}catch(e){}
+  try{localStorage.setItem(SK_FACT,JSON.stringify(FACT));}catch(e){}
+}
+
+async function saveCloud(){
+  showSync('saving');
+  try{
+    const res=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}`,{
+      method:'POST',
+      headers:{
+        'apikey':SB_KEY,
+        'Authorization':`Bearer ${SB_KEY}`,
+        'Content-Type':'application/json',
+        'Prefer':'resolution=merge-duplicates'
+      },
+      body:JSON.stringify({
+        id:'main',
+        db_data:DB,
+        fact_data:FACT,
+        updated_at:new Date().toISOString()
+      })
+    });
+    if(res.ok)showSync('saved');
+    else showSync('');
+  }catch(e){console.warn('Supabase save error:',e);showSync('');}
+}
+
+function saveDB(){saveLocal();saveCloud();}
+function saveFact(){saveLocal();saveCloud();}
+function loadDB(){}  // legacy — no usado, loadAll() lo sustituye
+function loadFact(){} // legacy — no usado
 
 // ════════════════════════════════════════
 // TOP HEADER
@@ -825,14 +912,21 @@ function addExtra(){const c=document.getElementById('eC').value.trim(),i=parseFl
 // ════════════════════════════════════════
 // BACKUP
 // ════════════════════════════════════════
-function exportarDatos(){const b={db:DB,fact:FACT,exportado:new Date().toISOString()};const blob=new Blob([JSON.stringify(b,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`finanzas-${new Date().toLocaleDateString('es-ES').replace(/\//g,'-')}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);alert('✓ Backup exportado. Guárdalo en Google Drive.');}
-function importarDatos(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const b=JSON.parse(e.target.result);if(!b.db||!b.db._v){alert('⚠ Archivo no válido.');return;}if(!confirm(`¿Restaurar backup del ${new Date(b.exportado).toLocaleDateString('es-ES')}?`))return;DB=b.db;FACT=b.fact||{};saveDB();saveFact();renderResumen();alert('✓ Restaurado.');}catch(e){alert('⚠ Error.');}};reader.readAsText(file);event.target.value='';}
+function exportarDatos(){const b={db:DB,fact:FACT,exportado:new Date().toISOString()};const blob=new Blob([JSON.stringify(b,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`finanzas-${new Date().toLocaleDateString('es-ES').replace(/\//g,'-')}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);alert('✓ Backup exportado.');}
+function importarDatos(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const b=JSON.parse(e.target.result);if(!b.db||!b.db._v){alert('⚠ Archivo no válido.');return;}if(!confirm(`¿Restaurar backup del ${new Date(b.exportado).toLocaleDateString('es-ES')}?`))return;DB=b.db;FACT=b.fact||{};saveDB();renderResumen();alert('✓ Restaurado y guardado en la nube.');}catch(e){alert('⚠ Error.');}};reader.readAsText(file);event.target.value='';}
 
 // ════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════
 const renders={resumen:renderResumen,cuentas:renderCuentas,movimientos:renderMovimientos,inversiones:renderInversiones,objetivos:renderObjetivos,calendario:renderCalendario,facturas:renderFacturas};
-loadDB();loadFact();renderResumen();
+
+async function init(){
+  await loadAll();
+  const loader=document.getElementById('loader');
+  if(loader)loader.classList.add('hidden');
+  renderResumen();
+}
+init();
 </script>
 </body>
 </html>
