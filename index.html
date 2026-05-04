@@ -349,6 +349,9 @@ function defaultDB(){return{_v:9,
   prestamo:{cuota:109.94,total:84,capital:7000}
 };}
 
+let DB=defaultDB();
+let FACT={};
+
 // ════════════════════════════════════════
 // SUPABASE CONFIG
 // ════════════════════════════════════════
@@ -367,7 +370,11 @@ async function loadAll(){
   // Intenta Supabase primero
   try{
     const res=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?id=eq.main&select=*`,{
-      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}
+      headers:{
+        'apikey':SB_KEY,
+        'Authorization':`Bearer ${SB_KEY}`,
+        'Content-Type':'application/json'
+      }
     });
     if(res.ok){
       const rows=await res.json();
@@ -375,7 +382,7 @@ async function loadAll(){
         const row=rows[0];
         if(row.db_data&&row.db_data._v>=9)DB=row.db_data;
         if(row.fact_data&&Object.keys(row.fact_data).length>0)FACT=row.fact_data;
-        saveLocal(); // actualiza caché local
+        saveLocal();
         return;
       }
     }
@@ -921,9 +928,9 @@ function importarDatos(event){const file=event.target.files[0];if(!file)return;c
 const renders={resumen:renderResumen,cuentas:renderCuentas,movimientos:renderMovimientos,inversiones:renderInversiones,objetivos:renderObjetivos,calendario:renderCalendario,facturas:renderFacturas};
 
 async function init(){
-  await loadAll();
+  try{ await loadAll(); }catch(e){ console.warn('Load failed, using defaults:', e); }
   const loader=document.getElementById('loader');
-  if(loader)loader.classList.add('hidden');
+  if(loader){ loader.style.opacity='0'; setTimeout(()=>loader.style.display='none', 350); }
   renderResumen();
 }
 init();
