@@ -3,70 +3,43 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>Finanzas</title>
+<title>Mis Finanzas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F0F4FB;--surf:#FFFFFF;--card:#FFFFFF;--card2:#F7F9FE;
+  --bg:#F0F4FB;--surf:#FFF;--card:#FFF;--card2:#F7F9FE;
   --brd:#E4EAF4;--brd2:#EEF2FA;
   --blue:#4A7BE8;--blue-l:#EBF1FD;--blue-m:#C5D6FA;
   --green:#2BAA82;--green-l:#E6F7F2;--green-m:#A8DFD0;
   --red:#E0595A;--red-l:#FDEAEA;--red-m:#F5BBBB;
   --amber:#C87D12;--amber-l:#FDF4E3;--amber-m:#F5D8A0;
-  /* Trade Republic + PIAS + Legado + AXA + IVA */
   --tr:#6E7EC0;--tr-l:#ECEFFE;--tr-m:#C4CAE8;
   --tx:#1A1F36;--t2:#6B7399;--t3:#B0B8D4;
   --r:18px;--rs:12px;
-  --sh:0 2px 12px rgba(100,120,200,.08);--sh2:0 4px 24px rgba(100,120,200,.12);
+  --sh:0 2px 12px rgba(100,120,200,.08);
   --num:'Outfit',sans-serif;
 }
-body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;padding-bottom:96px;min-height:100vh}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;padding-bottom:90px;min-height:100vh}
 .num{font-family:var(--num)}
 
 /* SECTIONS */
-.sec{display:none;padding:14px 15px 8px;animation:fi .22s ease}
+.sec{display:none;padding:14px 15px 8px;animation:fi .2s ease}
 .sec.active{display:block}
-@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* HERO */
-.hero{background:linear-gradient(160deg,#C8D8F8 0%,#D8E8F8 40%,#E0F0EC 100%);padding:50px 22px 24px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(160deg,#C8D8F8 0%,#D8E8F8 40%,#E0F0EC 100%);padding:50px 22px 22px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-60px;right:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.35)}
 .hero::after{content:'';position:absolute;bottom:-50px;left:-20px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.2)}
 .hero-inner{position:relative;z-index:1}
 .hero-label{font-size:11px;font-weight:700;color:rgba(74,123,232,.75);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
-.hero-total{font-family:var(--num);font-size:46px;font-weight:700;color:var(--tx);letter-spacing:-.5px;line-height:1;margin-bottom:4px}
+.hero-total{font-family:var(--num);font-size:44px;font-weight:700;color:var(--tx);letter-spacing:-.5px;line-height:1;margin-bottom:4px}
 .hero-date{font-size:11px;color:rgba(74,123,232,.6);margin-top:6px;font-weight:500}
 
-/* ACCOUNT STRIP */
-.accts-wrap{display:flex;gap:10px;overflow-x:auto;padding:16px 15px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.accts-wrap::-webkit-scrollbar{display:none}
-.acct-card{flex-shrink:0;width:148px;border-radius:16px;padding:15px;position:relative;overflow:hidden}
-.acct-card::after{content:'';position:absolute;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.15);top:-25px;right:-25px}
-.acct-lbl{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;opacity:.75;margin-bottom:10px}
-.acct-val{font-family:var(--num);font-size:22px;font-weight:700;line-height:1;margin-bottom:4px;position:relative;z-index:1}
-.acct-date{font-size:10px;opacity:.5}
-.acct-bb{background:linear-gradient(135deg,#5B8EF0,#82AEFF);color:#fff}
-.acct-sa{background:linear-gradient(135deg,#E07585,#F5A0AC);color:#fff}
-.acct-tr{background:linear-gradient(135deg,#7E8FC4,#A0AFDC);color:#fff}
-
-/* INV STRIP — hidden on resumen (info now in section) */
-.inv-strip{display:flex;gap:8px;overflow-x:auto;padding:4px 15px 14px;scrollbar-width:none}
-.inv-strip::-webkit-scrollbar{display:none}
-.inv-pill{flex-shrink:0;display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:100px;background:var(--surf);border:1px solid var(--brd);box-shadow:var(--sh)}
-.inv-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.inv-lbl{font-size:11px;color:var(--t2);font-weight:600}
-.inv-val{font-family:var(--num);font-size:13px;font-weight:600}
-
-/* ALERT BANNER */
-.alert-wrap{padding:0 15px 10px}
-.alert-banner{padding:12px 14px;border-radius:14px;background:var(--amber-l);border:1px solid var(--amber-m);display:flex;align-items:flex-start;gap:10px}
-.alert-title{font-size:12px;font-weight:800;color:var(--amber);margin-bottom:3px}
-.alert-txt{font-size:11px;font-weight:600;color:var(--amber);opacity:.85;line-height:1.4}
-
-/* BOTTOM NAV */
+/* NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(24px);border-top:1px solid var(--brd);display:flex;padding:10px 2px calc(10px + env(safe-area-inset-bottom));z-index:100;box-shadow:0 -4px 20px rgba(100,120,200,.08)}
 .nb{flex:1;padding:3px 2px;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;font-family:inherit}
 .ni-wrap{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;transition:.18s}
@@ -80,12 +53,12 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .card{background:var(--surf);border-radius:var(--r);padding:16px;margin-bottom:12px;border:1px solid var(--brd2);box-shadow:var(--sh)}
 .card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
 .card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t2)}
-.page-title{font-size:22px;font-weight:800;letter-spacing:-.4px;margin-bottom:15px;color:var(--tx)}
+.page-title{font-size:22px;font-weight:800;letter-spacing:-.4px;margin-bottom:15px}
 
-/* LIST ITEMS */
-.li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--brd2)}
+/* LIST */
+.li{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--brd2)}
 .li:last-child{border-bottom:none}
-.li-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800}
+.li-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:800}
 .li-body{flex:1;min-width:0}
 .li-title{font-size:13px;font-weight:600;color:var(--tx)}
 .li-sub{font-size:11px;color:var(--t2);margin-top:2px}
@@ -95,26 +68,19 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 /* FORMS */
 .fr{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
 .fr label{font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.04em}
-.fr input,.fr select{padding:11px 13px;font-size:14px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);width:100%;font-family:inherit;-webkit-appearance:none;transition:.2s}
+.fr input,.fr select,.fr textarea{padding:11px 13px;font-size:14px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);width:100%;font-family:inherit;-webkit-appearance:none;transition:.2s}
 .fr input:focus,.fr select:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(74,123,232,.1)}
 .fg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
-/* TYPE PILLS (movimientos) */
-.type-pills{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-bottom:15px;padding-bottom:2px}
-.type-pills::-webkit-scrollbar{display:none}
-.tp{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:100px;border:1.5px solid var(--brd);background:var(--surf);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--t2);transition:.15s;box-shadow:var(--sh)}
-.tp.on{border-color:var(--blue);background:var(--blue-l);color:var(--blue)}
-.tp svg{stroke:var(--t2);transition:.15s}
-.tp.on svg{stroke:var(--blue)}
-
 /* BUTTONS */
-.btn{width:100%;padding:14px;border-radius:var(--rs);border:none;font-size:14px;font-weight:700;cursor:pointer;color:#fff;font-family:inherit;transition:.15s}
-.btn:active{transform:scale(.98);opacity:.9}
-.btn-blue{background:var(--blue)}.btn-red{background:var(--red)}.btn-green{background:var(--green)}.btn-amber{background:var(--amber)}.btn-tr{background:var(--tr)}
+.btn{width:100%;padding:13px;border-radius:var(--rs);border:none;font-size:14px;font-weight:700;cursor:pointer;color:#fff;font-family:inherit;transition:.15s}
+.btn:active{transform:scale(.98)}
+.btn-blue{background:var(--blue)}.btn-red{background:var(--red)}.btn-green{background:var(--green)}
+.btn-amber{background:var(--amber)}.btn-tr{background:var(--tr)}
 .btn-dark{background:var(--card2);border:1.5px solid var(--brd);color:var(--tx)}
-.btn-ghost{padding:10px 15px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--surf);color:var(--t2);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:var(--sh)}
-.btn-pagado{padding:6px 12px;border-radius:8px;border:1.5px solid var(--green-m);background:var(--green-l);color:var(--green);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.15s}
-.btn-pagado:active{opacity:.7}
+.btn-ghost{padding:9px 14px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--surf);color:var(--t2);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-sm{padding:5px 11px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:#fff}
+.btn-pagado{padding:6px 12px;border-radius:8px;border:1.5px solid var(--green-m);background:var(--green-l);color:var(--green);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
 
 /* TAGS */
 .tag{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px}
@@ -130,96 +96,100 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
 .pf-red{background:linear-gradient(90deg,#E0595A,#F5A0A0)}
 .pf-tr{background:linear-gradient(90deg,#6E7EC0,#9CAAE0)}
 
-/* P&L BOXES */
+/* P&L BOX */
 .pnl-box{border-radius:var(--rs);padding:14px 16px;margin-bottom:12px;border:1px solid transparent}
 .pnl-pos{background:var(--green-l);border-color:var(--green-m)}
 .pnl-neg{background:var(--red-l);border-color:var(--red-m)}
-.pnl-tr{background:var(--tr-l);border-color:var(--tr-m)}
 .pnl-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.pnl-val{font-family:var(--num);font-size:28px;font-weight:700;letter-spacing:-.3px;line-height:1.1}
+.pnl-val{font-family:var(--num);font-size:26px;font-weight:700;letter-spacing:-.3px}
 .pnl-sub{font-size:11px;margin-top:4px;font-weight:600}
 
 /* MISC */
-.ep{background:var(--card2);border-radius:var(--rs);padding:13px;margin-top:10px;display:none;border:1px solid var(--brd)}
+.ep{background:var(--card2);border-radius:var(--rs);padding:13px;margin-top:10px;display:none;border:1px solid var(--brd2)}
 .divlabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin:13px 0 8px}
 .msg-ok{font-size:13px;font-weight:700;color:var(--green);padding:12px;background:var(--green-l);border-radius:var(--rs);margin-top:10px;text-align:center;border:1px solid var(--green-m)}
 .msg-err{font-size:13px;font-weight:700;color:var(--red);padding:12px;background:var(--red-l);border-radius:var(--rs);margin-top:10px;text-align:center}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat-box{background:var(--surf);border-radius:14px;padding:14px;border:1px solid var(--brd2);box-shadow:var(--sh)}
+.stat-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t2);margin-bottom:6px}
+.stat-val{font-family:var(--num);font-size:22px;font-weight:700}
+.stat-sub{font-size:11px;color:var(--t2);margin-top:3px}
+.baja{opacity:.35}
 
-/* STATS ROW */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:13px}
-.stat-box{background:var(--surf);border-radius:13px;padding:12px;text-align:center;border:1px solid var(--brd2);box-shadow:var(--sh)}
-.stat-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t2);margin-bottom:5px}
-.stat-val{font-family:var(--num);font-size:15px;font-weight:700}
+/* HABITUALES CHECK */
+.hab-item{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--brd2);cursor:pointer;user-select:none}
+.hab-item:last-child{border-bottom:none}
+.hab-chk{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--brd);flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;transition:.18s}
+.hab-item.on .hab-chk{background:var(--green);border-color:var(--green)}
+.hab-body{flex:1}
+.hab-name{font-size:13px;font-weight:600;color:var(--tx)}
+.hab-item.on .hab-name{color:var(--t2)}
+.hab-amt{font-family:var(--num);font-size:13px;font-weight:600;color:var(--t2)}
 
-/* CALENDAR */
+/* CALENDAR STRIP */
 .cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:8px}
-.ch{font-size:9px;text-align:center;font-weight:700;color:var(--t3);padding:4px;letter-spacing:.05em}
-.cd{font-family:var(--num);font-size:13px;font-weight:500;text-align:center;padding:8px 2px;border-radius:8px;color:var(--t2)}
+.ch{font-size:9px;text-align:center;font-weight:700;color:var(--t3);padding:4px}
+.cd{font-family:var(--num);font-size:12px;font-weight:500;text-align:center;padding:7px 2px;border-radius:8px;color:var(--t2)}
 .cd.bill{background:var(--blue-l);color:var(--blue);font-weight:700}
+.cd.bill-san{background:var(--red-l);color:var(--red);font-weight:700}
 .cd.paid{background:var(--green-l);color:var(--green);font-weight:700}
 .cd.today{outline:2px solid var(--blue);outline-offset:-2px;font-weight:800;color:var(--tx)}
 .cd.empty{opacity:0}
 .cd-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700}
-.cd-ok{background:var(--green-l);color:var(--green)}.cd-soon{background:var(--amber-l);color:var(--amber)}.cd-urg{background:var(--red-l);color:var(--red)}.cd-none{background:var(--card2);color:var(--t2)}
+.cd-ok{background:var(--green-l);color:var(--green)}.cd-soon{background:var(--amber-l);color:var(--amber)}
+.cd-urg{background:var(--red-l);color:var(--red)}.cd-none{background:var(--card2);color:var(--t2)}
 
-/* OBJ CARD */
-.oc{background:var(--surf);border-radius:var(--r);padding:16px;margin-bottom:10px;border:1px solid var(--brd2);box-shadow:var(--sh)}
-.oc.done{background:linear-gradient(135deg,#E6F7F2,#F0FCF8);border-color:var(--green-m)}
+/* ACCT CARDS */
+.acct-card{flex-shrink:0;width:148px;border-radius:16px;padding:15px;position:relative;overflow:hidden}
+.acct-card::after{content:'';position:absolute;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.15);top:-25px;right:-25px}
+.acct-lbl{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;opacity:.75;margin-bottom:10px}
+.acct-val{font-family:var(--num);font-size:22px;font-weight:700;line-height:1;margin-bottom:4px;position:relative;z-index:1}
+.acct-date{font-size:10px;opacity:.5}
+.acct-bb{background:linear-gradient(135deg,#5B8EF0,#82AEFF);color:#fff}
+.acct-sa{background:linear-gradient(135deg,#E07585,#F5A0AC);color:#fff}
+.acct-tr{background:linear-gradient(135deg,#7E8FC4,#A0AFDC);color:#fff}
+.accts-wrap{display:flex;gap:10px;overflow-x:auto;padding:14px 15px 6px;scrollbar-width:none}
+.accts-wrap::-webkit-scrollbar{display:none}
 
-/* CHECKLIST */
-.fi{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--brd2);cursor:pointer;user-select:none}
+/* FACTURAS CHECK */
+.fi{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--brd2);cursor:pointer;user-select:none}
 .fi:last-child{border-bottom:none}
-.fi-chk{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--brd);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.18s;background:#fff}
+.fi-chk{width:22px;height:22px;border-radius:7px;border:1.5px solid var(--brd);flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;transition:.18s}
 .fi.chk .fi-chk{background:var(--green);border-color:var(--green)}
 .fi.nap{opacity:.22;pointer-events:none}
 .fi-body{flex:1}
-.fi-name{font-size:13px;font-weight:600;color:var(--tx)}
+.fi-name{font-size:13px;font-weight:600}
 .fi.chk .fi-name{color:var(--t2);text-decoration:line-through}
 .fi-sub{font-size:11px;color:var(--t2);margin-top:2px}
 .fi-amt{font-family:var(--num);font-size:13px;font-weight:600;color:var(--t2)}
-.baja{opacity:.35}
 
-/* BACKUP BAR — pointer-events:none on container so it doesn't block clicks behind it */
+/* BKBAR */
 .bkbar{position:fixed;top:0;right:0;z-index:300;padding:10px 13px;display:flex;gap:8px;pointer-events:none}
 .bkbtn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:100px;font-size:11px;font-weight:700;cursor:pointer;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border:1px solid var(--blue-m);color:var(--blue);font-family:inherit;box-shadow:var(--sh);pointer-events:all}
 
-/* LOADER */
-.loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;transition:opacity .3s}
-.loader.hidden{opacity:0;pointer-events:none}
-.loader-spin{width:36px;height:36px;border:3px solid var(--brd);border-top-color:var(--blue);border-radius:50%;animation:spin 1s linear infinite}
-.loader-txt{font-size:13px;font-weight:600;color:var(--t2)}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* OBJ */
+.oc{background:var(--surf);border-radius:var(--r);padding:16px;margin-bottom:10px;border:1px solid var(--brd2);box-shadow:var(--sh)}
+.oc.done{background:linear-gradient(135deg,#E6F7F2,#F0FCF8);border-color:var(--green-m)}
 
-/* SYNC INDICATOR */
-.sync-dot{position:fixed;bottom:84px;right:14px;width:8px;height:8px;border-radius:50%;background:var(--green);z-index:200;opacity:0;transition:opacity .4s}
-.sync-dot.saving{opacity:1;background:var(--amber);animation:pulse 1s ease infinite}
-.sync-dot.saved{opacity:1;background:var(--green)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* MES NAV */
+.mes-nav{display:flex;gap:10px;margin-bottom:15px;align-items:center}
+.mes-nav span{flex:1;text-align:center;font-size:18px;font-weight:800;letter-spacing:-.3px}
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-  <div class="loader-spin"></div>
-  <div class="loader-txt">Cargando tus datos…</div>
-</div>
-<div class="sync-dot" id="syncDot"></div>
-
-<!-- BACKUP BAR -->
 <div class="bkbar">
-  <button class="bkbtn" onclick="exportarDatos()">
+  <button class="bkbtn" onclick="exportar()">
     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     Exportar
   </button>
   <label class="bkbtn" style="cursor:pointer">
     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     Importar
-    <input type="file" accept=".json" style="display:none" onchange="importarDatos(event)"/>
+    <input type="file" accept=".json" style="display:none" onchange="importar(event)"/>
   </label>
 </div>
 
-<!-- HERO -->
 <div class="hero" id="hero">
   <div class="hero-inner">
     <div class="hero-label">Patrimonio total</div>
@@ -227,300 +197,287 @@ body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:v
     <div class="hero-date" id="heroDate"></div>
   </div>
 </div>
-<div class="accts-wrap" id="accountsBar"></div>
-<div id="alertWrap"></div>
+<div class="accts-wrap" id="acctBar"></div>
 
-<!-- SECTIONS -->
-<div class="sec active" id="s-resumen"></div>
-<div class="sec" id="s-cuentas"></div>
-<div class="sec" id="s-movimientos"></div>
-<div class="sec" id="s-inversiones"></div>
-<div class="sec" id="s-objetivos"></div>
-<div class="sec" id="s-calendario"></div>
+<div class="sec active" id="s-inicio"></div>
+<div class="sec" id="s-bbva"></div>
+<div class="sec" id="s-santander"></div>
+<div class="sec" id="s-tr"></div>
+<div class="sec" id="s-productos"></div>
+<div class="sec" id="s-iva"></div>
 <div class="sec" id="s-facturas"></div>
 
-<!-- NAV -->
 <nav class="bnav">
-  <button class="nb active" onclick="show('resumen',this)"><div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="nl">Inicio</span></button>
-  <button class="nb" onclick="show('cuentas',this)"><div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div><span class="nl">Cuentas</span></button>
-  <button class="nb" onclick="show('movimientos',this)"><div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div><span class="nl">Añadir</span></button>
-  <button class="nb" onclick="show('inversiones',this)"><div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><span class="nl">Inversión</span></button>
-  <button class="nb" onclick="show('objetivos',this)"><div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><span class="nl">Objetivos</span></button>
-  <button class="nb" onclick="show('calendario',this)"><div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="nl">Calendario</span></button>
-  <button class="nb" onclick="show('facturas',this)"><div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><span class="nl">Facturas</span></button>
+  <button class="nb active" onclick="show('inicio',this)">
+    <div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <span class="nl">Inicio</span>
+  </button>
+  <button class="nb" onclick="show('bbva',this)">
+    <div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+    <span class="nl">BBVA</span>
+  </button>
+  <button class="nb" onclick="show('santander',this)">
+    <div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+    <span class="nl">Santander</span>
+  </button>
+  <button class="nb" onclick="show('tr',this)">
+    <div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+    <span class="nl">Objetivos</span>
+  </button>
+  <button class="nb" onclick="show('productos',this)">
+    <div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+    <span class="nl">Productos</span>
+  </button>
+  <button class="nb" onclick="show('iva',this)">
+    <div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="9"/></svg></div>
+    <span class="nl">IVA</span>
+  </button>
+  <button class="nb" onclick="show('facturas',this)">
+    <div class="ni-wrap"><svg class="ns" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+    <span class="nl">Facturas</span>
+  </button>
 </nav>
 
 <script>
-// ════════════════════════════════════════
-// CONSTANTS & HELPERS
-// ════════════════════════════════════════
-const hoy=new Date();
-const SK='finanzas-marta-v9', SK_FACT='facturas-asesoria-marta-v3';
-const diasSem=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-const mesesN=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-const mesesC=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+// ══════════════════════════════════════════
+// GLOBALS
+// ══════════════════════════════════════════
+const hoy = new Date();
+const SK = 'marta-finanzas-v1';
+const mesesN = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const mesesC = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const diasS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+document.getElementById('heroDate').textContent = `${diasS[hoy.getDay()]}, ${hoy.getDate()} de ${mesesN[hoy.getMonth()]} de ${hoy.getFullYear()}`;
 
-document.getElementById('heroDate').textContent=`${diasSem[hoy.getDay()]}, ${hoy.getDate()} de ${mesesN[hoy.getMonth()]} de ${hoy.getFullYear()}`;
-
-function fmt(n){if(n==null)return'—';return Math.abs(parseFloat(n)).toFixed(2).replace('.',',')+' €';}
-function fmtS(n){const v=parseFloat(n);return(v>=0?'+':'-')+Math.abs(v).toFixed(2).replace('.',',')+' €';}
-function mesKey(y,m){return`${y}-${String(m).padStart(2,'0')}`;}
-function isPast(dia,y,m){const ty=hoy.getFullYear(),tm=hoy.getMonth(),td=hoy.getDate();if(y<ty||(y===ty&&m<tm))return true;if(y===ty&&m===tm&&dia<td)return true;return false;}
-function reciboActivo(r,y,m){if(r.finAnio!==undefined)if(y>r.finAnio||(y===r.finAnio&&m>r.finMes))return false;return true;}
-function reciboAplica(r,y,m){if(!reciboActivo(r,y,m))return false;if(r.frec==='monthly')return true;if(r.frec==='quarterly')return r.meses&&r.meses.includes(m);if(r.frec==='annual')return r.mesAnual===m;if(r.frec==='once')return r.mesAnual===m&&(!r.anio||r.anio===y);return false;}
-function getBBVABills(y,m){return DB.recibos.filter(r=>r.cuenta==='bbva'&&(r.tipo==='gasto'||r.tipo==='fraccionado')&&reciboAplica(r,y,m)).sort((a,b)=>a.dia-b.dia);}
-function diasRestantes(f){if(!f)return null;const fd=new Date(f);fd.setHours(0,0,0,0);const hd=new Date();hd.setHours(0,0,0,0);return Math.ceil((fd-hd)/(864e5));}
-function calcCuotasPagadas(){const ini=new Date('2026-05-01');if(hoy<ini)return 0;const m=(hoy.getFullYear()-ini.getFullYear())*12+(hoy.getMonth()-ini.getMonth());return Math.min(m+1,DB.prestamo.total);}
-function ivaTotal(){return(DB.iva||[]).reduce((s,i)=>s+i.importe,0);}
-function toDateInput(f){if(!f)return hoy.toISOString().split('T')[0];if(f.includes('-'))return f;const p=f.split('/');return p.length===3?`${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`:hoy.toISOString().split('T')[0];}
-function fromDateInput(f){if(!f)return'';const p=f.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:''}
-function cColor(c){return c==='bbva'?'var(--blue)':c==='san'?'var(--red)':'var(--tr)';}
-function cLight(c){return c==='bbva'?'var(--blue-l)':c==='san'?'var(--red-l)':'var(--tr-l)';}
-function cLabel(c){return c==='bbva'?'BBVA':c==='san'?'Santander':'Trade Republic';}
-function calcTotal(){return(DB.saldos.bbva?.val||0)+(DB.saldos.san?.val||0)+(DB.saldos.tr?.val||0);}
-function calcAlertasBills(days=4){
-  return DB.recibos.filter(r=>{
-    if(!reciboAplica(r,hoy.getFullYear(),hoy.getMonth()))return false;
-    if(isPast(r.dia,hoy.getFullYear(),hoy.getMonth()))return false;
-    const d=r.dia-hoy.getDate();return d>=0&&d<=days;
-  }).sort((a,b)=>a.dia-b.dia);
+function fmt(n) { if(n==null)return'—'; return Math.abs(parseFloat(n)).toFixed(2).replace('.',',')+' €'; }
+function mesKey(y,m) { return `${y}-${String(m).padStart(2,'0')}`; }
+function isPast(dia,y,m) {
+  const ty=hoy.getFullYear(),tm=hoy.getMonth(),td=hoy.getDate();
+  if(y<ty||(y===ty&&m<tm))return true;
+  if(y===ty&&m===tm&&dia<td)return true;
+  return false;
 }
-function distribuirTR(){
-  const saldoTR=DB.saldos.tr?.val||0;
-  const ordenados=[...DB.objetivos].sort((a,b)=>{if(!a.fecha&&!b.fecha)return 0;if(!a.fecha)return 1;if(!b.fecha)return-1;return new Date(a.fecha)-new Date(b.fecha);});
-  let restante=saldoTR;const asignado={};
-  ordenados.forEach(o=>{const c=Math.min(o.meta,Math.max(0,restante));asignado[o.id]=c;restante=Math.max(0,restante-o.meta);});
-  return asignado;
+function reciboActivo(r,y,m) {
+  if(r.finAnio!==undefined) if(y>r.finAnio||(y===r.finAnio&&m>r.finMes))return false;
+  return true;
 }
-function calcGastosBBVA(){
-  const recibos=DB.recibos.filter(r=>r.cuenta==='bbva'&&(r.tipo==='gasto'||r.tipo==='fraccionado')&&reciboAplica(r,hoy.getFullYear(),hoy.getMonth()));
-  const total=recibos.reduce((s,r)=>s+r.importe,0);
-  const pendiente=recibos.filter(r=>!isPast(r.dia,hoy.getFullYear(),hoy.getMonth())).reduce((s,r)=>s+r.importe,0);
-  return{total,pendiente};
+function reciboAplica(r,y,m) {
+  if(!reciboActivo(r,y,m))return false;
+  if(r.frec==='monthly')return true;
+  if(r.frec==='quarterly')return r.meses&&r.meses.includes(m);
+  if(r.frec==='annual')return r.mesAnual===m;
+  if(r.frec==='once')return r.mesAnual===m&&(!r.anio||r.anio===y);
+  return false;
 }
-function calcGastosSan(){
-  const recibos=DB.recibos.filter(r=>r.cuenta==='san'&&(r.tipo==='gasto'||r.tipo==='fraccionado')&&reciboAplica(r,hoy.getFullYear(),hoy.getMonth()));
-  const totalRecibos=recibos.reduce((s,r)=>s+r.importe,0);
-  const pendienteRecibos=recibos.filter(r=>!isPast(r.dia,hoy.getFullYear(),hoy.getMonth())).reduce((s,r)=>s+r.importe,0);
-  const bizumsMes=mesKey(hoy.getFullYear(),hoy.getMonth());
-  const bizums=(DB.deudas||[]).filter(d=>d.pagada&&d.pagadaMes===bizumsMes).reduce((s,d)=>s+d.importe,0);
-  return{total:totalRecibos+bizums,pendiente:pendienteRecibos};
+function diasRestantes(f) {
+  if(!f)return null;
+  const fd=new Date(f);fd.setHours(0,0,0,0);
+  const hd=new Date();hd.setHours(0,0,0,0);
+  return Math.ceil((fd-hd)/864e5);
 }
-
-// ════════════════════════════════════════
-// DEFAULT DB
-// ════════════════════════════════════════
-function defaultDB(){return{_v:9,
-  saldos:{bbva:{val:512,fecha:'22/04/2026'},san:{val:12.98,fecha:'22/04/2026'},tr:{val:60.87,fecha:'22/04/2026'}},
-  recibos:[
-    {id:1,nombre:'Neting',importe:48.39,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:7},
-    {id:2,nombre:'PIAS',importe:50,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10},
-    {id:3,nombre:'Dr Smile',importe:41.46,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10,finAnio:2026,finMes:5},
-    {id:4,nombre:'Aspiradora',importe:26.75,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10,finAnio:2026,finMes:11},
-    {id:5,nombre:'Google ONE',importe:2.99,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:10},
-    {id:6,nombre:'Curves',importe:59,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:16,finAnio:2026,finMes:3},
-    {id:7,nombre:'Comparsa',importe:16,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:16},
-    {id:8,nombre:'App WB',importe:3.09,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:24},
-    {id:9,nombre:'DIGI',importe:10,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:30},
-    {id:10,nombre:'Legado Activo AXA',importe:20,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:30},
-    {id:11,nombre:'Cuota autónomo',importe:302.65,tipo:'gasto',frec:'monthly',cuenta:'bbva',dia:30},
-    {id:12,nombre:'AJE',importe:48,tipo:'gasto',frec:'quarterly',cuenta:'bbva',dia:1,meses:[0,3,6,9]},
-    {id:13,nombre:'Arrabal & Díaz',importe:60,tipo:'gasto',frec:'quarterly',cuenta:'bbva',dia:10,meses:[1,4,7,10]},
-    {id:14,nombre:'Seguro de Hogar',importe:78.26,tipo:'gasto',frec:'annual',cuenta:'bbva',dia:4,mesAnual:1},
-    {id:15,nombre:'Regularización autónomo',importe:178.08,tipo:'gasto',frec:'quarterly',cuenta:'bbva',dia:30,meses:[3,4,5]},
-    {id:16,nombre:'Shein 2/3',importe:68.07,tipo:'fraccionado',frec:'once',cuenta:'bbva',dia:15,mesAnual:4,anio:2026},
-    {id:17,nombre:'Shein 3/3',importe:68.07,tipo:'fraccionado',frec:'once',cuenta:'bbva',dia:14,mesAnual:5,anio:2026},
-    {id:18,nombre:'Alquiler',importe:540,tipo:'gasto',frec:'monthly',cuenta:'san',dia:1},
-    {id:19,nombre:'Luz',importe:30,tipo:'gasto',frec:'monthly',cuenta:'san',dia:1},
-    {id:20,nombre:'Uñas + Cejas',importe:39,tipo:'gasto',frec:'monthly',cuenta:'san',dia:4},
-  ],
-  deudas:[],iva:[],
-  inversiones:{
-    pias:{saldo:1008.70,disposiciones:100.07,variacion:58.77,fecha:'20/04/2026'},
-    legado:{acumulado:136.63,disponible:96.63,variacion:16.63,fecha:'20/04/2026'},
-    axa:{compra:42.50,cierre:42.10,fecha:'26/04/2026'}
-  },
-  objetivos:[
-    {id:1,nombre:'Caparica',meta:150,fecha:'2026-07-14'},
-    {id:2,nombre:'Puro Latino',meta:200,fecha:'2026-07-24'},
-    {id:3,nombre:'Traje de Carnaval',meta:300,fecha:'2026-12-01'},
-    {id:4,nombre:'Dentista — Retenedor',meta:60,fecha:''},
-  ],
-  prestamo:{cuota:109.94,total:84,capital:7000}
-};}
-
-let DB=defaultDB();
-let FACT={};
-
-// ════════════════════════════════════════
-// SUPABASE CONFIG
-// ════════════════════════════════════════
-const SB_URL='https://pfbpsnfdsukydpquucgf.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmYnBzbmZkc3VreWRwcXV1Y2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MDg1NDYsImV4cCI6MjA5MjM4NDU0Nn0.mz81M0k4buO1Ey5Mv5V0lRM9_rA2jBxBWH-W6JKJGn8';
-const SB_TABLE='finanzas_personal';
-
-function showSync(state){
-  const d=document.getElementById('syncDot');
-  if(!d)return;
-  d.className='sync-dot '+state;
-  if(state==='saved')setTimeout(()=>{d.className='sync-dot';},2000);
+function calcCuotasPagadas() {
+  const ini=new Date('2026-05-01');if(hoy<ini)return 0;
+  const m=(hoy.getFullYear()-ini.getFullYear())*12+(hoy.getMonth()-ini.getMonth());
+  return Math.min(m+1,DB.prestamo.total);
 }
+function toDateInput(f) {
+  if(!f)return hoy.toISOString().split('T')[0];
+  if(f.includes('-'))return f;
+  const p=f.split('/');return p.length===3?`${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`:hoy.toISOString().split('T')[0];
+}
+function fromDateInput(f) { if(!f)return'';const p=f.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:''; }
 
-async function loadAll(){
-  // Intenta Supabase primero
-  try{
-    const res=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}?id=eq.main&select=*`,{
-      headers:{
-        'apikey':SB_KEY,
-        'Authorization':`Bearer ${SB_KEY}`,
-        'Content-Type':'application/json'
-      }
-    });
-    if(res.ok){
-      const rows=await res.json();
-      if(rows&&rows.length>0){
-        const row=rows[0];
-        if(row.db_data&&row.db_data._v>=9)DB=row.db_data;
-        if(row.fact_data&&Object.keys(row.fact_data).length>0)FACT=row.fact_data;
-        saveLocal();
-        return;
-      }
-    }
-  }catch(e){console.warn('Supabase load error:',e);}
-  // Fallback: localStorage
-  try{
-    const r=localStorage.getItem(SK);
-    if(r){const t=JSON.parse(r);if(t._v>=9)DB=t;}
-    const f=localStorage.getItem(SK_FACT);
-    if(f)FACT=JSON.parse(f);
-  }catch(e){}
+// ══════════════════════════════════════════
+// DB
+// ══════════════════════════════════════════
+function defaultDB() {
+  return {
+    _v: 1,
+    saldos: {
+      bbva: {val:512, fecha:'22/04/2026'},
+      san:  {val:12.98, fecha:'22/04/2026'},
+      tr:   {val:60.87, fecha:'22/04/2026'}
+    },
+    // BBVA — recibos fijos
+    bbvaRecibos: [
+      {id:1, nombre:'Neting', importe:48.39, frec:'monthly', dia:7},
+      {id:2, nombre:'PIAS', importe:50, frec:'monthly', dia:10},
+      {id:3, nombre:'Dr Smile', importe:41.46, frec:'monthly', dia:10, finAnio:2026, finMes:5},
+      {id:4, nombre:'Aspiradora', importe:26.75, frec:'monthly', dia:10, finAnio:2026, finMes:11},
+      {id:5, nombre:'Google ONE', importe:2.99, frec:'monthly', dia:10},
+      {id:6, nombre:'Comparsa', importe:16, frec:'monthly', dia:16},
+      {id:7, nombre:'App WB', importe:3.09, frec:'monthly', dia:24},
+      {id:8, nombre:'DIGI', importe:10, frec:'monthly', dia:30},
+      {id:9, nombre:'Legado Activo AXA', importe:20, frec:'monthly', dia:30},
+      {id:10, nombre:'Cuota autónomo', importe:302.65, frec:'monthly', dia:30},
+      {id:11, nombre:'AJE', importe:48, frec:'quarterly', dia:1, meses:[0,3,6,9]},
+      {id:12, nombre:'Arrabal & Díaz', importe:60, frec:'quarterly', dia:10, meses:[1,4,7,10]},
+      {id:13, nombre:'Seguro de Hogar', importe:78.26, frec:'annual', dia:4, mesAnual:1},
+      {id:14, nombre:'Regularización autónomo', importe:178.08, frec:'quarterly', dia:30, meses:[3,4,5]},
+      {id:15, nombre:'Shein 2/3', importe:68.07, frec:'once', dia:15, mesAnual:4, anio:2026},
+      {id:16, nombre:'Shein 3/3', importe:68.07, frec:'once', dia:14, mesAnual:5, anio:2026},
+    ],
+    // Santander — recibos fijos
+    sanRecibos: [
+      {id:101, nombre:'Alquiler', importe:540, frec:'monthly', dia:1},
+      {id:102, nombre:'Luz', importe:30, frec:'monthly', dia:1},
+      {id:103, nombre:'Uñas + Cejas', importe:39, frec:'monthly', dia:4},
+    ],
+    // Santander — habituales (lista de gastos variables que se activan/desactivan por mes)
+    sanHabituales: [
+      {id:201, nombre:'Farmacia', importe:20, cat:'salud'},
+      {id:202, nombre:'Supermercado extra', importe:50, cat:'alimentación'},
+      {id:203, nombre:'Gasolina', importe:40, cat:'transporte'},
+      {id:204, nombre:'Ropa', importe:60, cat:'personal'},
+      {id:205, nombre:'Ocio / salida', importe:30, cat:'ocio'},
+      {id:206, nombre:'Peluquería', importe:40, cat:'personal'},
+    ],
+    // Gastos variables Santander activados por mes {mesKey: [{habId, importe, nota}]}
+    sanGastosMes: {},
+    // Gastos extra Santander por mes {mesKey: [{id, nombre, importe}]}
+    sanExtrasMes: {},
+    // Bizums pendientes
+    deudas: [],
+    // IVA acumulado
+    iva: [],
+    // Trade Republic — objetivos
+    objetivos: [
+      {id:301, nombre:'Caparica', meta:150, fecha:'2026-07-14'},
+      {id:302, nombre:'Puro Latino', meta:200, fecha:'2026-07-24'},
+      {id:303, nombre:'Traje de Carnaval', meta:300, fecha:'2026-12-01'},
+      {id:304, nombre:'Dentista — Retenedor', meta:60, fecha:''},
+    ],
+    // Productos de ahorro
+    pias: {saldo:1008.70, disposiciones:100.07, variacion:58.77, fecha:'20/04/2026'},
+    legado: {acumulado:136.63, disponible:96.63, variacion:16.63, fecha:'20/04/2026'},
+    axa: {compra:42.50, cierre:42.10, fecha:'26/04/2026'},
+    prestamo: {cuota:109.94, total:84, capital:7000},
+    // Facturas deducibles {mesKey: {checks:{}, extras:[]}}
+    facturas: {},
+  };
 }
 
-function saveLocal(){
-  try{localStorage.setItem(SK,JSON.stringify(DB));}catch(e){}
-  try{localStorage.setItem(SK_FACT,JSON.stringify(FACT));}catch(e){}
+let DB = defaultDB();
+function save() { try{localStorage.setItem(SK,JSON.stringify(DB));}catch(e){} }
+function load() { try{const r=localStorage.getItem(SK);if(r){const t=JSON.parse(r);if(t._v>=1)DB=t;}}catch(e){} }
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  btn.classList.add('active');
+  const isHome = id==='inicio';
+  ['hero','acctBar'].forEach(el=>{const e=document.getElementById(el);if(e)e.style.display=isHome?'':'none';});
+  window.scrollTo(0,0);
+  renders[id]&&renders[id]();
 }
 
-async function saveCloud(){
-  showSync('saving');
-  try{
-    const res=await fetch(`${SB_URL}/rest/v1/${SB_TABLE}`,{
-      method:'POST',
-      headers:{
-        'apikey':SB_KEY,
-        'Authorization':`Bearer ${SB_KEY}`,
-        'Content-Type':'application/json',
-        'Prefer':'resolution=merge-duplicates'
-      },
-      body:JSON.stringify({
-        id:'main',
-        db_data:DB,
-        fact_data:FACT,
-        updated_at:new Date().toISOString()
-      })
-    });
-    if(res.ok)showSync('saved');
-    else showSync('');
-  }catch(e){console.warn('Supabase save error:',e);showSync('');}
-}
-
-function saveDB(){saveLocal();saveCloud();}
-function saveFact(){saveLocal();saveCloud();}
-function loadDB(){}  // legacy — no usado, loadAll() lo sustituye
-function loadFact(){} // legacy — no usado
-
-// ════════════════════════════════════════
-// TOP HEADER
-// ════════════════════════════════════════
-function renderTopBar(){
-  document.getElementById('heroTotal').textContent=fmt(calcTotal());
-  const s=DB.saldos;
-  document.getElementById('accountsBar').innerHTML=`
+// ══════════════════════════════════════════
+// HERO / HEADER
+// ══════════════════════════════════════════
+function renderHeader() {
+  const s = DB.saldos;
+  const total = (s.bbva?.val||0)+(s.san?.val||0)+(s.tr?.val||0);
+  document.getElementById('heroTotal').textContent = fmt(total);
+  document.getElementById('acctBar').innerHTML = `
     <div class="acct-card acct-bb"><div class="acct-lbl">BBVA</div><div class="acct-val">${fmt(s.bbva?.val)}</div><div class="acct-date">${s.bbva?.fecha||''}</div></div>
     <div class="acct-card acct-sa"><div class="acct-lbl">Santander</div><div class="acct-val">${fmt(s.san?.val)}</div><div class="acct-date">${s.san?.fecha||''}</div></div>
     <div class="acct-card acct-tr"><div class="acct-lbl">Trade Republic</div><div class="acct-val">${fmt(s.tr?.val)}</div><div class="acct-date">${s.tr?.fecha||''}</div></div>`;
-  const aw=document.getElementById('alertWrap');
-  if(aw)aw.innerHTML='';
 }
 
-// ════════════════════════════════════════
-// NAVIGATE
-// ════════════════════════════════════════
-function show(id,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('s-'+id).classList.add('active');btn.classList.add('active');
-  const isHome=id==='resumen';
-  ['hero','accountsBar','alertWrap'].forEach(el=>{const e=document.getElementById(el);if(e)e.style.display=isHome?'':'none';});
-  window.scrollTo(0,0);renders[id]&&renders[id]();
-}
+// ══════════════════════════════════════════
+// INICIO
+// ══════════════════════════════════════════
+function renderInicio() {
+  renderHeader();
+  const y=hoy.getFullYear(), m=hoy.getMonth();
 
-// ════════════════════════════════════════
-// RESUMEN — 4 bloques: ahorro, IVA, deudas, vencimientos
-// ════════════════════════════════════════
-function renderResumen(){
-  renderTopBar();
-  const p=DB.inversiones.pias, l=DB.inversiones.legado, a=DB.inversiones.axa;
-  const deudasPend=(DB.deudas||[]).filter(d=>!d.pagada);
-  const varAxa=a.cierre-a.compra;
+  // BBVA: pagado vs pendiente este mes
+  const bbvaBills = DB.bbvaRecibos.filter(r=>reciboAplica(r,y,m));
+  const bbvaTotal = bbvaBills.reduce((s,r)=>s+r.importe,0);
+  const bbvaPend  = bbvaBills.filter(r=>!isPast(r.dia,y,m)).reduce((s,r)=>s+r.importe,0);
+  const bbvaPag   = bbvaTotal - bbvaPend;
+  const bbvaPct   = bbvaTotal>0?Math.round(bbvaPag/bbvaTotal*100):0;
 
-  let html='';
+  // Santander: fijos + habituales activos + extras
+  const sanFijos = DB.sanRecibos.filter(r=>reciboAplica(r,y,m));
+  const sanFijosTotal = sanFijos.reduce((s,r)=>s+r.importe,0);
+  const sanFijosPend  = sanFijos.filter(r=>!isPast(r.dia,y,m)).reduce((s,r)=>s+r.importe,0);
+  const mk = mesKey(y,m);
+  const sanActivos = DB.sanGastosMes[mk]||[];
+  const sanExtras  = DB.sanExtrasMes[mk]||[];
+  const sanVarTotal = sanActivos.reduce((s,g)=>s+g.importe,0) + sanExtras.reduce((s,g)=>s+g.importe,0);
+  const sanTotal = sanFijosTotal + sanVarTotal;
+  const sanPend  = sanFijosPend; // variables se consideran ya "gastadas"
+  const sanPct   = sanTotal>0?Math.round((sanTotal-sanPend)/sanTotal*100):0;
 
-  // Gastos mensuales: BBVA y Santander
-  const gastosBBVA=calcGastosBBVA(), gastosSan=calcGastosSan();
-  html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-    <div class="card" style="border-top:3px solid var(--blue);margin-bottom:0;padding:14px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:8px">Gastos BBVA</div>
-      <div style="display:flex;align-items:baseline;gap:4px">
-        <span class="num" style="font-size:22px;font-weight:700;color:var(--blue)">${fmt(gastosBBVA.pendiente)}</span>
+  // Deudas pendientes
+  const deudasPend = (DB.deudas||[]).filter(d=>!d.pagada);
+
+  // Próximos recibos (ambas cuentas, próximos 5 días)
+  const hoy_d = hoy.getDate();
+  const proxBBVA = bbvaBills.filter(r=>!isPast(r.dia,y,m)&&(r.dia-hoy_d)<=5).sort((a,b)=>a.dia-b.dia);
+  const proxSAN  = sanFijos.filter(r=>!isPast(r.dia,y,m)&&(r.dia-hoy_d)<=5).sort((a,b)=>a.dia-b.dia);
+  const proximos = [...proxBBVA.map(r=>({...r,banco:'BBVA',color:'var(--blue)',light:'var(--blue-l)'})),
+                    ...proxSAN.map(r=>({...r,banco:'Santander',color:'var(--red)',light:'var(--red-l)'}))].sort((a,b)=>a.dia-b.dia);
+
+  let html = '';
+
+  // Resumen BBVA
+  html += `<div class="card" style="border-top:3px solid var(--blue)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--blue)">BBVA — ${mesesC[m]}</span><span class="tag t-blue">${bbvaPct}% pagado</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Pendiente</div>
+        <div class="num" style="font-size:28px;font-weight:700;color:var(--blue)">−${fmt(bbvaPend)}</div>
       </div>
-      <div style="font-size:11px;color:var(--t2);margin-top:3px">de <span class="num" style="font-weight:700">${fmt(gastosBBVA.total)}</span> total</div>
-      <div class="prog" style="height:5px;margin-top:8px;margin-bottom:0"><div class="prog-fill pf-blue" style="width:${gastosBBVA.total>0?Math.round((gastosBBVA.total-gastosBBVA.pendiente)/gastosBBVA.total*100):0}%"></div></div>
-    </div>
-    <div class="card" style="border-top:3px solid var(--red);margin-bottom:0;padding:14px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red);margin-bottom:8px">Gastos Santander</div>
-      <div style="display:flex;align-items:baseline;gap:4px">
-        <span class="num" style="font-size:22px;font-weight:700;color:var(--red)">${fmt(gastosSan.pendiente)}</span>
+      <div style="text-align:right">
+        <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Total mes</div>
+        <div class="num" style="font-size:16px;font-weight:700;color:var(--t2)">−${fmt(bbvaTotal)}</div>
       </div>
-      <div style="font-size:11px;color:var(--t2);margin-top:3px">de <span class="num" style="font-weight:700">${fmt(gastosSan.total)}</span> total</div>
-      <div class="prog" style="height:5px;margin-top:8px;margin-bottom:0"><div class="prog-fill pf-red" style="width:${gastosSan.total>0?Math.round((gastosSan.total-gastosSan.pendiente)/gastosSan.total*100):0}%"></div></div>
     </div>
+    <div class="prog"><div class="prog-fill pf-blue" style="width:${bbvaPct}%"></div></div>
+    <div style="font-size:11px;color:var(--t2);margin-top:4px">Pagado ${fmt(bbvaPag)}</div>
   </div>`;
 
-  // Productos de ahorro e inversión
-  html+=`<div class="card" style="border-top:3px solid var(--tr)">
-    <div class="card-hdr"><span class="card-title" style="color:var(--tr)">Productos de ahorro</span></div>
-    <div class="li">
-      <div class="li-icon" style="background:var(--tr-l);color:var(--tr)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
-      <div class="li-body"><div class="li-title">PIAS</div><div class="li-sub">+50 €/mes · día 10</div></div>
-      <div class="li-amount" style="color:var(--tr)">${fmt(p.saldo)}</div>
+  // Resumen Santander
+  html += `<div class="card" style="border-top:3px solid var(--red)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--red)">Santander — ${mesesC[m]}</span><span class="tag t-red">${sanPct}% pagado</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Fijos pendientes</div>
+        <div class="num" style="font-size:28px;font-weight:700;color:var(--red)">−${fmt(sanPend)}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Total mes</div>
+        <div class="num" style="font-size:16px;font-weight:700;color:var(--t2)">−${fmt(sanTotal)}</div>
+      </div>
     </div>
-    <div class="li">
-      <div class="li-icon" style="background:var(--tr-l);color:var(--tr)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-      <div class="li-body"><div class="li-title">Legado Activo AXA</div><div class="li-sub">+20 €/mes · día 30</div></div>
-      <div class="li-amount" style="color:var(--tr)">${fmt(l.disponible)}</div>
-    </div>
-    <div class="li">
-      <div class="li-icon" style="background:${varAxa>=0?'var(--green-l)':'var(--red-l)'};color:${varAxa>=0?'var(--green)':'var(--red)'}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
-      <div class="li-body"><div class="li-title">Acción AXA · CS.PA</div><div class="li-sub">${varAxa>=0?'+'+'':''}${varAxa.toFixed(2).replace('.',',')} € vs. compra</div></div>
-      <div class="li-amount" style="color:${varAxa>=0?'var(--green)':'var(--red)'}">${fmt(a.cierre)}</div>
-    </div>
+    <div class="prog"><div class="prog-fill pf-red" style="width:${sanPct}%"></div></div>
+    <div style="font-size:11px;color:var(--t2);margin-top:4px">Fijos ${fmt(sanFijosTotal)} · Variables ${fmt(sanVarTotal)}</div>
   </div>`;
 
-  // IVA
-  if(ivaTotal()>0){
-    html+=`<div class="card" style="border-top:3px solid var(--tr)">
-      <div class="card-hdr"><span class="card-title" style="color:var(--tr)">IVA acumulado ${hoy.getFullYear()}</span><span class="num" style="font-size:18px;font-weight:700;color:var(--tr)">${fmt(ivaTotal())}</span></div>
-      <div style="font-size:12px;color:var(--t2)">${(DB.iva||[]).length} concepto${(DB.iva||[]).length!==1?'s':''} · Liquidación anual · Trade Republic</div>
+  // Próximos vencimientos (≤5 días)
+  if(proximos.length) {
+    html += `<div class="card" style="border-top:3px solid var(--amber)">
+      <div class="card-hdr"><span class="card-title" style="color:var(--amber)">Próximos vencimientos</span><span class="tag t-amber">${proximos.length} recibo${proximos.length>1?'s':''}</span></div>
+      ${proximos.map(r=>`<div class="li">
+        <div class="li-icon" style="background:${r.light};color:${r.color};font-size:9px;font-weight:800">d.${r.dia}</div>
+        <div class="li-body"><div class="li-title">${r.nombre}</div><div class="li-sub">${r.banco}</div></div>
+        <div class="li-amount" style="color:var(--red)">−${fmt(r.importe)}</div>
+      </div>`).join('')}
     </div>`;
   }
 
-  // Deudas/Bizum
-  if(deudasPend.length){
-    html+=`<div class="card" style="border-top:3px solid var(--red)">
-      <div class="card-hdr"><span class="card-title" style="color:var(--red)">Bizums pendientes</span><span class="num" style="font-size:18px;font-weight:700;color:var(--red)">−${fmt(deudasPend.reduce((s,d)=>s+d.importe,0))}</span></div>
+  // Deudas/Bizums
+  if(deudasPend.length) {
+    html += `<div class="card" style="border-top:3px solid var(--red)">
+      <div class="card-hdr"><span class="card-title" style="color:var(--red)">Bizums pendientes</span><span class="num" style="font-size:17px;font-weight:700;color:var(--red)">−${fmt(deudasPend.reduce((s,d)=>s+d.importe,0))}</span></div>
       ${deudasPend.map(d=>`<div class="li">
-        <div class="li-icon" style="background:var(--red-l);color:var(--red)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <div class="li-icon" style="background:var(--red-l);color:var(--red)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
         <div class="li-body"><div class="li-title">${d.nombre}</div>${d.notas?`<div class="li-sub">${d.notas}</div>`:''}</div>
         <div class="li-amount" style="color:var(--red);margin-right:8px">−${fmt(d.importe)}</div>
         <button class="btn-pagado" onclick="pagarDeuda(${d.id})">Pagado</button>
@@ -528,186 +485,537 @@ function renderResumen(){
     </div>`;
   }
 
-
-
-  document.getElementById('s-resumen').innerHTML=html;
+  document.getElementById('s-inicio').innerHTML = html;
 }
-function pagarDeuda(id){
+function pagarDeuda(id) {
   const d=(DB.deudas||[]).find(x=>x.id===id);
-  if(!d)return;
-  d.pagada=true;
-  d.pagadaMes=mesKey(hoy.getFullYear(),hoy.getMonth());
-  saveDB();renderResumen();
+  if(!d)return; d.pagada=true; d.pagadaMes=mesKey(hoy.getFullYear(),hoy.getMonth());
+  save(); renderInicio();
 }
 
-// ════════════════════════════════════════
-// CUENTAS
-// ════════════════════════════════════════
-function renderCuentas(){
-  document.getElementById('s-cuentas').innerHTML=`<div class="page-title">Cuentas</div>
-    <div class="card" style="border-top:3px solid var(--blue)">
-      <div class="card-hdr"><span class="card-title" style="color:var(--blue)">BBVA</span><span class="num" style="font-size:20px;font-weight:700">${fmt(DB.saldos.bbva?.val)}</span></div>
-      <div class="fg2"><div class="fr"><label>Saldo (€)</label><input type="number" id="sbbva" value="${DB.saldos.bbva?.val||''}" step="0.01" inputmode="decimal"/></div><div class="fr"><label>Fecha</label><input type="date" id="fbbva" value="${toDateInput(DB.saldos.bbva?.fecha)}"/></div></div>
-      <button class="btn btn-blue" onclick="actualizarSaldo('bbva','sbbva','fbbva')">Actualizar BBVA</button>
-    </div>
-    <div class="card" style="border-top:3px solid var(--red)">
-      <div class="card-hdr"><span class="card-title" style="color:var(--red)">Santander</span><span class="num" style="font-size:20px;font-weight:700">${fmt(DB.saldos.san?.val)}</span></div>
-      <div class="fg2"><div class="fr"><label>Saldo (€)</label><input type="number" id="ssan" value="${DB.saldos.san?.val||''}" step="0.01" inputmode="decimal"/></div><div class="fr"><label>Fecha</label><input type="date" id="fsan" value="${toDateInput(DB.saldos.san?.fecha)}"/></div></div>
-      <button class="btn btn-red" onclick="actualizarSaldo('san','ssan','fsan')">Actualizar Santander</button>
-    </div>
-    <div class="card" style="border-top:3px solid var(--tr)">
-      <div class="card-hdr"><span class="card-title" style="color:var(--tr)">Trade Republic</span><span class="num" style="font-size:20px;font-weight:700;color:var(--tr)">${fmt(DB.saldos.tr?.val)}</span></div>
-      <div class="fg2"><div class="fr"><label>Saldo (€)</label><input type="number" id="str" value="${DB.saldos.tr?.val||''}" step="0.01" inputmode="decimal"/></div><div class="fr"><label>Fecha</label><input type="date" id="ftr" value="${toDateInput(DB.saldos.tr?.fecha)}"/></div></div>
-      <button class="btn btn-tr" onclick="actualizarSaldo('tr','str','ftr')">Actualizar Trade Republic</button>
-    </div>
-    <div id="cMsg"></div>`;
-}
-function actualizarSaldo(c,si,fi){
-  const v=parseFloat(document.getElementById(si).value),f=fromDateInput(document.getElementById(fi).value);
-  if(isNaN(v)){document.getElementById('cMsg').innerHTML='<div class="msg-err">⚠ Importe inválido</div>';return;}
-  DB.saldos[c]={val:v,fecha:f};saveDB();renderTopBar();
-  document.getElementById('cMsg').innerHTML='<div class="msg-ok">✓ Guardado correctamente</div>';
-  setTimeout(()=>{const m=document.getElementById('cMsg');if(m)m.innerHTML='';},2000);
-}
+// ══════════════════════════════════════════
+// BBVA
+// ══════════════════════════════════════════
+let bbvaMesY=hoy.getFullYear(), bbvaMesM=hoy.getMonth();
+function renderBBVA() {
+  const y=bbvaMesY, m=bbvaMesM;
+  const recibos = DB.bbvaRecibos.filter(r=>reciboAplica(r,y,m)).sort((a,b)=>a.dia-b.dia);
+  const total = recibos.reduce((s,r)=>s+r.importe,0);
+  const pend  = recibos.filter(r=>!isPast(r.dia,y,m)).reduce((s,r)=>s+r.importe,0);
+  const pag   = total-pend;
+  const pct   = total>0?Math.round(pag/total*100):0;
 
-// ════════════════════════════════════════
-// MOVIMIENTOS
-// ════════════════════════════════════════
-let movTipo='gasto';
-const iconGasto=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>`;
-const iconFrac=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3H1l5 8-5 8h15l5-8-5-8z"/><line x1="12" y1="3" x2="12" y2="19"/></svg>`;
-const iconIva=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="9"/><circle cx="9.5" cy="9.5" r=".5" fill="currentColor"/><circle cx="14.5" cy="14.5" r=".5" fill="currentColor"/></svg>`;
-const iconDeuda=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`;
+  // Calendario visual
+  const byDay={};
+  recibos.forEach(r=>{if(!byDay[r.dia])byDay[r.dia]=[];byDay[r.dia].push(r);});
+  const firstDay=new Date(y,m,1).getDay(), offset=firstDay===0?6:firstDay-1;
+  const daysInM=new Date(y,m+1,0).getDate();
+  let calHtml='';
+  for(let i=0;i<offset;i++) calHtml+=`<div class="cd empty">·</div>`;
+  for(let d=1;d<=daysInM;d++){
+    const hb=byDay[d], isToday=hoy.getFullYear()===y&&hoy.getMonth()===m&&d===hoy.getDate();
+    const past=isPast(d,y,m);
+    calHtml+=`<div class="cd${hb?(past?' paid':' bill'):''}${isToday?' today':''}">${d}</div>`;
+  }
 
-function renderMovimientos(){
-  document.getElementById('s-movimientos').innerHTML=`
-    <div class="page-title">Añadir movimiento</div>
-    <div class="type-pills">
-      <button class="tp${movTipo==='gasto'?' on':''}" onclick="setMovTipo('gasto',this)">${iconGasto} Gasto/Recibo</button>
-      <button class="tp${movTipo==='fraccionado'?' on':''}" onclick="setMovTipo('fraccionado',this)">${iconFrac} Fraccionado</button>
-      <button class="tp${movTipo==='iva'?' on':''}" onclick="setMovTipo('iva',this)">${iconIva} IVA</button>
-      <button class="tp${movTipo==='deuda'?' on':''}" onclick="setMovTipo('deuda',this)">${iconDeuda} Deuda/Bizum</button>
-    </div>
-    <div class="card" id="movForm">${formMov(movTipo)}<button class="btn btn-blue" style="margin-top:4px" onclick="addMovimiento()">Guardar</button><div id="mMsg"></div></div>
-    ${secDeudas()}${secIVA()}${secRecibos()}`;
-}
-function setMovTipo(t,el){movTipo=t;document.querySelectorAll('.tp').forEach(x=>x.classList.remove('on'));el.classList.add('on');document.getElementById('movForm').innerHTML=`${formMov(t)}<button class="btn btn-blue" style="margin-top:4px" onclick="addMovimiento()">Guardar</button><div id="mMsg"></div>`;}
-function formMov(t){
-  if(t==='gasto')return`<div class="fr"><label>Nombre</label><input type="text" id="mN" placeholder="Ej: Spotify"/></div><div class="fg2"><div class="fr"><label>Importe (€)</label><input type="number" id="mI" step="0.01" inputmode="decimal" placeholder="0,00"/></div><div class="fr"><label>Día de cargo</label><input type="number" id="mD" min="1" max="31" placeholder="1"/></div></div><div class="fg2"><div class="fr"><label>Frecuencia</label><select id="mF"><option value="monthly">Mensual</option><option value="quarterly">Trimestral</option><option value="annual">Anual</option><option value="once">Único</option></select></div><div class="fr"><label>Cuenta</label><select id="mC"><option value="bbva">BBVA</option><option value="san">Santander</option><option value="tr">Trade Republic</option></select></div></div><div class="fr"><label>Notas</label><input type="text" id="mNt" placeholder="Opcional"/></div><div class="fr"><label>¿Factura deducible?</label><select id="mEF"><option value="no">No</option><option value="si">Sí — añadir a Facturas</option></select></div>`;
-  if(t==='fraccionado')return`<div class="fr"><label>Nombre</label><input type="text" id="mN" placeholder="Ej: Shein 1/3"/></div><div class="fg2"><div class="fr"><label>Importe/pago (€)</label><input type="number" id="mI" step="0.01" inputmode="decimal" placeholder="0,00"/></div><div class="fr"><label>Cuenta</label><select id="mC"><option value="bbva">BBVA</option><option value="san">Santander</option></select></div></div><div class="fg2"><div class="fr"><label>Mes inicio</label><input type="month" id="mFini" value="${hoy.getFullYear()}-${String(hoy.getMonth()+1).padStart(2,'0')}"/></div><div class="fr"><label>Mes fin</label><input type="month" id="mFfin"/></div></div><div class="fr"><label>Día del cargo</label><input type="number" id="mD" min="1" max="31" placeholder="15"/></div>`;
-  if(t==='iva')return`<div class="fr"><label>Concepto</label><input type="text" id="mN" placeholder="Ej: Factura cliente marzo"/></div><div class="fr"><label>Importe IVA (€)</label><input type="number" id="mI" step="0.01" inputmode="decimal" placeholder="0,00"/></div><div class="fr"><label>Fecha</label><input type="date" id="mFini" value="${hoy.toISOString().split('T')[0]}"/></div>`;
-  if(t==='deuda')return`<div class="fr"><label>¿A quién?</label><input type="text" id="mN" placeholder="Ej: María, cena sábado"/></div><div class="fr"><label>Importe (€)</label><input type="number" id="mI" step="0.01" inputmode="decimal" placeholder="0,00"/></div><div class="fr"><label>Notas</label><input type="text" id="mNt" placeholder="Opcional"/></div>`;
-  return'';
-}
-function addMovimiento(){
-  const tipo=movTipo,nombre=document.getElementById('mN')?.value.trim(),importe=parseFloat(document.getElementById('mI')?.value),msg=document.getElementById('mMsg');
-  if(!nombre||isNaN(importe)||importe<=0){msg.className='msg-err';msg.textContent='⚠ Nombre e importe obligatorios.';return;}
-  if(tipo==='gasto'){const frec=document.getElementById('mF').value,cuenta=document.getElementById('mC').value,dia=parseInt(document.getElementById('mD').value)||1,notas=document.getElementById('mNt')?.value.trim()||'',esF=document.getElementById('mEF')?.value==='si';const r={id:Date.now(),nombre,importe,tipo:'gasto',frec,cuenta,dia,notas};if(frec==='quarterly')r.meses=[0,3,6,9];if(frec==='annual'||frec==='once'){r.mesAnual=hoy.getMonth();if(frec==='once')r.anio=hoy.getFullYear();}if(esF){const k=mesKey(hoy.getFullYear(),hoy.getMonth());if(!FACT[k])FACT[k]={checks:{},extras:[]};FACT[k].extras.push({id:Date.now()+1,name:nombre,amt:importe,checked:false});saveFact();}DB.recibos.push(r);}
-  if(tipo==='fraccionado'){const cuenta=document.getElementById('mC').value,dia=parseInt(document.getElementById('mD').value)||1,fini=document.getElementById('mFini').value,ffin=document.getElementById('mFfin').value;if(!fini||!ffin){msg.className='msg-err';msg.textContent='⚠ Indica mes inicio y fin.';return;}const[iniY,iniM]=fini.split('-').map(Number);const[finY,finM]=ffin.split('-').map(Number);let y=iniY,m=iniM-1;while(y<finY||(y===finY&&m<=finM-1)){DB.recibos.push({id:Date.now()+Math.random(),nombre,importe,tipo:'fraccionado',frec:'once',cuenta,dia,mesAnual:m,anio:y});m++;if(m>11){m=0;y++;}}}
-  if(tipo==='iva'){const fecha=document.getElementById('mFini').value;if(!DB.iva)DB.iva=[];DB.iva.push({id:Date.now(),nombre,importe,fecha});}
-  if(tipo==='deuda'){const notas=document.getElementById('mNt')?.value.trim()||'';if(!DB.deudas)DB.deudas=[];DB.deudas.push({id:Date.now(),nombre,importe,notas,pagada:false});}
-  saveDB();msg.className='msg-ok';msg.textContent='✓ Guardado correctamente';
-  setTimeout(()=>renderMovimientos(),1200);
-}
+  const finLabel = r => r.finAnio!==undefined
+    ? `<span class="tag t-amber" style="margin-left:4px;font-size:9px">hasta ${mesesC[r.finMes].toLowerCase()} ${r.finAnio}</span>` : '';
+  const frecLabel = r => ({monthly:'Mensual',quarterly:'Trimestral',annual:'Anual',once:'Único'}[r.frec]||r.frec);
 
-function secDeudas(){
-  const d=DB.deudas||[];if(!d.length)return'';
-  const pend=d.filter(x=>!x.pagada),pag=d.filter(x=>x.pagada);
-  const totalPend=pend.reduce((s,x)=>s+x.importe,0);
-  return`<div class="card" style="border-top:3px solid var(--red)">
-    <div class="card-hdr"><span class="card-title" style="color:var(--red)">Deudas · Bizum Santander</span><span class="num" style="font-size:18px;font-weight:700;color:var(--red)">−${fmt(totalPend)}</span></div>
-    ${pend.map(x=>`<div class="li">
-      <div class="li-icon" style="background:var(--red-l);color:var(--red)">${iconDeuda}</div>
-      <div class="li-body"><div class="li-title">${x.nombre}</div>${x.notas?`<div class="li-sub">${x.notas}</div>`:''}</div>
-      <div class="li-amount" style="color:var(--red);margin-right:8px">−${fmt(x.importe)}</div>
-      <button class="btn-pagado" onclick="toggleDeuda(${x.id})">Pagado</button>
-    </div>`).join('')}
-    ${pag.length?`<div class="divlabel">Pagadas</div>${pag.map(x=>`<div class="li" style="opacity:.4">
-      <div class="li-icon" style="background:var(--green-l);color:var(--green)">${iconDeuda}</div>
-      <div class="li-body"><div class="li-title">${x.nombre}</div></div>
-      <div class="li-amount" style="color:var(--green);margin-right:8px">${fmt(x.importe)}</div>
-      <div class="li-action" onclick="eliminarDeuda(${x.id})" style="border:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-    </div>`).join('')}`:''}
-  </div>`;
-}
-
-function secIVA(){
-  const iva=DB.iva||[];if(!iva.length)return'';
-  const total=iva.reduce((s,i)=>s+i.importe,0);
-  return`<div class="card" style="border-top:3px solid var(--tr)">
-    <div class="card-hdr"><span class="card-title" style="color:var(--tr)">IVA acumulado · Trade Republic</span><span class="num" style="font-size:18px;font-weight:700;color:var(--tr)">${fmt(total)}</span></div>
-    ${iva.map(i=>`<div class="li">
-      <div class="li-icon" style="background:var(--tr-l);color:var(--tr);font-size:9px">${iconIva}</div>
-      <div class="li-body"><div class="li-title">${i.nombre}</div><div class="li-sub">${i.fecha}</div></div>
-      <div class="li-amount" style="color:var(--tr);margin-right:8px">${fmt(i.importe)}</div>
-      <div class="li-action" onclick="eliminarIVA(${i.id})" style="border:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-    </div>`).join('')}
-    <button class="btn btn-dark" style="margin-top:10px;font-size:12px;padding:11px" onclick="liquidarIVA()">Liquidar IVA · Reiniciar a cero</button>
-  </div>`;
-}
-
-function secRecibos(){
-  // Helper to format fin date
-  function finLabel(r){if(r.finAnio===undefined)return'';const m=mesesC[r.finMes]||'';return`<span class="tag t-amber" style="margin-left:4px">Hasta ${m} ${r.finAnio}</span>`;}
-  return`<div class="card" style="border-top:3px solid var(--blue)">
-    <div class="card-hdr"><span class="card-title" style="color:var(--blue)">BBVA — Recibos</span></div>
-    ${DB.recibos.filter(r=>r.cuenta==='bbva').map(r=>{
-      const activo=reciboActivo(r,hoy.getFullYear(),hoy.getMonth());
-      const fl={monthly:'Mensual',quarterly:'Trimestral',annual:'Anual',once:'Único'}[r.frec]||r.frec;
-      return`<div class="${activo?'':'baja'}"><div class="li">
-        <div class="li-icon" style="background:var(--blue-l);color:var(--blue);font-size:9px;font-weight:800">d.${r.dia}</div>
-        <div class="li-body"><div class="li-title">${r.nombre} ${finLabel(r)}</div><div class="li-sub">${fl}${!activo?' · Baja':''}</div></div>
-        <div class="li-amount" style="color:var(--red);margin-right:8px">−${fmt(r.importe)}</div>
-        <div class="li-action" onclick="toggleEditR(${r.id})" style="border-radius:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
-      </div>
-      <div id="editR-${r.id}" class="ep"><div class="fg2" style="margin-bottom:8px"><div class="fr"><label>Nombre</label><input type="text" id="rEN-${r.id}" value="${r.nombre}"/></div><div class="fr"><label>Importe (€)</label><input type="number" id="rEI-${r.id}" value="${r.importe}" step="0.01" inputmode="decimal"/></div></div><div style="display:flex;gap:8px"><button class="btn btn-green" style="flex:1;padding:11px;font-size:13px" onclick="guardarEditR(${r.id})">✓ Guardar</button>${activo?`<button class="btn btn-red" style="flex:1;padding:11px;font-size:12px" onclick="darDeBaja(${r.id})">Dar de baja</button>`:`<button class="btn btn-dark" style="flex:1;padding:11px;font-size:12px" onclick="reactivarRecibo(${r.id})">Reactivar</button>`}</div></div>
-      </div>`;}).join('')||'<div style="font-size:13px;color:var(--t2);padding:8px 0">Sin recibos en BBVA</div>'}
+  let html = `<div class="page-title" style="color:var(--blue)">BBVA — Recibos</div>
+  <div class="mes-nav">
+    <button class="btn-ghost" onclick="bbvaMes(-1)">←</button>
+    <span>${mesesC[m]} ${y}</span>
+    <button class="btn-ghost" onclick="bbvaMes(1)">→</button>
   </div>
-  <div class="card" style="border-top:3px solid var(--red)">
-    <div class="card-hdr"><span class="card-title" style="color:var(--red)">Santander — Recibos</span></div>
-    ${DB.recibos.filter(r=>r.cuenta==='san').map(r=>{
-      const activo=reciboActivo(r,hoy.getFullYear(),hoy.getMonth());
-      const fl={monthly:'Mensual',quarterly:'Trimestral',annual:'Anual',once:'Único'}[r.frec]||r.frec;
-      return`<div class="${activo?'':'baja'}"><div class="li">
-        <div class="li-icon" style="background:var(--red-l);color:var(--red);font-size:9px;font-weight:800">d.${r.dia}</div>
-        <div class="li-body"><div class="li-title">${r.nombre}</div><div class="li-sub">${fl}${!activo?' · Baja':''}</div></div>
+  <div class="stats-row">
+    <div class="stat-box" style="border-top:3px solid var(--blue)">
+      <div class="stat-lbl" style="color:var(--blue)">Pendiente</div>
+      <div class="stat-val" style="color:var(--blue)">−${fmt(pend)}</div>
+      <div class="stat-sub">de ${fmt(total)} total</div>
+      <div class="prog" style="margin-top:8px;margin-bottom:0"><div class="prog-fill pf-blue" style="width:${pct}%"></div></div>
+    </div>
+    <div class="stat-box" style="border-top:3px solid var(--green)">
+      <div class="stat-lbl" style="color:var(--green)">Pagado</div>
+      <div class="stat-val" style="color:var(--green)">−${fmt(pag)}</div>
+      <div class="stat-sub">${pct}% del mes</div>
+    </div>
+  </div>
+  <div class="card" style="padding:12px">
+    <div class="cg"><div class="ch">L</div><div class="ch">M</div><div class="ch">X</div><div class="ch">J</div><div class="ch">V</div><div class="ch">S</div><div class="ch">D</div></div>
+    <div class="cg">${calHtml}</div>
+  </div>
+  <div class="card" style="border-top:3px solid var(--blue)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--blue)">Recibos del mes</span></div>
+    ${recibos.map(r=>{
+      const past=isPast(r.dia,y,m);
+      return `<div class="li">
+        <div class="li-icon" style="background:var(--blue-l);color:var(--blue);font-size:9px;font-weight:800">d.${r.dia}</div>
+        <div class="li-body">
+          <div class="li-title">${r.nombre} ${finLabel(r)}</div>
+          <div class="li-sub">${frecLabel(r)}</div>
+        </div>
+        <span class="tag ${past?'t-green':'t-amber'}" style="margin-right:6px">${past?'Pagado':'Pendiente'}</span>
+        <div class="li-amount" style="color:${past?'var(--t2)':'var(--red)'}">−${fmt(r.importe)}</div>
+      </div>`;
+    }).join('')||'<div style="font-size:13px;color:var(--t2);padding:8px 0">Sin recibos este mes</div>'}
+    <div style="background:var(--blue-l);border-radius:var(--rs);padding:11px 14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:12px;font-weight:700;color:var(--blue)">Total BBVA ${mesesC[m]}</span>
+      <span class="num" style="font-size:16px;font-weight:700;color:var(--blue)">−${fmt(total)}</span>
+    </div>
+  </div>
+  <div class="card" style="border-top:3px solid var(--blue)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--blue)">Todos los recibos</span></div>
+    ${DB.bbvaRecibos.map(r=>{
+      const activo=reciboActivo(r,y,m);
+      const fl=frecLabel(r);
+      return `<div class="${activo?'':'baja'}"><div class="li">
+        <div class="li-icon" style="background:var(--blue-l);color:var(--blue);font-size:9px;font-weight:800">d.${r.dia}</div>
+        <div class="li-body">
+          <div class="li-title">${r.nombre} ${finLabel(r)}</div>
+          <div class="li-sub">${fl}${!activo?' · Baja':''}</div>
+        </div>
         <div class="li-amount" style="color:var(--red);margin-right:8px">−${fmt(r.importe)}</div>
-        <div class="li-action" onclick="toggleEditR(${r.id})" style="border-radius:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        <div class="li-action" onclick="toggleEditBBVA(${r.id})" style="border-radius:8px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
       </div>
-      <div id="editR-${r.id}" class="ep"><div class="fg2" style="margin-bottom:8px"><div class="fr"><label>Nombre</label><input type="text" id="rEN-${r.id}" value="${r.nombre}"/></div><div class="fr"><label>Importe (€)</label><input type="number" id="rEI-${r.id}" value="${r.importe}" step="0.01" inputmode="decimal"/></div></div><div style="display:flex;gap:8px"><button class="btn btn-green" style="flex:1;padding:11px;font-size:13px" onclick="guardarEditR(${r.id})">✓ Guardar</button>${activo?`<button class="btn btn-red" style="flex:1;padding:11px;font-size:12px" onclick="darDeBaja(${r.id})">Dar de baja</button>`:`<button class="btn btn-dark" style="flex:1;padding:11px;font-size:12px" onclick="reactivarRecibo(${r.id})">Reactivar</button>`}</div></div>
-      </div>`;}).join('')||'<div style="font-size:13px;color:var(--t2);padding:8px 0">Sin recibos en Santander</div>'}
+      <div id="eb-${r.id}" class="ep">
+        <div class="fg2" style="margin-bottom:8px">
+          <div class="fr"><label>Nombre</label><input type="text" id="ebN-${r.id}" value="${r.nombre}"/></div>
+          <div class="fr"><label>Importe (€)</label><input type="number" id="ebI-${r.id}" value="${r.importe}" step="0.01" inputmode="decimal"/></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-green" style="flex:1;padding:10px;font-size:13px" onclick="guardarBBVA(${r.id})">✓ Guardar</button>
+          ${activo?`<button class="btn btn-red" style="flex:1;padding:10px;font-size:12px" onclick="bajaRecibo('bbva',${r.id})">Dar de baja</button>`:`<button class="btn btn-dark" style="flex:1;padding:10px;font-size:12px" onclick="altaRecibo('bbva',${r.id})">Reactivar</button>`}
+          <button class="btn btn-red" style="padding:10px 12px;font-size:12px" onclick="borrarRecibo('bbva',${r.id})">🗑</button>
+        </div>
+      </div></div>`;
+    }).join('')}
+  </div>
+  <div class="card" style="border:2px dashed var(--brd)">
+    <div class="card-title" style="margin-bottom:13px">Añadir recibo BBVA</div>
+    <div class="fr"><label>Nombre</label><input type="text" id="bbvaN" placeholder="Ej: Netflix"/></div>
+    <div class="fg2">
+      <div class="fr"><label>Importe (€)</label><input type="number" id="bbvaI" step="0.01" inputmode="decimal" placeholder="0,00"/></div>
+      <div class="fr"><label>Día de cargo</label><input type="number" id="bbvaD" min="1" max="31" placeholder="1"/></div>
+    </div>
+    <div class="fg2">
+      <div class="fr"><label>Frecuencia</label>
+        <select id="bbvaF"><option value="monthly">Mensual</option><option value="quarterly">Trimestral</option><option value="annual">Anual</option><option value="once">Único</option></select>
+      </div>
+      <div class="fr"><label>Fin (opcional)</label><input type="month" id="bbvaFin" placeholder="aaaa-mm"/></div>
+    </div>
+    <button class="btn btn-blue" onclick="addBBVA()">Añadir recibo</button>
+    <div id="bbvaMsg"></div>
   </div>`;
+
+  document.getElementById('s-bbva').innerHTML = html;
+}
+function bbvaMes(d){bbvaMesM+=d;if(bbvaMesM>11){bbvaMesM=0;bbvaMesY++;}if(bbvaMesM<0){bbvaMesM=11;bbvaMesY--;}renderBBVA();}
+function toggleEditBBVA(id){const el=document.getElementById('eb-'+id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
+function guardarBBVA(id){
+  const r=DB.bbvaRecibos.find(x=>x.id===id);if(!r)return;
+  const n=document.getElementById('ebN-'+id)?.value.trim();if(n)r.nombre=n;
+  const i=parseFloat(document.getElementById('ebI-'+id)?.value);if(!isNaN(i))r.importe=i;
+  save();renderBBVA();
+}
+function bajaRecibo(bank,id){
+  const arr=bank==='bbva'?DB.bbvaRecibos:DB.sanRecibos;
+  const r=arr.find(x=>x.id===id);if(!r)return;
+  r.finAnio=hoy.getFullYear();r.finMes=hoy.getMonth();
+  save();bank==='bbva'?renderBBVA():renderSantander();
+}
+function altaRecibo(bank,id){
+  const arr=bank==='bbva'?DB.bbvaRecibos:DB.sanRecibos;
+  const r=arr.find(x=>x.id===id);if(!r)return;
+  delete r.finAnio;delete r.finMes;
+  save();bank==='bbva'?renderBBVA():renderSantander();
+}
+function borrarRecibo(bank,id){
+  if(bank==='bbva')DB.bbvaRecibos=DB.bbvaRecibos.filter(x=>x.id!==id);
+  else DB.sanRecibos=DB.sanRecibos.filter(x=>x.id!==id);
+  save();bank==='bbva'?renderBBVA():renderSantander();
+}
+function addBBVA(){
+  const nombre=document.getElementById('bbvaN').value.trim();
+  const importe=parseFloat(document.getElementById('bbvaI').value);
+  const dia=parseInt(document.getElementById('bbvaD').value)||1;
+  const frec=document.getElementById('bbvaF').value;
+  const fin=document.getElementById('bbvaFin').value;
+  const msg=document.getElementById('bbvaMsg');
+  if(!nombre||isNaN(importe)||importe<=0){msg.className='msg-err';msg.textContent='⚠ Nombre e importe obligatorios';return;}
+  const r={id:Date.now(),nombre,importe,frec,dia};
+  if(frec==='quarterly')r.meses=[0,3,6,9];
+  if(frec==='annual'||frec==='once'){r.mesAnual=hoy.getMonth();if(frec==='once')r.anio=hoy.getFullYear();}
+  if(fin){const[fy,fm]=fin.split('-').map(Number);r.finAnio=fy;r.finMes=fm-1;}
+  DB.bbvaRecibos.push(r);save();
+  msg.className='msg-ok';msg.textContent='✓ Recibo añadido';
+  setTimeout(()=>renderBBVA(),900);
 }
 
-function toggleDeuda(id){
-  const d=(DB.deudas||[]).find(x=>x.id===id);
-  if(!d)return;
-  d.pagada=!d.pagada;
-  if(d.pagada)d.pagadaMes=mesKey(hoy.getFullYear(),hoy.getMonth());
-  else delete d.pagadaMes;
-  saveDB();renderMovimientos();
-}
-function eliminarDeuda(id){DB.deudas=(DB.deudas||[]).filter(x=>x.id!==id);saveDB();renderMovimientos();}
-function eliminarIVA(id){DB.iva=(DB.iva||[]).filter(x=>x.id!==id);saveDB();renderMovimientos();}
-function liquidarIVA(){if(!confirm('¿Liquidar IVA?'))return;DB.iva=[];saveDB();renderMovimientos();}
-function toggleEditR(id){const el=document.getElementById('editR-'+id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
-function guardarEditR(id){const r=DB.recibos.find(x=>x.id===id);if(!r)return;const n=document.getElementById('rEN-'+id)?.value.trim();if(n)r.nombre=n;const i=parseFloat(document.getElementById('rEI-'+id)?.value);if(!isNaN(i)&&i>=0)r.importe=i;saveDB();renderMovimientos();}
-function darDeBaja(id){const r=DB.recibos.find(x=>x.id===id);if(!r)return;r.finAnio=hoy.getFullYear();r.finMes=hoy.getMonth();saveDB();renderMovimientos();}
-function reactivarRecibo(id){const r=DB.recibos.find(x=>x.id===id);if(!r)return;delete r.finAnio;delete r.finMes;saveDB();renderMovimientos();}
+// ══════════════════════════════════════════
+// SANTANDER
+// ══════════════════════════════════════════
+let sanMesY=hoy.getFullYear(), sanMesM=hoy.getMonth();
+function renderSantander() {
+  const y=sanMesY, m=sanMesM, mk=mesKey(y,m);
+  const fijos=DB.sanRecibos.filter(r=>reciboAplica(r,y,m)).sort((a,b)=>a.dia-b.dia);
+  const fijosTotal=fijos.reduce((s,r)=>s+r.importe,0);
+  const fijosPend=fijos.filter(r=>!isPast(r.dia,y,m)).reduce((s,r)=>s+r.importe,0);
+  const activos=DB.sanGastosMes[mk]||[];
+  const extras=DB.sanExtrasMes[mk]||[];
+  const varTotal=activos.reduce((s,g)=>s+g.importe,0)+extras.reduce((s,g)=>s+g.importe,0);
+  const totalMes=fijosTotal+varTotal;
 
-// ════════════════════════════════════════
-// INVERSIONES
-// ════════════════════════════════════════
-function renderInversiones(){
-  const p=DB.inversiones.pias, l=DB.inversiones.legado, a=DB.inversiones.axa;
+  const finLabel=r=>r.finAnio!==undefined?`<span class="tag t-amber" style="margin-left:4px;font-size:9px">hasta ${mesesC[r.finMes].toLowerCase()} ${r.finAnio}</span>`:'' ;
+
+  let html=`<div class="page-title" style="color:var(--red)">Santander — Gastos</div>
+  <div class="mes-nav">
+    <button class="btn-ghost" onclick="sanMes(-1)">←</button>
+    <span>${mesesC[m]} ${y}</span>
+    <button class="btn-ghost" onclick="sanMes(1)">→</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box" style="border-top:3px solid var(--red)">
+      <div class="stat-lbl" style="color:var(--red)">Total mes</div>
+      <div class="stat-val" style="color:var(--red)">−${fmt(totalMes)}</div>
+      <div class="stat-sub">Fijos ${fmt(fijosTotal)} · Variables ${fmt(varTotal)}</div>
+    </div>
+    <div class="stat-box" style="border-top:3px solid var(--amber)">
+      <div class="stat-lbl" style="color:var(--amber)">Fijos pendientes</div>
+      <div class="stat-val" style="color:var(--amber)">−${fmt(fijosPend)}</div>
+      <div class="stat-sub">de ${fmt(fijosTotal)} fijos</div>
+    </div>
+  </div>
+
+  <!-- RECIBOS FIJOS -->
+  <div class="card" style="border-top:3px solid var(--red)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--red)">Recibos fijos</span><span class="num" style="font-size:15px;font-weight:700;color:var(--red)">−${fmt(fijosTotal)}</span></div>
+    ${fijos.map(r=>{
+      const past=isPast(r.dia,y,m);
+      return `<div class="li">
+        <div class="li-icon" style="background:var(--red-l);color:var(--red);font-size:9px;font-weight:800">d.${r.dia}</div>
+        <div class="li-body"><div class="li-title">${r.nombre} ${finLabel(r)}</div></div>
+        <span class="tag ${past?'t-green':'t-amber'}" style="margin-right:6px">${past?'Pagado':'Pendiente'}</span>
+        <div class="li-amount" style="color:${past?'var(--t2)':'var(--red)'}">−${fmt(r.importe)}</div>
+      </div>`;
+    }).join('')||'<div style="font-size:13px;color:var(--t2);padding:8px 0">Sin recibos fijos este mes</div>'}
+  </div>
+
+  <!-- HABITUALES -->
+  <div class="card" style="border-top:3px solid var(--amber)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--amber)">Gastos habituales</span><span class="num" style="font-size:14px;font-weight:700;color:var(--amber)">−${fmt(activos.reduce((s,g)=>s+g.importe,0))}</span></div>
+    <div style="font-size:11px;color:var(--t2);margin-bottom:10px">Activa los que hayas hecho este mes. Puedes editar el importe.</div>
+    ${DB.sanHabituales.map(h=>{
+      const activo=activos.find(g=>g.habId===h.id);
+      return `<div class="hab-item${activo?' on':''}" onclick="toggleHabitual(${h.id})">
+        <div class="hab-chk">${activo?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
+        </div>
+        <div class="hab-body">
+          <div class="hab-name">${h.nombre}</div>
+          <div style="font-size:10px;color:var(--t2)">${h.cat}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px" onclick="event.stopPropagation()">
+          ${activo?`<input type="number" value="${activo.importe}" step="1" inputmode="decimal" style="width:64px;padding:5px 8px;font-size:13px;border-radius:8px;border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:var(--num);font-weight:700" onchange="editHabImporte(${h.id},this.value)"/>`:`<span class="hab-amt">${fmt(h.importe)}</span>`}
+        </div>
+      </div>`;
+    }).join('')}
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--brd2)">
+      <div style="font-size:10px;font-weight:700;color:var(--t2);letter-spacing:.04em;margin-bottom:8px">GESTIONAR HABITUALES</div>
+      ${DB.sanHabituales.map(h=>`
+        <div class="li" style="padding:8px 0">
+          <div class="li-body"><div class="li-title" style="font-size:12px">${h.nombre}</div><div class="li-sub">${h.cat}</div></div>
+          <div class="li-amount" style="color:var(--t2);margin-right:6px;font-size:12px">${fmt(h.importe)}</div>
+          <div class="li-action" onclick="toggleEditHab(${h.id})" style="border-radius:8px">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+        </div>
+        <div id="eh-${h.id}" class="ep">
+          <div class="fg2" style="margin-bottom:8px">
+            <div class="fr"><label>Nombre</label><input type="text" id="ehN-${h.id}" value="${h.nombre}"/></div>
+            <div class="fr"><label>Importe base (€)</label><input type="number" id="ehI-${h.id}" value="${h.importe}" step="0.01" inputmode="decimal"/></div>
+            <div class="fr"><label>Categoría</label><input type="text" id="ehC-${h.id}" value="${h.cat}"/></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-green" style="flex:1;padding:10px;font-size:13px" onclick="guardarHab(${h.id})">✓ Guardar</button>
+            <button class="btn btn-red" style="padding:10px 12px;font-size:12px" onclick="borrarHab(${h.id})">🗑</button>
+          </div>
+        </div>`).join('')}
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <input type="text" id="habN" placeholder="Nuevo habitual" style="flex:1;padding:10px 12px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+        <input type="number" id="habI" placeholder="€" inputmode="decimal" style="width:68px;padding:10px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+        <button class="btn btn-amber" style="width:auto;padding:10px 14px;font-size:16px" onclick="addHabitual()">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GASTOS EXTRA -->
+  <div class="card" style="border-top:3px solid var(--red)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--red)">Gastos extra del mes</span><span class="num" style="font-size:14px;font-weight:700;color:var(--red)">−${fmt(extras.reduce((s,g)=>s+g.importe,0))}</span></div>
+    ${extras.map(g=>`<div class="li">
+      <div class="li-body"><div class="li-title">${g.nombre}</div></div>
+      <div class="li-amount" style="color:var(--red);margin-right:8px">−${fmt(g.importe)}</div>
+      <div class="li-action" onclick="borrarExtra(${g.id})" style="border:none">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--t2);padding:6px 0">Sin gastos extra este mes</div>'}
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <input type="text" id="exN" placeholder="Concepto" style="flex:1;padding:10px 12px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+      <input type="number" id="exI" placeholder="€" inputmode="decimal" style="width:68px;padding:10px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+      <button class="btn btn-red" style="width:auto;padding:10px 14px;font-size:16px" onclick="addExtra()">+</button>
+    </div>
+  </div>
+
+  <!-- RECIBOS FIJOS (gestión) -->
+  <div class="card" style="border:2px dashed var(--brd)">
+    <div class="card-title" style="margin-bottom:13px">Añadir recibo fijo Santander</div>
+    <div class="fr"><label>Nombre</label><input type="text" id="sanN" placeholder="Ej: Seguro coche"/></div>
+    <div class="fg2">
+      <div class="fr"><label>Importe (€)</label><input type="number" id="sanI" step="0.01" inputmode="decimal" placeholder="0,00"/></div>
+      <div class="fr"><label>Día de cargo</label><input type="number" id="sanD" min="1" max="31" placeholder="1"/></div>
+    </div>
+    <div class="fg2">
+      <div class="fr"><label>Frecuencia</label>
+        <select id="sanF"><option value="monthly">Mensual</option><option value="quarterly">Trimestral</option><option value="annual">Anual</option><option value="once">Único</option></select>
+      </div>
+      <div class="fr"><label>Fin (opcional)</label><input type="month" id="sanFin"/></div>
+    </div>
+    <button class="btn btn-red" onclick="addSanRecibo()">Añadir recibo</button>
+    <div id="sanMsg"></div>
+  </div>
+
+  <!-- TODOS LOS RECIBOS FIJOS SANTANDER (gestión) -->
+  <div class="card" style="border-top:3px solid var(--red)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--red)">Todos los recibos fijos</span></div>
+    ${DB.sanRecibos.map(r=>{
+      const activo=reciboActivo(r,y,m);
+      return `<div class="${activo?'':'baja'}"><div class="li">
+        <div class="li-icon" style="background:var(--red-l);color:var(--red);font-size:9px;font-weight:800">d.${r.dia}</div>
+        <div class="li-body"><div class="li-title">${r.nombre} ${finLabel(r)}</div><div class="li-sub">${({monthly:'Mensual',quarterly:'Trimestral',annual:'Anual',once:'Único'}[r.frec]||r.frec)}${!activo?' · Baja':''}</div></div>
+        <div class="li-amount" style="color:var(--red);margin-right:8px">−${fmt(r.importe)}</div>
+        <div class="li-action" onclick="toggleEditSAN(${r.id})" style="border-radius:8px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+      </div>
+      <div id="es-${r.id}" class="ep">
+        <div class="fg2" style="margin-bottom:8px">
+          <div class="fr"><label>Nombre</label><input type="text" id="esN-${r.id}" value="${r.nombre}"/></div>
+          <div class="fr"><label>Importe (€)</label><input type="number" id="esI-${r.id}" value="${r.importe}" step="0.01" inputmode="decimal"/></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-green" style="flex:1;padding:10px;font-size:13px" onclick="guardarSAN(${r.id})">✓ Guardar</button>
+          ${activo?`<button class="btn btn-red" style="flex:1;padding:10px;font-size:12px" onclick="bajaRecibo('san',${r.id})">Dar de baja</button>`:`<button class="btn btn-dark" style="flex:1;padding:10px;font-size:12px" onclick="altaRecibo('san',${r.id})">Reactivar</button>`}
+          <button class="btn btn-red" style="padding:10px 12px;font-size:12px" onclick="borrarRecibo('san',${r.id})">🗑</button>
+        </div>
+      </div></div>`;
+    }).join('')||'<div style="font-size:13px;color:var(--t2);padding:8px 0">Sin recibos registrados</div>'}
+  </div>`;
+
+  document.getElementById('s-santander').innerHTML = html;
+}
+function sanMes(d){sanMesM+=d;if(sanMesM>11){sanMesM=0;sanMesY++;}if(sanMesM<0){sanMesM=11;sanMesY--;}renderSantander();}
+function toggleHabitual(habId){
+  const mk=mesKey(sanMesY,sanMesM);
+  if(!DB.sanGastosMes[mk])DB.sanGastosMes[mk]=[];
+  const idx=DB.sanGastosMes[mk].findIndex(g=>g.habId===habId);
+  if(idx>=0)DB.sanGastosMes[mk].splice(idx,1);
+  else{const h=DB.sanHabituales.find(x=>x.id===habId);if(h)DB.sanGastosMes[mk].push({habId,importe:h.importe});}
+  save();renderSantander();
+}
+function editHabImporte(habId,val){
+  const mk=mesKey(sanMesY,sanMesM);
+  if(!DB.sanGastosMes[mk])return;
+  const g=DB.sanGastosMes[mk].find(x=>x.habId===habId);
+  if(g){g.importe=parseFloat(val)||0;save();}
+}
+function toggleEditHab(id){const el=document.getElementById('eh-'+id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
+function guardarHab(id){
+  const h=DB.sanHabituales.find(x=>x.id===id);if(!h)return;
+  const n=document.getElementById('ehN-'+id)?.value.trim();if(n)h.nombre=n;
+  const i=parseFloat(document.getElementById('ehI-'+id)?.value);if(!isNaN(i))h.importe=i;
+  const c=document.getElementById('ehC-'+id)?.value.trim();if(c)h.cat=c;
+  save();renderSantander();
+}
+function borrarHab(id){DB.sanHabituales=DB.sanHabituales.filter(x=>x.id!==id);save();renderSantander();}
+function addHabitual(){
+  const n=document.getElementById('habN').value.trim();
+  const i=parseFloat(document.getElementById('habI').value);
+  if(!n)return;
+  DB.sanHabituales.push({id:Date.now(),nombre:n,importe:isNaN(i)?0:i,cat:'otro'});
+  save();renderSantander();
+}
+function addExtra(){
+  const n=document.getElementById('exN').value.trim();
+  const i=parseFloat(document.getElementById('exI').value);
+  if(!n)return;
+  const mk=mesKey(sanMesY,sanMesM);
+  if(!DB.sanExtrasMes[mk])DB.sanExtrasMes[mk]=[];
+  DB.sanExtrasMes[mk].push({id:Date.now(),nombre:n,importe:isNaN(i)?0:i});
+  save();renderSantander();
+}
+function borrarExtra(id){
+  const mk=mesKey(sanMesY,sanMesM);
+  if(DB.sanExtrasMes[mk])DB.sanExtrasMes[mk]=DB.sanExtrasMes[mk].filter(x=>x.id!==id);
+  save();renderSantander();
+}
+function toggleEditSAN(id){const el=document.getElementById('es-'+id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
+function guardarSAN(id){
+  const r=DB.sanRecibos.find(x=>x.id===id);if(!r)return;
+  const n=document.getElementById('esN-'+id)?.value.trim();if(n)r.nombre=n;
+  const i=parseFloat(document.getElementById('esI-'+id)?.value);if(!isNaN(i))r.importe=i;
+  save();renderSantander();
+}
+function addSanRecibo(){
+  const nombre=document.getElementById('sanN').value.trim();
+  const importe=parseFloat(document.getElementById('sanI').value);
+  const dia=parseInt(document.getElementById('sanD').value)||1;
+  const frec=document.getElementById('sanF').value;
+  const fin=document.getElementById('sanFin').value;
+  const msg=document.getElementById('sanMsg');
+  if(!nombre||isNaN(importe)||importe<=0){msg.className='msg-err';msg.textContent='⚠ Nombre e importe obligatorios';return;}
+  const r={id:Date.now(),nombre,importe,frec,dia};
+  if(frec==='quarterly')r.meses=[0,3,6,9];
+  if(frec==='annual'||frec==='once'){r.mesAnual=hoy.getMonth();if(frec==='once')r.anio=hoy.getFullYear();}
+  if(fin){const[fy,fm]=fin.split('-').map(Number);r.finAnio=fy;r.finMes=fm-1;}
+  DB.sanRecibos.push(r);save();
+  msg.className='msg-ok';msg.textContent='✓ Recibo añadido';
+  setTimeout(()=>renderSantander(),900);
+}
+
+// ══════════════════════════════════════════
+// TRADE REPUBLIC — OBJETIVOS
+// ══════════════════════════════════════════
+function renderTR() {
+  const saldoTR=DB.saldos.tr?.val||0;
+  const totalMeta=DB.objetivos.reduce((s,o)=>s+o.meta,0);
+  const ordenados=[...DB.objetivos].sort((a,b)=>{
+    if(!a.fecha&&!b.fecha)return 0;if(!a.fecha)return 1;if(!b.fecha)return -1;
+    return new Date(a.fecha)-new Date(b.fecha);
+  });
+  let restante=saldoTR;
+  const asignado={};
+  ordenados.forEach(o=>{const c=Math.min(o.meta,Math.max(0,restante));asignado[o.id]=c;restante=Math.max(0,restante-o.meta);});
+
+  let html=`<div class="page-title" style="color:var(--tr)">Trade Republic — Objetivos</div>
+  <div class="card" style="border-top:3px solid var(--tr)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px">
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tr)">Saldo disponible</div>
+        <div class="num" style="font-size:32px;font-weight:700;margin-top:4px">${fmt(saldoTR)}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t2)">Total metas</div>
+        <div class="num" style="font-size:18px;font-weight:700;margin-top:4px">${fmt(totalMeta)}</div>
+      </div>
+    </div>
+    <div class="prog" style="height:8px"><div class="prog-fill pf-tr" style="width:${Math.min(100,(saldoTR/totalMeta*100)||0).toFixed(1)}%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-top:5px;font-weight:600">
+      <span>${Math.min(100,(saldoTR/totalMeta*100)||0).toFixed(0)}% cubierto</span>
+      ${saldoTR<totalMeta?`<span style="color:var(--red)">Déficit ${fmt(totalMeta-saldoTR)}</span>`:`<span style="color:var(--green)">✓ Todo cubierto</span>`}
+    </div>
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--brd2)">
+      <div class="fr"><label>Actualizar saldo TR (€)</label><input type="number" id="trSaldo" value="${saldoTR}" step="0.01" inputmode="decimal"/></div>
+      <div class="fr"><label>Fecha</label><input type="date" id="trFecha" value="${toDateInput(DB.saldos.tr?.fecha)}"/></div>
+      <button class="btn btn-tr" onclick="actualizarTR()">Guardar saldo</button>
+    </div>
+  </div>`;
+
+  html+=ordenados.map((o,idx)=>{
+    const cubre=asignado[o.id]||0, faltan=Math.max(0,o.meta-cubre);
+    const pct=o.meta>0?Math.min(100,Math.round(cubre/o.meta*100)):0;
+    const cubierto=pct>=100;
+    const dias=diasRestantes(o.fecha);
+    let cbCls='cd-none',cbTxt='Sin fecha';
+    if(dias!==null){if(dias<0){cbTxt='Vencido';cbCls='cd-urg';}else if(dias<=30){cbTxt=`${dias}d`;cbCls='cd-urg';}else if(dias<=90){cbTxt=`${dias}d`;cbCls='cd-soon';}else{cbTxt=`${dias}d`;cbCls='cd-ok';}}
+    return `<div class="oc${cubierto?' done':''}">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px">
+        <div style="width:26px;height:26px;border-radius:50%;background:${cubierto?'var(--green)':'var(--tr-l)'};color:${cubierto?'#fff':'var(--tr)'};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">${cubierto?'✓':idx+1}</div>
+        <div style="flex:1">
+          <div style="font-size:16px;font-weight:800;color:${cubierto?'var(--green)':'var(--tx)'}">${o.nombre}</div>
+          <div style="font-size:11px;color:var(--t2);margin-top:2px">${o.fecha?new Date(o.fecha).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'Sin fecha límite'}</div>
+        </div>
+        <span class="cd-badge ${cbCls}">${cbTxt}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px">
+        <span style="color:var(--t2)">Cubierto <span class="num" style="color:${cubierto?'var(--green)':'var(--tx)'};font-size:13px;font-weight:700">${fmt(cubre)}</span></span>
+        <span style="color:var(--t2)">Meta <span class="num" style="font-size:13px;font-weight:700">${fmt(o.meta)}</span></span>
+      </div>
+      <div class="prog"><div class="prog-fill ${cubierto?'pf-green':'pf-tr'}" style="width:${pct}%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-top:4px">
+        <span>${pct}%</span>${faltan>0?`<span style="color:var(--red)">Faltan ${fmt(faltan)}</span>`:`<span style="color:var(--green)">✓ Completo</span>`}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        ${cubierto?`<button class="btn btn-green" style="flex:2;padding:11px;font-size:13px" onclick="completarObjetivo(${o.id})">✓ Marcar pagado</button>`:''}
+        <button class="btn-ghost" style="flex:1;padding:11px;font-size:12px" onclick="document.getElementById('eo-${o.id}').style.display=document.getElementById('eo-${o.id}').style.display==='block'?'none':'block'">Editar</button>
+      </div>
+      <div id="eo-${o.id}" class="ep">
+        <div class="fg2">
+          <div class="fr"><label>Nombre</label><input type="text" id="oN-${o.id}" value="${o.nombre}"/></div>
+          <div class="fr"><label>Meta (€)</label><input type="number" id="oM-${o.id}" value="${o.meta}" step="0.01" inputmode="decimal"/></div>
+          <div class="fr"><label>Fecha límite</label><input type="date" id="oF-${o.id}" value="${o.fecha||''}"/></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-green" style="flex:1;padding:11px" onclick="guardarObjetivo(${o.id})">Guardar</button>
+          <button class="btn btn-red" style="flex:1;padding:11px" onclick="borrarObjetivo(${o.id})">Eliminar</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  html+=`<div class="card" style="border:2px dashed var(--brd)">
+    <div class="card-title" style="margin-bottom:13px">Nuevo objetivo</div>
+    <div class="fg2">
+      <div class="fr"><label>Nombre</label><input type="text" id="oNN" placeholder="Ej: Viaje"/></div>
+      <div class="fr"><label>Meta (€)</label><input type="number" id="oNM" step="0.01" inputmode="decimal" placeholder="0,00"/></div>
+      <div class="fr"><label>Fecha límite</label><input type="date" id="oNF"/></div>
+    </div>
+    <button class="btn btn-tr" onclick="addObjetivo()">Guardar objetivo</button>
+  </div>`;
+  document.getElementById('s-tr').innerHTML=html;
+}
+function actualizarTR(){
+  const v=parseFloat(document.getElementById('trSaldo').value);
+  const f=fromDateInput(document.getElementById('trFecha').value);
+  if(isNaN(v))return;
+  DB.saldos.tr={val:v,fecha:f};save();renderTR();
+}
+function completarObjetivo(id){
+  const numId=Number(id);
+  const o=DB.objetivos.find(x=>Number(x.id)===numId);if(!o)return;
+  if(!DB.saldos.tr)DB.saldos.tr={val:0,fecha:''};
+  DB.saldos.tr.val=Math.max(0,(DB.saldos.tr.val||0)-o.meta);
+  DB.objetivos=DB.objetivos.filter(x=>Number(x.id)!==numId);
+  save();renderTR();
+}
+function guardarObjetivo(id){
+  const o=DB.objetivos.find(x=>x.id===id);if(!o)return;
+  const n=document.getElementById('oN-'+id)?.value.trim();if(n)o.nombre=n;
+  const m=parseFloat(document.getElementById('oM-'+id)?.value);if(!isNaN(m))o.meta=m;
+  const f=document.getElementById('oF-'+id)?.value;if(f!==undefined)o.fecha=f;
+  save();renderTR();
+}
+function borrarObjetivo(id){DB.objetivos=DB.objetivos.filter(x=>x.id!==id);save();renderTR();}
+function addObjetivo(){
+  const nombre=document.getElementById('oNN').value.trim();
+  const meta=parseFloat(document.getElementById('oNM').value);
+  const fecha=document.getElementById('oNF').value;
+  if(!nombre||isNaN(meta))return;
+  DB.objetivos.push({id:Date.now(),nombre,meta,fecha});save();renderTR();
+}
+
+// ══════════════════════════════════════════
+// PRODUCTOS (PIAS, LEGADO, AXA, PRÉSTAMO)
+// ══════════════════════════════════════════
+function renderProductos(){
+  const p=DB.pias, l=DB.legado, a=DB.axa;
   const varAxa=a.cierre-a.compra, varAxaP=(varAxa/a.compra*100);
   const pagadas=calcCuotasPagadas(), amort=pagadas*DB.prestamo.cuota;
   const saldoRestante=Math.max(0,DB.prestamo.capital-amort);
   const pct=Math.min(100,amort/DB.prestamo.capital*100);
 
-  document.getElementById('s-inversiones').innerHTML=`<div class="page-title">Inversión</div>
+  document.getElementById('s-productos').innerHTML=`<div class="page-title" style="color:var(--tr)">Productos de ahorro</div>
 
-  <!-- PIAS -->
   <div class="card" style="border-top:3px solid var(--tr)">
     <div class="card-hdr"><span class="card-title" style="color:var(--tr)">PIAS</span><span class="num" style="font-size:22px;font-weight:700;color:var(--tr)">${fmt(p.saldo)}</span></div>
     <div class="pnl-box ${p.variacion>=0?'pnl-pos':'pnl-neg'}">
@@ -717,14 +1025,13 @@ function renderInversiones(){
     <div class="fg2">
       <div class="fr"><label>Saldo actual (€)</label><input type="number" id="pS" value="${p.saldo}" step="0.01" inputmode="decimal"/></div>
       <div class="fr"><label>Disposiciones (€)</label><input type="number" id="pD" value="${p.disposiciones}" step="0.01" inputmode="decimal"/></div>
-      <div class="fr"><label>Variación patrimonial (€)</label><input type="number" id="pV" value="${p.variacion}" step="0.01" inputmode="decimal"/></div>
-      <div class="fr"><label>Fecha referencia</label><input type="text" id="pF" value="${p.fecha}" placeholder="dd/mm/aaaa"/></div>
+      <div class="fr"><label>Variación (€)</label><input type="number" id="pV" value="${p.variacion}" step="0.01" inputmode="decimal"/></div>
+      <div class="fr"><label>Fecha</label><input type="text" id="pF" value="${p.fecha}" placeholder="dd/mm/aaaa"/></div>
     </div>
-    <button class="btn btn-tr" onclick="saveInv()">Guardar PIAS</button>
+    <button class="btn btn-tr" onclick="savePIAS()">Guardar PIAS</button>
     <div style="font-size:11px;color:var(--t2);text-align:center;margin-top:9px">+50 €/mes · día 10 · BBVA</div>
   </div>
 
-  <!-- LEGADO ACTIVO -->
   <div class="card" style="border-top:3px solid var(--tr)">
     <div class="card-hdr"><span class="card-title" style="color:var(--tr)">Legado Activo AXA</span><span class="num" style="font-size:22px;font-weight:700;color:var(--tr)">${fmt(l.disponible)}</span></div>
     <div class="pnl-box ${(l.variacion||0)>=0?'pnl-pos':'pnl-neg'}">
@@ -734,22 +1041,21 @@ function renderInversiones(){
     <div class="fg2">
       <div class="fr"><label>Acumulado total (€)</label><input type="number" id="lA" value="${l.acumulado}" step="0.01" inputmode="decimal"/></div>
       <div class="fr"><label>Disponible / rescatable (€)</label><input type="number" id="lD" value="${l.disponible}" step="0.01" inputmode="decimal"/></div>
-      <div class="fr"><label>Variación patrimonial (€)</label><input type="number" id="lV" value="${l.variacion||0}" step="0.01" inputmode="decimal"/></div>
+      <div class="fr"><label>Variación (€)</label><input type="number" id="lV" value="${l.variacion||0}" step="0.01" inputmode="decimal"/></div>
       <div class="fr"><label>No disponible (decesos)</label><input type="number" value="${(l.acumulado-l.disponible).toFixed(2)}" disabled style="background:var(--card2);color:var(--t2)"/></div>
-      <div class="fr"><label>Fecha referencia</label><input type="text" id="lF" value="${l.fecha}" placeholder="dd/mm/aaaa"/></div>
+      <div class="fr"><label>Fecha</label><input type="text" id="lF" value="${l.fecha}" placeholder="dd/mm/aaaa"/></div>
     </div>
-    <button class="btn btn-tr" onclick="saveLeg()">Guardar Legado</button>
+    <button class="btn btn-tr" onclick="saveLegado()">Guardar Legado</button>
     <div style="font-size:11px;color:var(--t2);text-align:center;margin-top:9px">+20 €/mes · día 30 · BBVA · Incluye decesos</div>
   </div>
 
-  <!-- AXA ACCIÓN -->
   <div class="card" style="border-top:3px solid var(--tr)">
     <div class="card-hdr"><span class="card-title" style="color:var(--tr)">Acción AXA · CS.PA</span></div>
     <div class="pnl-box ${varAxa>=0?'pnl-pos':'pnl-neg'}" style="display:flex;align-items:center;justify-content:space-between">
       <div>
         <div class="pnl-lbl" style="color:${varAxa>=0?'var(--green)':'var(--red)'}">${varAxa>=0?'Ganancia latente':'Pérdida latente'}</div>
         <div class="pnl-val" style="color:${varAxa>=0?'var(--green)':'var(--red)'}">${varAxa>=0?'+':''}${varAxa.toFixed(2).replace('.',',')} €</div>
-        <div class="pnl-sub" style="color:${varAxa>=0?'var(--green)':'var(--red)'}">  ${varAxaP>=0?'+':''}${varAxaP.toFixed(2)}% · Sin impacto hasta venta</div>
+        <div class="pnl-sub" style="color:${varAxa>=0?'var(--green)':'var(--red)'}">${varAxaP>=0?'+':''}${varAxaP.toFixed(2)}% · Sin impacto hasta venta</div>
       </div>
       <div style="font-size:36px">${varAxa>=0?'📈':'📉'}</div>
     </div>
@@ -761,7 +1067,6 @@ function renderInversiones(){
     <button class="btn btn-tr" onclick="saveAxa()">Guardar AXA</button>
   </div>
 
-  <!-- PRÉSTAMO -->
   <div class="card" style="border-top:3px solid var(--red)">
     <div class="card-hdr"><span class="card-title" style="color:var(--red)">Préstamo · Santander</span><span class="num" style="color:var(--red);font-size:15px;font-weight:700">${fmt(DB.prestamo.cuota)}/mes</span></div>
     <div class="pnl-box pnl-neg">
@@ -772,168 +1077,212 @@ function renderInversiones(){
     <div class="li"><div class="li-icon" style="background:var(--card2);color:var(--t2);font-size:9px">CAP</div><div class="li-body"><div class="li-title">Capital original</div></div><div class="li-amount" style="color:var(--t2)">${fmt(DB.prestamo.capital)}</div></div>
     <div class="li"><div class="li-icon" style="background:var(--green-l);color:var(--green);font-size:9px">AMO</div><div class="li-body"><div class="li-title">Amortizado estimado</div></div><div class="li-amount" style="color:var(--green)">${fmt(amort)}</div></div>
     <div style="margin-top:12px">
-      <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--t2);margin-bottom:5px"><span>Progreso amortización</span><span class="num">${pct.toFixed(1)}%</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--t2);margin-bottom:5px"><span>Progreso</span><span class="num">${pct.toFixed(1)}%</span></div>
       <div class="prog" style="height:7px"><div class="prog-fill pf-red" style="width:${pct.toFixed(1)}%"></div></div>
       <div style="font-size:11px;color:var(--t2);margin-top:5px">Finaliza: abril 2033</div>
     </div>
+  </div>
+
+  <!-- ACTUALIZAR SALDOS BBVA Y SANTANDER -->
+  <div class="card">
+    <div class="card-title" style="margin-bottom:13px">Actualizar saldos de cuenta</div>
+    <div class="fr"><label>BBVA (€)</label><input type="number" id="sBBVA" value="${DB.saldos.bbva?.val||''}" step="0.01" inputmode="decimal"/></div>
+    <div class="fr"><label>Fecha BBVA</label><input type="date" id="fBBVA" value="${toDateInput(DB.saldos.bbva?.fecha)}"/></div>
+    <button class="btn btn-blue" style="margin-bottom:12px" onclick="actualizarSaldo('bbva','sBBVA','fBBVA')">Guardar BBVA</button>
+    <div class="fr"><label>Santander (€)</label><input type="number" id="sSAN" value="${DB.saldos.san?.val||''}" step="0.01" inputmode="decimal"/></div>
+    <div class="fr"><label>Fecha Santander</label><input type="date" id="fSAN" value="${toDateInput(DB.saldos.san?.fecha)}"/></div>
+    <button class="btn btn-red" onclick="actualizarSaldo('san','sSAN','fSAN')">Guardar Santander</button>
+    <div id="saldoMsg"></div>
   </div>`;
 }
-function saveInv(){const s=parseFloat(document.getElementById('pS').value),d=parseFloat(document.getElementById('pD').value),v=parseFloat(document.getElementById('pV').value),f=document.getElementById('pF').value.trim();if(!isNaN(s))DB.inversiones.pias.saldo=s;if(!isNaN(d))DB.inversiones.pias.disposiciones=d;if(!isNaN(v))DB.inversiones.pias.variacion=v;if(f)DB.inversiones.pias.fecha=f;saveDB();renderInversiones();}
-function saveLeg(){const a=parseFloat(document.getElementById('lA').value),d=parseFloat(document.getElementById('lD').value),v=parseFloat(document.getElementById('lV').value),f=document.getElementById('lF').value.trim();if(!isNaN(a))DB.inversiones.legado.acumulado=a;if(!isNaN(d))DB.inversiones.legado.disponible=d;if(!isNaN(v))DB.inversiones.legado.variacion=v;if(f)DB.inversiones.legado.fecha=f;saveDB();renderInversiones();}
-function saveAxa(){const b=parseFloat(document.getElementById('axB').value),c=parseFloat(document.getElementById('axC').value),f=document.getElementById('axF').value.trim();if(!isNaN(b))DB.inversiones.axa.compra=b;if(!isNaN(c))DB.inversiones.axa.cierre=c;if(f)DB.inversiones.axa.fecha=f;saveDB();renderInversiones();}
+function savePIAS(){const s=parseFloat(document.getElementById('pS').value),d=parseFloat(document.getElementById('pD').value),v=parseFloat(document.getElementById('pV').value),f=document.getElementById('pF').value.trim();if(!isNaN(s))DB.pias.saldo=s;if(!isNaN(d))DB.pias.disposiciones=d;if(!isNaN(v))DB.pias.variacion=v;if(f)DB.pias.fecha=f;save();renderProductos();}
+function saveLegado(){const a=parseFloat(document.getElementById('lA').value),d=parseFloat(document.getElementById('lD').value),v=parseFloat(document.getElementById('lV').value),f=document.getElementById('lF').value.trim();if(!isNaN(a))DB.legado.acumulado=a;if(!isNaN(d))DB.legado.disponible=d;if(!isNaN(v))DB.legado.variacion=v;if(f)DB.legado.fecha=f;save();renderProductos();}
+function saveAxa(){const b=parseFloat(document.getElementById('axB').value),c=parseFloat(document.getElementById('axC').value),f=document.getElementById('axF').value.trim();if(!isNaN(b))DB.axa.compra=b;if(!isNaN(c))DB.axa.cierre=c;if(f)DB.axa.fecha=f;save();renderProductos();}
+function actualizarSaldo(c,si,fi){
+  const v=parseFloat(document.getElementById(si).value);
+  const f=fromDateInput(document.getElementById(fi).value);
+  if(isNaN(v))return;
+  DB.saldos[c]={val:v,fecha:f};save();
+  const msg=document.getElementById('saldoMsg');
+  msg.className='msg-ok';msg.textContent='✓ Guardado';
+  setTimeout(()=>{if(msg)msg.textContent='';},2000);
+}
 
-// ════════════════════════════════════════
-// OBJETIVOS
-// ════════════════════════════════════════
-function renderObjetivos(){
-  const saldoTR=DB.saldos.tr?.val||0,totalMeta=DB.objetivos.reduce((s,o)=>s+o.meta,0),asignado=distribuirTR();
-  const ordenados=[...DB.objetivos].sort((a,b)=>{if(!a.fecha&&!b.fecha)return 0;if(!a.fecha)return 1;if(!b.fecha)return-1;return new Date(a.fecha)-new Date(b.fecha);});
-  let html=`<div class="page-title">Objetivos · Trade Republic</div>
+// ══════════════════════════════════════════
+// IVA + DEUDAS
+// ══════════════════════════════════════════
+function renderIVA(){
+  const iva=DB.iva||[];
+  const total=iva.reduce((s,i)=>s+i.importe,0);
+  const deudas=DB.deudas||[];
+  const pend=deudas.filter(d=>!d.pagada);
+  const pag=deudas.filter(d=>d.pagada);
+  const totalDeudas=pend.reduce((s,d)=>s+d.importe,0);
+
+  document.getElementById('s-iva').innerHTML=`<div class="page-title">IVA + Deudas</div>
+
   <div class="card" style="border-top:3px solid var(--tr)">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px">
-      <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--tr)">Saldo TR</div><div class="num" style="font-size:28px;font-weight:700;margin-top:4px">${fmt(saldoTR)}</div></div>
-      <div style="text-align:right"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t2)">Total metas</div><div class="num" style="font-size:18px;font-weight:700;margin-top:4px">${fmt(totalMeta)}</div></div>
+    <div class="card-hdr"><span class="card-title" style="color:var(--tr)">IVA acumulado ${hoy.getFullYear()}</span><span class="num" style="font-size:20px;font-weight:700;color:var(--tr)">${fmt(total)}</span></div>
+    <div style="font-size:12px;color:var(--t2);margin-bottom:12px">${iva.length} concepto${iva.length!==1?'s':''} · Liquidación anual</div>
+    ${iva.map(i=>`<div class="li">
+      <div class="li-icon" style="background:var(--tr-l);color:var(--tr);font-size:9px;font-weight:800">IVA</div>
+      <div class="li-body"><div class="li-title">${i.nombre}</div><div class="li-sub">${i.fecha}</div></div>
+      <div class="li-amount" style="color:var(--tr);margin-right:8px">${fmt(i.importe)}</div>
+      <div class="li-action" onclick="borrarIVA(${i.id})" style="border:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--t2);padding:6px 0">Sin registros IVA</div>'}
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <input type="text" id="ivaN" placeholder="Concepto" style="flex:1;padding:10px 12px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+      <input type="number" id="ivaI" placeholder="€" inputmode="decimal" style="width:72px;padding:10px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+      <button class="btn btn-tr" style="width:auto;padding:10px 14px;font-size:16px" onclick="addIVA()">+</button>
     </div>
-    <div class="prog" style="height:8px"><div class="prog-fill pf-tr" style="width:${Math.min(100,(saldoTR/totalMeta*100)).toFixed(1)}%"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-top:5px;font-weight:600">
-      <span>${Math.min(100,(saldoTR/totalMeta*100)).toFixed(0)}% cubierto</span>
-      ${saldoTR<totalMeta?`<span style="color:var(--red)">Déficit ${fmt(totalMeta-saldoTR)}</span>`:`<span style="color:var(--green)">✓ Todo cubierto</span>`}
+    ${total>0?`<button class="btn btn-dark" style="margin-top:10px;font-size:12px;padding:11px" onclick="liquidarIVA()">Liquidar IVA · Reiniciar a cero</button>`:''}
+  </div>
+
+  <div class="card" style="border-top:3px solid var(--red)">
+    <div class="card-hdr"><span class="card-title" style="color:var(--red)">Bizums pendientes</span>${pend.length?`<span class="num" style="font-size:18px;font-weight:700;color:var(--red)">−${fmt(totalDeudas)}</span>`:''}
     </div>
-    <div style="font-size:11px;color:var(--t3);margin-top:9px;padding-top:9px;border-top:1px solid var(--brd2)">El saldo TR se distribuye automáticamente por fecha más próxima</div>
+    ${pend.map(d=>`<div class="li">
+      <div class="li-icon" style="background:var(--red-l);color:var(--red)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <div class="li-body"><div class="li-title">${d.nombre}</div>${d.notas?`<div class="li-sub">${d.notas}</div>`:''}</div>
+      <div class="li-amount" style="color:var(--red);margin-right:8px">−${fmt(d.importe)}</div>
+      <button class="btn-pagado" onclick="toggleDeuda(${d.id})">Pagado</button>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--t2);padding:6px 0">Sin bizums pendientes</div>'}
+    ${pag.length?`<div class="divlabel">Pagados</div>${pag.map(d=>`<div class="li" style="opacity:.4">
+      <div class="li-icon" style="background:var(--green-l);color:var(--green)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <div class="li-body"><div class="li-title">${d.nombre}</div></div>
+      <div class="li-amount" style="color:var(--green);margin-right:8px">${fmt(d.importe)}</div>
+      <div class="li-action" onclick="borrarDeuda(${d.id})" style="border:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+    </div>`).join('')}`:''}
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--brd2)">
+      <div class="fr"><label>¿A quién?</label><input type="text" id="deudaN" placeholder="Ej: María, cena sábado"/></div>
+      <div class="fg2">
+        <div class="fr"><label>Importe (€)</label><input type="number" id="deudaI" step="0.01" inputmode="decimal" placeholder="0,00"/></div>
+        <div class="fr"><label>Notas</label><input type="text" id="deudaNotas" placeholder="Opcional"/></div>
+      </div>
+      <button class="btn btn-red" onclick="addDeuda()">Añadir bizum</button>
+      <div id="deudaMsg"></div>
+    </div>
   </div>`;
-  html+=ordenados.map((o,idx)=>{
-    const cubre=asignado[o.id]||0,faltan=Math.max(0,o.meta-cubre),pct=o.meta>0?Math.min(100,Math.round(cubre/o.meta*100)):0,cubierto=pct>=100,dias=diasRestantes(o.fecha);
-    let cbCls='cd-none',cbTxt='Sin fecha';
-    if(dias!==null){if(dias<0){cbTxt='Vencido';cbCls='cd-urg';}else if(dias<=30){cbTxt=`${dias}d`;cbCls='cd-urg';}else if(dias<=90){cbTxt=`${dias}d`;cbCls='cd-soon';}else{cbTxt=`${dias}d`;cbCls='cd-ok';}}
-    return`<div class="oc${cubierto?' done':''}">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px">
-        <div style="width:26px;height:26px;border-radius:50%;background:${cubierto?'var(--green)':'var(--blue-l)'};color:${cubierto?'#fff':'var(--blue)'};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">${cubierto?'✓':idx+1}</div>
-        <div style="flex:1">
-          <div style="font-size:16px;font-weight:800;letter-spacing:-.3px;color:${cubierto?'var(--green)':'var(--tx)'}">${o.nombre}</div>
-          <div style="font-size:11px;color:var(--t2);margin-top:2px">${o.fecha?new Date(o.fecha).toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}):'Sin fecha límite'}</div>
-        </div>
-        <span class="cd-badge ${cbCls}">${cbTxt}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px">
-        <span style="color:var(--t2)">Cubierto <span class="num" style="color:${cubierto?'var(--green)':'var(--tx)'};font-size:13px;font-weight:700">${fmt(cubre)}</span></span>
-        <span style="color:var(--t2)">Meta <span class="num" style="color:var(--tx);font-size:13px;font-weight:700">${fmt(o.meta)}</span></span>
-      </div>
-      <div class="prog"><div class="prog-fill ${cubierto?'pf-green':'pf-blue'}" style="width:${pct}%"></div></div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-top:4px">
-        <span>${pct}% cubierto</span>${faltan>0?`<span style="color:var(--red)">Faltan ${fmt(faltan)}</span>`:`<span style="color:var(--green)">✓ Completo</span>`}
-      </div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        ${cubierto?`<button class="btn btn-green" style="flex:2;padding:11px;font-size:13px" onclick="completarObjetivo(${o.id})">✓ Marcar pagado</button>`:''}
-        <button class="btn-ghost" style="flex:1;padding:11px;font-size:12px" onclick="document.getElementById('eo-${o.id}').style.display=document.getElementById('eo-${o.id}').style.display==='block'?'none':'block'">Editar</button>
-      </div>
-      <div id="eo-${o.id}" class="ep"><div class="fg2"><div class="fr"><label>Nombre</label><input type="text" id="oN-${o.id}" value="${o.nombre}"/></div><div class="fr"><label>Meta (€)</label><input type="number" id="oM-${o.id}" value="${o.meta}" step="0.01" inputmode="decimal"/></div><div class="fr"><label>Fecha límite</label><input type="date" id="oF-${o.id}" value="${o.fecha||''}"/></div></div><div style="display:flex;gap:8px"><button class="btn btn-green" style="flex:1;padding:11px" onclick="guardarEditO(${o.id})">Guardar</button><button class="btn btn-red" style="flex:1;padding:11px" onclick="delObjetivo(${o.id})">Eliminar</button></div></div>
-    </div>`;
-  }).join('');
-  html+=`<div class="card" style="border:2px dashed var(--brd)"><div class="card-title" style="margin-bottom:13px">Nuevo objetivo</div><div class="fg2"><div class="fr"><label>Nombre</label><input type="text" id="oNN" placeholder="Ej: Viaje Roma"/></div><div class="fr"><label>Meta (€)</label><input type="number" id="oNM" step="0.01" inputmode="decimal" placeholder="0,00"/></div><div class="fr"><label>Fecha límite</label><input type="date" id="oNF"/></div></div><button class="btn btn-blue" onclick="addObjetivo()">Guardar objetivo</button></div>`;
-  document.getElementById('s-objetivos').innerHTML=html;
 }
-function completarObjetivo(id){
-  const numId=Number(id);
-  const o=DB.objetivos.find(x=>Number(x.id)===numId);
-  if(!o)return;
-  if(!DB.saldos.tr)DB.saldos.tr={val:0,fecha:''};
-  DB.saldos.tr.val=Math.max(0,(DB.saldos.tr.val||0)-o.meta);
-  DB.objetivos=DB.objetivos.filter(x=>Number(x.id)!==numId);
-  saveDB();
-  renderObjetivos();
+function addIVA(){const n=document.getElementById('ivaN').value.trim(),i=parseFloat(document.getElementById('ivaI').value);if(!n||isNaN(i))return;DB.iva.push({id:Date.now(),nombre:n,importe:i,fecha:hoy.toLocaleDateString('es-ES')});save();renderIVA();}
+function borrarIVA(id){DB.iva=DB.iva.filter(x=>x.id!==id);save();renderIVA();}
+function liquidarIVA(){DB.iva=[];save();renderIVA();}
+function addDeuda(){
+  const n=document.getElementById('deudaN').value.trim(),i=parseFloat(document.getElementById('deudaI').value),nt=document.getElementById('deudaNotas').value.trim();
+  const msg=document.getElementById('deudaMsg');
+  if(!n||isNaN(i)||i<=0){msg.className='msg-err';msg.textContent='⚠ Nombre e importe obligatorios';return;}
+  DB.deudas.push({id:Date.now(),nombre:n,importe:i,notas:nt,pagada:false});
+  save();msg.className='msg-ok';msg.textContent='✓ Añadido';setTimeout(()=>renderIVA(),900);
 }
-function guardarEditO(id){const o=DB.objetivos.find(x=>x.id===id);if(!o)return;const n=document.getElementById('oN-'+id)?.value.trim();if(n)o.nombre=n;const m=parseFloat(document.getElementById('oM-'+id)?.value);if(!isNaN(m))o.meta=m;const f=document.getElementById('oF-'+id)?.value;if(f!==undefined)o.fecha=f;saveDB();renderObjetivos();}
-function delObjetivo(id){if(!confirm('¿Eliminar objetivo?'))return;DB.objetivos=DB.objetivos.filter(x=>x.id!==id);saveDB();renderObjetivos();}
-function addObjetivo(){const nombre=document.getElementById('oNN').value.trim(),meta=parseFloat(document.getElementById('oNM').value),fecha=document.getElementById('oNF').value;if(!nombre||isNaN(meta))return;DB.objetivos.push({id:Date.now(),nombre,meta,fecha});saveDB();renderObjetivos();}
+function toggleDeuda(id){const d=DB.deudas.find(x=>x.id===id);if(!d)return;d.pagada=!d.pagada;d.pagadaMes=mesKey(hoy.getFullYear(),hoy.getMonth());save();renderIVA();}
+function borrarDeuda(id){DB.deudas=DB.deudas.filter(x=>x.id!==id);save();renderIVA();}
 
-// ════════════════════════════════════════
-// CALENDARIO  (fix: pointer-events en bkbar ya solucionado en CSS)
-// ════════════════════════════════════════
-let curYear=hoy.getFullYear(),curMonth=hoy.getMonth();
-function renderCalendario(){
-  document.getElementById('s-calendario').innerHTML=`
-    <div class="page-title">Calendario</div>
-    <div style="display:flex;gap:10px;margin-bottom:15px;align-items:center">
-      <button class="btn-ghost" style="padding:9px 18px;font-size:16px" onclick="changeMes(-1)">←</button>
-      <span id="calTitle" style="flex:1;text-align:center;font-size:18px;font-weight:800;letter-spacing:-.3px"></span>
-      <button class="btn-ghost" style="padding:9px 18px;font-size:16px" onclick="changeMes(1)">→</button>
-    </div>
-    <div class="stats-row">
-      <div class="stat-box"><div class="stat-lbl">Total</div><div class="stat-val" id="tTotal" style="color:var(--blue)">—</div></div>
-      <div class="stat-box"><div class="stat-lbl">Pagado</div><div class="stat-val" id="tPaid" style="color:var(--green)">—</div></div>
-      <div class="stat-box"><div class="stat-lbl">Pendiente</div><div class="stat-val" id="tPend" style="color:var(--red)">—</div></div>
-    </div>
-    <div class="card" style="padding:12px">
-      <div class="cg"><div class="ch">L</div><div class="ch">M</div><div class="ch">X</div><div class="ch">J</div><div class="ch">V</div><div class="ch">S</div><div class="ch">D</div></div>
-      <div class="cg" id="calDays"></div>
-    </div>
-    <div class="card" id="calList"></div>`;
-  renderCal();
-}
-function changeMes(d){curMonth+=d;if(curMonth>11){curMonth=0;curYear++;}if(curMonth<0){curMonth=11;curYear--;}renderCal();}
-function renderCal(){
-  if(!document.getElementById('calTitle'))return;
-  document.getElementById('calTitle').textContent=mesesC[curMonth]+' '+curYear;
-  const bills=getBBVABills(curYear,curMonth);const byDay={};bills.forEach(b=>{if(!byDay[b.dia])byDay[b.dia]=[];byDay[b.dia].push(b);});
-  let total=0,paid=0,pending=0;bills.forEach(b=>{total+=b.importe;if(isPast(b.dia,curYear,curMonth))paid+=b.importe;else pending+=b.importe;});
-  document.getElementById('tTotal').textContent=fmt(total);document.getElementById('tPaid').textContent=fmt(paid);document.getElementById('tPend').textContent=fmt(pending);
-  const firstDay=new Date(curYear,curMonth,1).getDay(),offset=firstDay===0?6:firstDay-1,daysInM=new Date(curYear,curMonth+1,0).getDate();
-  let html='';for(let i=0;i<offset;i++)html+=`<div class="cd empty">·</div>`;
-  for(let d=1;d<=daysInM;d++){const hb=byDay[d],isToday=hoy.getFullYear()===curYear&&hoy.getMonth()===curMonth&&d===hoy.getDate(),past=isPast(d,curYear,curMonth);html+=`<div class="cd${hb?(past?' paid':' bill'):''}${isToday?' today':''}">${d}</div>`;}
-  document.getElementById('calDays').innerHTML=html;
-  let lh=`<div class="card-hdr"><span class="card-title" style="color:var(--blue)">BBVA · ${mesesC[curMonth]}</span><span class="num" style="font-size:13px;font-weight:700;color:var(--red)">−${fmt(pending)}</span></div>`;
-  bills.forEach(b=>{const past=isPast(b.dia,curYear,curMonth);lh+=`<div class="li"><div class="li-icon" style="background:var(--blue-l);color:var(--blue);font-size:9px;font-weight:800">d.${b.dia}</div><div class="li-body"><div class="li-title">${b.nombre}</div></div><span class="tag ${past?'t-green':'t-amber'}">${past?'Pagado':'Pendiente'}</span><div class="li-amount" style="color:${past?'var(--t2)':'var(--red)'};margin-left:8px">${past?'':'-'}${fmt(b.importe)}</div></div>`;});
-  lh+=`<div style="background:var(--blue-l);border:1px solid var(--blue-m);border-radius:var(--rs);padding:11px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;font-weight:700;color:var(--blue)">Total BBVA ${mesesC[curMonth]}</span><span class="num" style="font-size:16px;font-weight:700;color:var(--blue)">−${fmt(total)}</span></div>`;
-  document.getElementById('calList').innerHTML=lh;
-}
-
-// ════════════════════════════════════════
-// FACTURAS
-// ════════════════════════════════════════
-const FIJAS=[{id:'aje',name:'AJE',amt:48,frec:'quarterly',meses:[0,3,6,9]},{id:'neting',name:'Neting',amt:48.39,frec:'monthly'},{id:'google',name:'Google ONE',amt:2.99,frec:'monthly'},{id:'appwb',name:'App WB',amt:3.09,frec:'monthly'},{id:'arrabal',name:'Arrabal & Díaz',amt:60,frec:'quarterly',meses:[1,4,7,10]},{id:'alquiler',name:'Alquiler',amt:540,frec:'monthly'},{id:'ssalud',name:'Seguro de salud',amt:74.90,frec:'monthly'},{id:'shogar',name:'Seguro de hogar',amt:78.26,frec:'annual',mes:1},{id:'regular',name:'Regularización autónomo',amt:178.08,frec:'special',check:(y,m)=>y===2026&&[3,4,5].includes(m)}];
+// ══════════════════════════════════════════
+// FACTURAS DEDUCIBLES
+// ══════════════════════════════════════════
+const FIJAS_FACT=[
+  {id:'aje',name:'AJE',amt:48,frec:'quarterly',meses:[0,3,6,9]},
+  {id:'neting',name:'Neting',amt:48.39,frec:'monthly'},
+  {id:'google',name:'Google ONE',amt:2.99,frec:'monthly'},
+  {id:'appwb',name:'App WB',amt:3.09,frec:'monthly'},
+  {id:'arrabal',name:'Arrabal & Díaz',amt:60,frec:'quarterly',meses:[1,4,7,10]},
+  {id:'alquiler',name:'Alquiler',amt:540,frec:'monthly'},
+  {id:'ssalud',name:'Seguro de salud',amt:74.90,frec:'monthly'},
+  {id:'shogar',name:'Seguro de hogar',amt:78.26,frec:'annual',mes:1},
+  {id:'regular',name:'Regularización autónomo',amt:178.08,frec:'special',check:(y,m)=>y===2026&&[3,4,5].includes(m)},
+];
 function factAplica(f,y,m){if(f.frec==='monthly')return true;if(f.frec==='quarterly')return f.meses.includes(m);if(f.frec==='annual')return f.mes===m;if(f.frec==='special')return f.check(y,m);return false;}
-function tagFact(f){if(f.frec==='monthly')return't-blue';if(f.frec==='quarterly')return't-amber';if(f.frec==='annual')return't-grey';return't-red';}
-function tagLabel(f){if(f.frec==='monthly')return'Mensual';if(f.frec==='quarterly')return'Trimestral';if(f.frec==='annual')return'Anual';return'Especial';}
-let factY=hoy.getFullYear(),factM=hoy.getMonth();
-function getFactMes(y,m){const k=mesKey(y,m);if(!FACT[k])FACT[k]={checks:{},extras:[]};return FACT[k];}
+let factY=hoy.getFullYear(), factM=hoy.getMonth();
+function getFactMes(y,m){const k=mesKey(y,m);if(!DB.facturas[k])DB.facturas[k]={checks:{},extras:[]};return DB.facturas[k];}
 function renderFacturas(){
-  const e=getFactMes(factY,factM),disp=FIJAS.filter(f=>factAplica(f,factY,factM)),noDisp=FIJAS.filter(f=>!factAplica(f,factY,factM));
-  const totalF=disp.length+e.extras.length,okF=disp.filter(f=>e.checks[f.id]).length+e.extras.filter(x=>x.checked).length,pct=totalF?Math.round(okF/totalF*100):0;
-  let html=`<div class="page-title">Facturas</div>
-    <div style="display:flex;gap:10px;margin-bottom:15px;align-items:center"><button class="btn-ghost" style="padding:9px 18px;font-size:16px" onclick="changeFactMes(-1)">←</button><span style="flex:1;text-align:center;font-size:18px;font-weight:800;letter-spacing:-.3px">${mesesC[factM]} ${factY}</span><button class="btn-ghost" style="padding:9px 18px;font-size:16px" onclick="changeFactMes(1)">→</button></div>
-    <div class="stats-row"><div class="stat-box"><div class="stat-lbl">Total</div><div class="stat-val">${totalF}</div></div><div class="stat-box"><div class="stat-lbl">Guardadas</div><div class="stat-val" style="color:var(--green)">${okF}</div></div><div class="stat-box"><div class="stat-lbl">Pendientes</div><div class="stat-val" style="color:var(--red)">${totalF-okF}</div></div></div>
-    <div style="margin-bottom:13px"><div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--t2);margin-bottom:5px"><span>Progreso</span><span>${pct}%</span></div><div class="prog"><div class="prog-fill pf-green" style="width:${pct}%"></div></div></div>
-    <div class="card"><div class="card-hdr"><span class="card-title">Facturas deducibles</span></div>${disp.map(f=>{const chk=!!e.checks[f.id];return`<div class="fi${chk?' chk':''}" onclick="toggleFact('${f.id}')"><div class="fi-chk">${chk?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}</div><div class="fi-body"><div class="fi-name">${f.name} <span class="tag ${tagFact(f)}">${tagLabel(f)}</span></div><div class="fi-sub">${chk?'✓ Guardada en carpeta':'Pendiente de guardar'}</div></div><div class="fi-amt">${fmt(f.amt)}</div></div>`;}).join('')}</div>`;
-  if(noDisp.length)html+=`<div class="card"><div class="card-hdr"><span class="card-title">No aplican este mes</span></div>${noDisp.map(f=>`<div class="fi nap"><div class="fi-chk"></div><div class="fi-body"><div class="fi-name">${f.name} <span class="tag ${tagFact(f)}">${tagLabel(f)}</span></div></div><div class="fi-amt">${fmt(f.amt)}</div></div>`).join('')}</div>`;
-  html+=`<div class="card"><div class="card-hdr"><span class="card-title">Gastos extra</span></div>${e.extras.map(x=>`<div class="fi${x.checked?' chk':''}" onclick="toggleExtra(${x.id})"><div class="fi-chk">${x.checked?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}</div><div class="fi-body"><div class="fi-name">${x.name} <span class="tag t-red">Extra</span></div><div class="fi-sub">${x.checked?'✓ Guardada':'Pendiente'}</div></div><div class="fi-amt">${x.amt?fmt(x.amt):'—'}</div></div>`).join('')||`<div style="font-size:13px;color:var(--t2);padding:8px 0">Sin gastos extra este mes</div>`}
-  <div style="display:flex;gap:8px;margin-top:12px"><input type="text" id="eC" placeholder="Concepto" style="flex:1;padding:10px 12px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/><input type="number" id="eI" placeholder="€" inputmode="decimal" style="width:70px;padding:10px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/><button class="btn btn-blue" style="width:auto;padding:10px 16px;font-size:18px;line-height:1" onclick="addExtra()">+</button></div></div>
+  const e=getFactMes(factY,factM);
+  const disp=FIJAS_FACT.filter(f=>factAplica(f,factY,factM));
+  const noDisp=FIJAS_FACT.filter(f=>!factAplica(f,factY,factM));
+  const totalF=disp.length+e.extras.length;
+  const okF=disp.filter(f=>e.checks[f.id]).length+e.extras.filter(x=>x.checked).length;
+  const pct=totalF?Math.round(okF/totalF*100):0;
+
+  let html=`<div class="page-title">Facturas deducibles</div>
+  <div class="mes-nav">
+    <button class="btn-ghost" onclick="factMes(-1)">←</button>
+    <span>${mesesC[factM]} ${factY}</span>
+    <button class="btn-ghost" onclick="factMes(1)">→</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:13px">
+    <div class="stat-box" style="padding:11px;text-align:center"><div class="stat-lbl">Total</div><div class="stat-val" style="font-size:18px">${totalF}</div></div>
+    <div class="stat-box" style="padding:11px;text-align:center"><div class="stat-lbl">Guardadas</div><div class="stat-val" style="font-size:18px;color:var(--green)">${okF}</div></div>
+    <div class="stat-box" style="padding:11px;text-align:center"><div class="stat-lbl">Pendientes</div><div class="stat-val" style="font-size:18px;color:var(--red)">${totalF-okF}</div></div>
+  </div>
+  <div style="margin-bottom:13px">
+    <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--t2);margin-bottom:5px"><span>Progreso</span><span>${pct}%</span></div>
+    <div class="prog"><div class="prog-fill pf-green" style="width:${pct}%"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><span class="card-title">Facturas deducibles</span></div>
+    ${disp.map(f=>{const chk=!!e.checks[f.id];return`<div class="fi${chk?' chk':''}" onclick="toggleFact('${f.id}')">
+      <div class="fi-chk">${chk?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}</div>
+      <div class="fi-body"><div class="fi-name">${f.name}</div><div class="fi-sub">${chk?'✓ Guardada':'Pendiente'}</div></div>
+      <div class="fi-amt">${fmt(f.amt)}</div>
+    </div>`;}).join('')}
+  </div>`;
+
+  if(noDisp.length) html+=`<div class="card">
+    <div class="card-hdr"><span class="card-title">No aplican este mes</span></div>
+    ${noDisp.map(f=>`<div class="fi nap"><div class="fi-chk"></div><div class="fi-body"><div class="fi-name" style="color:var(--t2)">${f.name}</div></div><div class="fi-amt">${fmt(f.amt)}</div></div>`).join('')}
+  </div>`;
+
+  html+=`<div class="card">
+    <div class="card-hdr"><span class="card-title">Gastos extra deducibles</span></div>
+    ${e.extras.map(x=>`<div class="fi${x.checked?' chk':''}" onclick="toggleFactExtra(${x.id})">
+      <div class="fi-chk">${x.checked?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}</div>
+      <div class="fi-body"><div class="fi-name">${x.name}</div><div class="fi-sub">${x.checked?'✓ Guardada':'Pendiente'}</div></div>
+      <div class="fi-amt">${x.amt?fmt(x.amt):'—'}</div>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--t2);padding:6px 0">Sin gastos extra</div>'}
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <input type="text" id="feC" placeholder="Concepto" style="flex:1;padding:10px 12px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+      <input type="number" id="feI" placeholder="€" inputmode="decimal" style="width:68px;padding:10px;font-size:13px;border-radius:var(--rs);border:1.5px solid var(--brd);background:var(--card2);color:var(--tx);font-family:inherit"/>
+      <button class="btn btn-green" style="width:auto;padding:10px 14px;font-size:16px" onclick="addFactExtra()">+</button>
+    </div>
+  </div>
   <button class="btn-ghost" style="width:100%;margin-top:4px;padding:11px" onclick="resetFactMes()">↩ Reiniciar mes</button>`;
+
   document.getElementById('s-facturas').innerHTML=html;
 }
-function changeFactMes(d){factM+=d;if(factM>11){factM=0;factY++;}if(factM<0){factM=11;factY--;}renderFacturas();}
-function resetFactMes(){if(!confirm(`¿Reiniciar ${mesesC[factM]} ${factY}?`))return;const k=mesKey(factY,factM);if(FACT[k]){FACT[k].checks={};FACT[k].extras=[];}saveFact();renderFacturas();}
-function toggleFact(id){const e=getFactMes(factY,factM);e.checks[id]=!e.checks[id];saveFact();renderFacturas();}
-function toggleExtra(id){const e=getFactMes(factY,factM);const x=e.extras.find(x=>x.id===id);if(x){x.checked=!x.checked;saveFact();renderFacturas();}}
-function addExtra(){const c=document.getElementById('eC').value.trim(),i=parseFloat(document.getElementById('eI').value);if(!c)return;const e=getFactMes(factY,factM);e.extras.push({id:Date.now(),name:c,amt:isNaN(i)?null:i,checked:false});saveFact();renderFacturas();}
+function factMes(d){factM+=d;if(factM>11){factM=0;factY++;}if(factM<0){factM=11;factY--;}renderFacturas();}
+function toggleFact(id){const e=getFactMes(factY,factM);e.checks[id]=!e.checks[id];save();renderFacturas();}
+function toggleFactExtra(id){const e=getFactMes(factY,factM);const x=e.extras.find(x=>x.id===id);if(x){x.checked=!x.checked;save();renderFacturas();}}
+function addFactExtra(){const c=document.getElementById('feC').value.trim(),i=parseFloat(document.getElementById('feI').value);if(!c)return;const e=getFactMes(factY,factM);e.extras.push({id:Date.now(),name:c,amt:isNaN(i)?null:i,checked:false});save();renderFacturas();}
+function resetFactMes(){const k=mesKey(factY,factM);if(DB.facturas[k]){DB.facturas[k].checks={};DB.facturas[k].extras=[];}save();renderFacturas();}
 
-// ════════════════════════════════════════
+// ══════════════════════════════════════════
 // BACKUP
-// ════════════════════════════════════════
-function exportarDatos(){const b={db:DB,fact:FACT,exportado:new Date().toISOString()};const blob=new Blob([JSON.stringify(b,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`finanzas-${new Date().toLocaleDateString('es-ES').replace(/\//g,'-')}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);alert('✓ Backup exportado.');}
-function importarDatos(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const b=JSON.parse(e.target.result);if(!b.db||!b.db._v){alert('⚠ Archivo no válido.');return;}if(!confirm(`¿Restaurar backup del ${new Date(b.exportado).toLocaleDateString('es-ES')}?`))return;DB=b.db;FACT=b.fact||{};saveDB();renderResumen();alert('✓ Restaurado y guardado en la nube.');}catch(e){alert('⚠ Error.');}};reader.readAsText(file);event.target.value='';}
-
-// ════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════
-const renders={resumen:renderResumen,cuentas:renderCuentas,movimientos:renderMovimientos,inversiones:renderInversiones,objetivos:renderObjetivos,calendario:renderCalendario,facturas:renderFacturas};
-
-async function init(){
-  try{ await loadAll(); }catch(e){ console.warn('Load failed, using defaults:', e); }
-  const loader=document.getElementById('loader');
-  if(loader){ loader.style.opacity='0'; setTimeout(()=>loader.style.display='none', 350); }
-  renderResumen();
+// ══════════════════════════════════════════
+function exportar(){
+  const blob=new Blob([JSON.stringify({db:DB,exportado:new Date().toISOString()},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=`finanzas-${new Date().toLocaleDateString('es-ES').replace(/\//g,'-')}.json`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
 }
-init();
+function importar(event){
+  const file=event.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const b=JSON.parse(e.target.result);
+      if(!b.db||!b.db._v){alert('⚠ Archivo no válido.');return;}
+      DB=b.db;save();renderInicio();
+      alert('✓ Restaurado correctamente.');
+    }catch(e){alert('⚠ Error al leer el archivo.');}
+  };
+  reader.readAsText(file);event.target.value='';
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+const renders={inicio:renderInicio,bbva:renderBBVA,santander:renderSantander,tr:renderTR,productos:renderProductos,iva:renderIVA,facturas:renderFacturas};
+load();
+renderInicio();
 </script>
 </body>
 </html>
