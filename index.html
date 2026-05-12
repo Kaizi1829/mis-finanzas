@@ -274,7 +274,7 @@ const $=id=>document.getElementById(id);
 function isPast(dia,y,m){
   const ty=hoy.getFullYear(),tm=hoy.getMonth(),td=hoy.getDate();
   if(y<ty||(y===ty&&m<tm))return true;
-  return y===ty&&m===tm&&dia<=td; // <= so today counts as "past/done"
+  return y===ty&&m===tm&&dia<=td;
 }
 function isToday(dia,y,m){return hoy.getFullYear()===y&&hoy.getMonth()===m&&hoy.getDate()===dia;}
 function gastoAplica(g,y,m){
@@ -315,26 +315,56 @@ function tipoLbl(t){return{fijo:'Fijo',fraccionado:'Fraccionado',puntual:'Puntua
 function frecLbl(f){return{monthly:'Mensual',quarterly:'Trimestral',annual:'Anual'}[f]||'';}
 function finLbl(g){return g.finAnio!==undefined?`<span class="tag t-am" style="margin-left:4px;font-size:9px">hasta ${MC[g.finMes]} ${g.finAnio}</span>`:'';}
 
+// ── HELPERS ANALÍTICOS ──
+function getProx30(){
+  const result=[];
+  for(let i=1;i<=30;i++){
+    const d=new Date(hoy);d.setDate(hoy.getDate()+i);
+    const y=d.getFullYear(),m=d.getMonth(),dia=d.getDate();
+    DB.gastos.filter(g=>gastoAplica(g,y,m)&&dG(g)===dia&&!isPagado(g.id,y,m)&&!g.anulado)
+      .forEach(g=>result.push({...g,_d:d,_y:y,_m:m,_dia:dia}));
+  }
+  return result.sort((a,b)=>a._d-b._d);
+}
+function getFraccionadosActivos(){
+  const y=hoy.getFullYear(),m=hoy.getMonth();
+  return DB.gastos.filter(g=>g.tipo==='fraccionado'&&!g.anulado&&gastoAplica(g,y,m))
+    .map(g=>{const mR=g.finAnio!==undefined?(g.finAnio-y)*12+(g.finMes-m):null;return{...g,mesesRestantes:mR};})
+    .sort((a,b)=>(a.mesesRestantes??99)-(b.mesesRestantes??99));
+}
+function calcTotalAnual(g,anio){
+  if(g.anulado)return 0;let t=0;
+  for(let m=0;m<12;m++){if(gastoAplica(g,anio,m))t+=g.importe;}return t;
+}
+function getResumenFiscal(anio){
+  const deducibles=DB.gastos.filter(g=>g.deducible&&!g.anulado);
+  const porGasto=deducibles.map(g=>({...g,totalAnio:calcTotalAnual(g,anio)})).filter(g=>g.totalAnio>0);
+  const totalDeducibles=porGasto.reduce((s,g)=>s+g.totalAnio,0);
+  const ivaAnio=(DB.iva||[]).reduce((s,i)=>s+i.importe,0);
+  return{deducibles:porGasto,totalDeducibles,ivaAnio};
+}
+
+
 // ══════════════════════════════════════════════════════
 // DATABASE
 // ══════════════════════════════════════════════════════
 function defaultDB(){return{_v:4,
   saldos:{bbva:{val:512,fecha:'22/04/2026'},san:{val:12.98,fecha:'22/04/2026'},tr:{val:60.87,fecha:'22/04/2026'}},
   gastos:[
-    {id:1,nombre:'Neting',importe:48.39,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:7},
+    {id:1,nombre:'Neting',importe:48.39,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:7,deducible:true},
     {id:2,nombre:'PIAS',importe:50,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:10},
     {id:3,nombre:'Dr Smile',importe:41.46,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:10,finAnio:2026,finMes:5},
     {id:4,nombre:'Aspiradora',importe:26.75,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:10,finAnio:2026,finMes:11},
-    {id:5,nombre:'Google ONE',importe:2.99,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:10},
+    {id:5,nombre:'Google ONE',importe:2.99,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:10,deducible:true},
     {id:6,nombre:'Comparsa',importe:16,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:16},
-    {id:7,nombre:'App WB',importe:3.09,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:24},
-    {id:8,nombre:'DIGI',importe:10,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:30},
+    {id:7,nombre:'App WB',importe:3.09,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:24,deducible:true},
+    {id:8,nombre:'DIGI',importe:10,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:30,deducible:true},
     {id:9,nombre:'Legado Activo AXA',importe:20,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:30},
-    {id:10,nombre:'Cuota autónomo',importe:302.65,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:30},
-    {id:11,nombre:'AJE',importe:48,cuenta:'bbva',tipo:'fijo',frec:'quarterly',dia:1,meses:[0,3,6,9]},
-    {id:12,nombre:'Arrabal & Díaz',importe:60,cuenta:'bbva',tipo:'fijo',frec:'quarterly',dia:10,meses:[1,4,7,10]},
-    {id:13,nombre:'Seguro de Hogar',importe:78.26,cuenta:'bbva',tipo:'fijo',frec:'annual',dia:4,mesAnual:1},
-    {id:14,nombre:'Regularización autónomo',importe:178.08,cuenta:'bbva',tipo:'fijo',frec:'quarterly',dia:30,meses:[3,4,5]},
+    {id:10,nombre:'Cuota autónomo',importe:302.65,cuenta:'bbva',tipo:'fijo',frec:'monthly',dia:30,deducible:true},
+    {id:11,nombre:'AJE',importe:48,cuenta:'bbva',tipo:'fijo',frec:'quarterly',dia:1,meses:[0,3,6,9],deducible:true},
+    {id:12,nombre:'Arrabal & Díaz',importe:60,cuenta:'bbva',tipo:'fijo',frec:'quarterly',dia:10,meses:[1,4,7,10],deducible:true},
+    {id:13,nombre:'Seguro de Hogar',importe:78.26,cuenta:'bbva',tipo:'fijo',frec:'annual',dia:4,mesAnual:1,deducible:true},
+    {id:14,nombre:'Regularización autónomo',importe:178.08,cuenta:'bbva',tipo:'fijo',frec:'quarterly',dia:30,meses:[3,4,5],deducible:true},
     {id:15,nombre:'Shein 2/3',importe:68.07,cuenta:'bbva',tipo:'fraccionado',dia:15,iniAnio:2026,iniMes:4,finAnio:2026,finMes:4},
     {id:16,nombre:'Shein 3/3',importe:68.07,cuenta:'bbva',tipo:'fraccionado',dia:14,iniAnio:2026,iniMes:5,finAnio:2026,finMes:5},
     {id:101,nombre:'Alquiler',importe:540,cuenta:'san',tipo:'fijo',frec:'monthly',dia:1},
@@ -594,6 +624,48 @@ function renderDash(){
     <div class="li"><div class="li-ico" style="background:var(--re-l);color:var(--re);font-weight:800;font-size:9px">P</div><div class="li-body"><div class="li-name">Préstamo</div><div class="li-sub">${calcCuotas()} cuotas pagadas</div></div><div class="li-amt" style="color:var(--re)">−${fmt(Math.max(0,DB.prestamo.capital-calcCuotas()*DB.prestamo.cuota))}</div></div>
   </div>`;
 
+  // FRACCIONADOS ACTIVOS
+  const fracs=getFraccionadosActivos();
+  if(fracs.length){
+    const totalFracs=fracs.reduce((s,g)=>s+g.importe,0);
+    h+=`<div class="card" style="border-top:3px solid var(--am)">
+      <div class="chdr"><span class="ctit" style="color:var(--am)">Fraccionados activos</span><span style="font-family:var(--num);font-size:14px;font-weight:700;color:var(--re)">−${fmt(totalFracs)}/mes</span></div>
+      ${fracs.map(g=>{
+        const mR=g.mesesRestantes;
+        const fin=g.finAnio!==undefined?new Date(g.finAnio,g.finMes,1).toLocaleDateString('es-ES',{month:'short',year:'numeric'}):'—';
+        return `<div class="li">
+          <div class="li-ico" style="background:var(--am-l);color:var(--am);font-size:9px;font-weight:800">d.${dG(g)}</div>
+          <div class="li-body">
+            <div class="li-name">${g.nombre}</div>
+            <div class="li-sub">${g.cuenta==='bbva'?'BBVA':'Santander'} · Hasta ${fin}${mR!==null?` · <strong style="color:${mR<=1?'var(--re)':mR<=3?'var(--am)':'var(--gr)'}">${mR} mes${mR!==1?'es':''} restante${mR!==1?'s':''}</strong>`:''}</div>
+          </div>
+          <div class="li-amt" style="color:var(--am)">−${fmt(g.importe)}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  // PRÓXIMOS 30 DÍAS
+  const prox30=getProx30();
+  if(prox30.length){
+    h+=`<div class="card" style="border-top:3px solid var(--bl)">
+      <div class="chdr"><span class="ctit" style="color:var(--bl)">Próximos 30 días</span><span style="font-family:var(--num);font-size:14px;font-weight:700;color:var(--re)">−${fmt(prox30.reduce((s,g)=>s+g.importe,0))}</span></div>
+      ${prox30.map(g=>{
+        const diff=Math.round((g._d-new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()))/864e5);
+        const diffLbl=diff===1?'Mañana':diff<=7?`En ${diff} días`:`${g._d.getDate()} ${MC[g._m].slice(0,3)}`;
+        const urgente=diff<=3;
+        return `<div class="li">
+          <div class="li-ico" style="background:${urgente?'var(--re-l)':g._y===hoy.getFullYear()&&g._m===hoy.getMonth()?'var(--bl-l)':'var(--c2)'};color:${urgente?'var(--re)':'var(--bl)'};font-size:9px;font-weight:800">d.${g._dia}</div>
+          <div class="li-body">
+            <div class="li-name">${g.nombre}</div>
+            <div class="li-sub" style="color:${urgente?'var(--re)':'var(--t2)'};font-weight:${urgente?700:400}">${diffLbl} · ${g.cuenta==='bbva'?'BBVA':'Santander'}</div>
+          </div>
+          <div class="li-amt" style="color:${urgente?'var(--re)':'var(--t2)'}">−${fmt(g.importe)}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
   $('s-dash').innerHTML=h;
 }
 function pagDeuda(id){const d=DB.deudas.find(x=>x.id===id);if(!d)return;d.pagada=true;d.pagadaMes=mk(hoy.getFullYear(),hoy.getMonth());save();renderDash();}
@@ -837,6 +909,7 @@ function renderGest(){
     <button class="tbtn${gV==='iva'?' on':''}" onclick="gV='iva';renderGest()">🧾 IVA</button>
     <button class="tbtn${gV==='bizums'?' on':''}" onclick="gV='bizums';renderGest()">💬 Bizums</button>
     <button class="tbtn${gV==='saldos'?' on':''}" onclick="gV='saldos';renderGest()">📊 Saldos</button>
+    <button class="tbtn${gV==='fiscal'?' on':''}" onclick="gV='fiscal';renderGest()">📁 Fiscal</button>
   </div>`;
 
   if(gV==='recibos'){
@@ -859,6 +932,10 @@ function renderGest(){
         <div class="fr"><label>Cuenta</label><select id="gC-${g.id}"><option value="bbva" ${g.cuenta==='bbva'?'selected':''}>BBVA</option><option value="san" ${g.cuenta==='san'?'selected':''}>Santander</option></select></div>
         <div class="fr"><label>Tipo</label><select id="gT-${g.id}"><option value="fijo" ${g.tipo==='fijo'?'selected':''}>Fijo</option><option value="fraccionado" ${g.tipo==='fraccionado'?'selected':''}>Fraccionado</option><option value="puntual" ${g.tipo==='puntual'?'selected':''}>Puntual</option><option value="habitual" ${g.tipo==='habitual'?'selected':''}>Habitual</option></select></div>
         <div class="fr"><label>📅 Fecha de inicio</label><input type="month" id="gIniAll-${g.id}" value="${g.iniAnio?g.iniAnio+'-'+String(g.iniMes+1).padStart(2,'0'):''}"/></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:${g.deducible?'var(--gr-l)':'var(--c2)'};border-radius:var(--rs);margin-bottom:11px;cursor:pointer" onclick="toggleDeducible(${g.id})">
+          <div style="width:22px;height:22px;border-radius:7px;border:1.5px solid ${g.deducible?'var(--gr)':'var(--brd)'};background:${g.deducible?'var(--gr)':'#fff'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.18s">${g.deducible?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}</div>
+          <div><div style="font-size:13px;font-weight:600">Gasto deducible</div><div style="font-size:11px;color:var(--t2)">Aparece en el resumen fiscal del año</div></div>
+        </div>
         ${(g.tipo==='fijo'||g.tipo==='habitual')?`<div class="fr"><label>Frecuencia</label><select id="gF-${g.id}"><option value="monthly" ${g.frec==='monthly'?'selected':''}>Mensual</option><option value="quarterly" ${g.frec==='quarterly'?'selected':''}>Trimestral</option><option value="annual" ${g.frec==='annual'?'selected':''}>Anual</option></select></div><div class="fr"><label>Fin (opcional)</label><input type="month" id="gFin-${g.id}" value="${g.finAnio?g.finAnio+'-'+String(g.finMes+1).padStart(2,'0'):''}"/></div>`:''}
         ${g.tipo==='fraccionado'?`<div class="fr"><label>Mes fin</label><input type="month" id="gFinF-${g.id}" value="${g.finAnio?g.finAnio+'-'+String(g.finMes+1).padStart(2,'0'):''}"/></div>`:''}
         ${g.tipo==='puntual'?`<div class="fr"><label>Mes concreto</label><input type="month" id="gMes-${g.id}" value="${g.anio?g.anio+'-'+String(g.mesAnual+1).padStart(2,'0'):''}"/></div>`:''}
@@ -934,6 +1011,41 @@ function renderGest(){
     </div>`;
   }
 
+  if(gV==='fiscal'){
+    const anio=hoy.getFullYear();
+    const f=getResumenFiscal(anio);
+    const cuotaAnio=DB.gastos.filter(g=>g.nombre.toLowerCase().includes('autónomo')&&!g.anulado).reduce((s,g)=>s+calcTotalAnual(g,anio),0);
+    h+=`<div class="card" style="border-top:3px solid var(--gr)">
+      <div class="chdr"><span class="ctit" style="color:var(--gr)">📁 Resumen fiscal ${anio}</span></div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:14px">Para tu gestor · Basado en gastos marcados como deducibles</div>
+
+      <div style="background:var(--gr-l);border-radius:var(--rs);padding:14px;margin-bottom:12px">
+        <div style="font-size:10px;font-weight:700;color:var(--gr);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Total gastos deducibles estimados ${anio}</div>
+        <div style="font-family:var(--num);font-size:30px;font-weight:800;color:var(--gr)">${fmt(f.totalDeducibles)}</div>
+      </div>
+
+      <div style="background:var(--tr-l);border-radius:var(--rs);padding:14px;margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;color:var(--tr);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">IVA acumulado a declarar</div>
+        <div style="font-family:var(--num);font-size:26px;font-weight:800;color:var(--tr)">${fmt(f.ivaAnio)}</div>
+        <div style="font-size:11px;color:var(--tr);margin-top:4px">${DB.iva.length} concepto${DB.iva.length!==1?'s':''} registrados</div>
+      </div>
+
+      <div class="chdr" style="margin-bottom:10px"><span class="ctit">Desglose de deducibles</span></div>
+      ${f.deducibles.map(g=>{
+        const frec=g.frec==='monthly'?'12 meses':g.frec==='quarterly'?'4 trimestres':g.frec==='annual'?'1 vez/año':'varios meses';
+        return `<div class="li">
+          <div class="li-ico" style="background:var(--gr-l);color:var(--gr)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+          <div class="li-body"><div class="li-name">${g.nombre}</div><div class="li-sub">${fmt(g.importe)} · ${frec}</div></div>
+          <div class="li-amt" style="color:var(--gr);font-weight:800">${fmt(g.totalAnio)}</div>
+        </div>`;
+      }).join('')||'<div style="font-size:13px;color:var(--t2);padding:8px 0">Marca gastos como deducibles en la pestaña Recibos</div>'}
+
+      <div style="margin-top:14px;padding:12px;background:var(--c2);border-radius:var(--rs);font-size:12px;color:var(--t2);line-height:1.5">
+        💡 <strong>Nota para tu gestor:</strong> los importes son estimaciones basadas en los gastos que has marcado como deducibles. Consulta con Arrabal & Díaz para la declaración final.
+      </div>
+    </div>`;
+  }
+
   if(gV==='saldos'){
     h+=`<div class="card">
       <div class="ctit" style="margin-bottom:15px">Actualizar saldos de cuenta</div>
@@ -993,6 +1105,7 @@ function guardarG(id){
   save();renderGest();
 }
 function anularG(id){const g=DB.gastos.find(x=>x.id===id);if(!g)return;g.anulado=true;save();renderGest();}
+function toggleDeducible(id){const g=DB.gastos.find(x=>x.id===id);if(!g)return;g.deducible=!g.deducible;save();renderGest();}
 function reactivarG(id){const g=DB.gastos.find(x=>x.id===id);if(!g)return;delete g.anulado;save();renderGest();}
 function borrarG(id){DB.gastos=DB.gastos.filter(x=>x.id!==id);save();renderGest();}
 function limpiarAnul(){DB.gastos=DB.gastos.filter(x=>!x.anulado);save();renderGest();}
